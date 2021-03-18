@@ -13,14 +13,15 @@ package souq.com;
  */
 import java.sql.*;
 import java.util.*;
+import javax.servlet.jsp.JspWriter;
 
 public class DataBase {
 
     // init database constants
     private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/users";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "01018867111";
+    private static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/e_commerce";
+    private static final String USERNAME = "postgres";
+    private static final String PASSWORD = "postgres";
 
     // init connection object
     private Connection connection;
@@ -114,27 +115,101 @@ public class DataBase {
     }
     
  
-    public static void main(String[] args) {
-        DataBase db = new DataBase();
-        try {
-            db.connect();
-//            ResultSet rs = db.select("select *from users where fname='Ahmed' and lname='Ebrahim'");
-//            while (rs.next()) {
-//
-//                System.out.println(rs.getString(1));
-//                System.out.println(rs.getString(2));
-//                System.out.println(rs.getString(3));
-//                System.out.println(rs.getString(4));
-//                System.out.println(rs.getString(5));
-//                System.out.println(rs.getString(6));
-//            }
-            int result = db.DML("insert into users values(12,'ebrahim','sallam','ebrahim55','987654321','');");
-            System.out.println(result);
-            db.disconnect();
+    public void getFeaturedDev(JspWriter out,int categId)
+    {
+         try {
+                this.connect();
+             
+            ResultSet rs = this.select("select  name,img_url,price from product where category_id ="+categId+" and featured = 'f'  "
+                    + "order by date desc limit 4;");
+            while(rs.next())
+            {
+                out.print("<li class=\"span3\">\n" +
+                "   <div class=\"thumbnail\">\n" +
+                "      <i class=\"tag\"></i>\n" +
+                "           <a href=\"product_details.html\"><img style=\"height:150px\" src=\""+rs.getString(2)+"\" alt=\"\"></a>\n" +
+                "                 <div class=\"caption\">\n" +
+                "                       <h5>"+rs.getString(1)+"</h5>\n" +
+                "                                  <h4><a class=\"btn\" href=\"product_details.html\">VIEW</a> <span class=\"pull-right\">$"+rs.getString(3)+"</span></h4>\n" +
+                "                                    </div>\n" +
+                "                                       </div>\n" +
+                "                                     </li>");
+            }
+            this.disconnect();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+ 
+    
+    public void getLatestProducts(JspWriter out)
+    {
+         try {
+                this.connect();
+            ResultSet rs = this.select(" select name,img_url,price,description from product  order by date desc limit 9;");
+            while(rs.next())
+            {
+                out.print("<li class=\"span3\">\n" +
+                        " <div class=\"thumbnail\">\n" +
+                        "   <a  href=\"product_details.html\"><img style=\"height:150px\" src=\""+rs.getString(2)+"\" alt=\"\"/></a>\n" +
+                        "   <div class=\"caption\">\n" +
+                        "      <h5>"+rs.getString(1)+"</h5>\n" +
+                        "     <p> \n" +
+                                  rs.getString(4)+" \n" +
+                        "      </p>\n" +
+                        "\n" +
+                        "        <h4 style=\"text-align:center\"><a class=\"btn\" href=\"product_details.html\"> <i class=\"icon-zoom-in\"></i></a> <a class=\"btn\" href=\"#\">Add to <i class=\"icon-shopping-cart\"></i></a> <a class=\"btn btn-primary\" >$"+rs.getString(3)+"</a></h4>\n" +
+                        "      </div>\n" +
+                        "      </div>\n" +
+                        "    </li>");
+            }
+            this.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public int getNumOfDev(JspWriter out)
+    {
+        int mobile=0;
+        int laptop=0;
+        int numOfFeatured=0;
+         try {
+                this.connect();
+            ResultSet rs1 = this.select("select count(product_id) from product where category_id= 1;");
+            ResultSet rs2 = this.select("select count(product_id) from product where category_id= 2;");
+            ResultSet rs3 = this.select("select count(product_id) from product where featured= \'f\';");
+             
+            while(rs1.next())
+            {
+                mobile = rs1.getInt(1);
+            }
+            while(rs2.next())
+            {
+                laptop = rs2.getInt(1);
+            }
+            while(rs3.next())
+            {
+                numOfFeatured = rs3.getInt(1);
+            }
+             out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
+"                                <ul>\n" +
+"                                    <li><a href=\"products.html\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
+"                                    <li><a href=\"products.html\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
+"                                </ul>\n" +
+"                            </li>   ");
+            this.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+          return numOfFeatured;
+    }
+    
+    
 
 }

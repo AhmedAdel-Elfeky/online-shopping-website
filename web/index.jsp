@@ -1,3 +1,11 @@
+<%-- 
+    Document   : index
+    Created on : Mar 18, 2021, 4:59:36 PM
+    Author     : elfek
+--%>
+
+<%@page import="souq.com.DataBase"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -31,9 +39,9 @@
                     <div class="span6">Welcome!<strong> User</strong></div>
                     <div class="span6">
                         <div class="pull-right">
-                            <span class="btn btn-mini">$155.00</span>
+                            <span class="btn btn-mini">$0</span>
                             <a href="product_summary.html"><span class="">$</span></a>
-                            <a href="product_summary.html"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ 3 ] Itemes in your cart </span> </a> 
+                            <a href="product_summary.html"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ 0 ] Items in your cart </span> </a> 
                         </div>
                     </div>
                 </div>
@@ -102,14 +110,14 @@
                 <div class="row">
                     <!-- Sidebar ================================================== -->
                     <div id="sidebar" class="span3">
-                        <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="themes/images/ico-cart.png" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">$155.00</span></a></div>
+                        <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="themes/images/ico-cart.png" alt="cart">0 Items in your cart  <span class="badge badge-warning pull-right">$0</span></a></div>
                         <ul id="sideManu" class="nav nav-tabs nav-stacked">
-                            <li class="subMenu open"><a> ELECTRONICS [230]</a>
-                                <ul>
-                                    <li><a href="products.html"><i class="icon-chevron-right"></i>Laptop (30)</a></li>
-                                    <li><a href="products.html"><i class="icon-chevron-right"></i>Mobile Phone (80)</a></li>
-                                </ul>
-                            </li>          
+                            <%
+                                int numOfFeatured=0;
+                                DataBase d = new DataBase();
+                                numOfFeatured = d.getNumOfDev(out);
+                                numOfFeatured--;
+                            %>
                         </ul> <br/>                                                                   
                         <div class="thumbnail">
                             <img src="themes/images/payment_methods.png" title="Bootshop Payment Methods" alt="Payments Methods">
@@ -123,94 +131,25 @@
  <!-- ##################################################################################### --> 
                     <div class="span9">		
                         <div class="well well-small">
-                            <h4>Featured Products <small class="pull-right">200+ featured products</small></h4>
+                            <%
+                                out.print("<h4>Featured Products <small class=\"pull-right\">" +numOfFeatured+ "+ featured products</small></h4>");
+                            %>
+                           
                             <div class="row-fluid">
                                 <div id="featured" class="carousel slide">
                                     <div class="carousel-inner">
                                         <div class="item active">
                                             <ul class="thumbnails">
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <i class="tag"></i>
-                                                        <a href="product_details.html"><img src="themes/images/products/b1.jpg" alt=""></a>
-                                                        <div class="caption">
-                                                            <h5>Product name</h5>
-                                                            <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <i class="tag"></i>
-                                                        <a href="product_details.html"><img src="themes/images/products/b2.jpg" alt=""></a>
-                                                        <div class="caption">
-                                                            <h5>Product name</h5>
-                                                            <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <i class="tag"></i>
-                                                        <a href="product_details.html"><img src="themes/images/products/b3.jpg" alt=""></a>
-                                                        <div class="caption">
-                                                            <h5>Product name</h5>
-                                                            <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <i class="tag"></i>
-                                                        <a href="product_details.html"><img src="themes/images/products/b4.jpg" alt=""></a>
-                                                        <div class="caption">
-                                                            <h5>Product name</h5>
-                                                            <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                <%
+                                                    d.getFeaturedDev(out,1);
+                                                %>
                                             </ul>
                                         </div>
                                         <div class="item">
                                             <ul class="thumbnails">
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <i class="tag"></i>
-                                                        <a href="product_details.html"><img src="themes/images/products/5.jpg" alt=""></a>
-                                                        <div class="caption">
-                                                            <h5>Product name</h5>
-                                                            <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <i class="tag"></i>
-                                                        <a href="product_details.html"><img src="themes/images/products/6.jpg" alt=""></a>
-                                                        <div class="caption">
-                                                            <h5>Product name</h5>
-                                                            <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <a href="product_details.html"><img src="themes/images/products/7.jpg" alt=""></a>
-                                                        <div class="caption">
-                                                            <h5>Product name</h5>
-                                                            <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="span3">
-                                                    <div class="thumbnail">
-                                                        <a href="product_details.html"><img src="themes/images/products/8.jpg" alt=""></a>
-                                                        <div class="caption">
-                                                            <h5>Product name</h5>
-                                                            <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$222.00</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                <%
+                                                    d.getFeaturedDev(out,2);
+                                                %>
                                             </ul>
                                         </div>
                                     </div>
@@ -222,79 +161,9 @@
     <!-- ##################################################################################### -->                    
                         <h4>Latest Products </h4>
                         <ul class="thumbnails">
-                            <li class="span3">
-                                <div class="thumbnail">
-                                    <a  href="product_details.html"><img src="themes/images/products/6.jpg" alt=""/></a>
-                                    <div class="caption">
-                                        <h5>Product name</h5>
-                                        <p> 
-                                            Lorem Ipsum is simply dummy text. 
-                                        </p>
-
-                                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" >$222.00</a></h4>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="span3">
-                                <div class="thumbnail">
-                                    <a  href="product_details.html"><img src="themes/images/products/7.jpg" alt=""/></a>
-                                    <div class="caption">
-                                        <h5>Product name</h5>
-                                        <p> 
-                                            Lorem Ipsum is simply dummy text. 
-                                        </p>
-                                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" >$222.00</a></h4>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="span3">
-                                <div class="thumbnail">
-                                    <a  href="product_details.html"><img src="themes/images/products/8.jpg" alt=""/></a>
-                                    <div class="caption">
-                                        <h5>Product name</h5>
-                                        <p> 
-                                            Lorem Ipsum is simply dummy text. 
-                                        </p>
-                                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary"  >$222.00</a></h4>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="span3">
-                                <div class="thumbnail">
-                                    <a  href="product_details.html"><img src="themes/images/products/9.jpg" alt=""/></a>
-                                    <div class="caption">
-                                        <h5>Product name</h5>
-                                        <p> 
-                                            Lorem Ipsum is simply dummy text. 
-                                        </p>
-                                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" >$222.00</a></h4>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="span3">
-                                <div class="thumbnail">
-                                    <a  href="product_details.html"><img src="themes/images/products/10.jpg" alt=""/></a>
-                                    <div class="caption">
-                                        <h5>Product name</h5>
-                                        <p> 
-                                            Lorem Ipsum is simply dummy text. 
-                                        </p>
-                                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" >$222.00</a></h4>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="span3">
-                                <div class="thumbnail">
-                                    <a  href="product_details.html"><img src="themes/images/products/11.jpg" alt=""/></a>
-                                    <div class="caption">
-                                        <h5>Product name</h5>
-                                        <p> 
-                                            Lorem Ipsum is simply dummy text. 
-                                        </p>
-                                        <h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" >$222.00</a></h4>
-                                    </div>
-                                </div>
-                            </li>
+                             <%
+                                                    d.getLatestProducts(out);
+                             %>
                         </ul>	
 
                     </div>
