@@ -17,9 +17,11 @@ import java.util.*;
 public class DataBase {
 
     // init database constants
-    private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/users";
-    private static final String USERNAME = "root";
+
+
+    //private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/e_commerce";
+    private static final String USERNAME = "postgres";
     private static final String PASSWORD = "01018867111";
 
     // init connection object
@@ -114,27 +116,5 @@ public class DataBase {
     }
     
  
-    public static void main(String[] args) {
-        DataBase db = new DataBase();
-        try {
-            db.connect();
-//            ResultSet rs = db.select("select *from users where fname='Ahmed' and lname='Ebrahim'");
-//            while (rs.next()) {
-//
-//                System.out.println(rs.getString(1));
-//                System.out.println(rs.getString(2));
-//                System.out.println(rs.getString(3));
-//                System.out.println(rs.getString(4));
-//                System.out.println(rs.getString(5));
-//                System.out.println(rs.getString(6));
-//            }
-            int result = db.DML("insert into users values(12,'ebrahim','sallam','ebrahim55','987654321','');");
-            System.out.println(result);
-            db.disconnect();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+  
 }
