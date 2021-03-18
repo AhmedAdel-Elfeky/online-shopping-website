@@ -34,8 +34,11 @@ public class SearchOnProduct extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
         DataBase db = new DataBase();
-        RequestDispatcher header = req.getRequestDispatcher("header.html");
+        RequestDispatcher header = req.getRequestDispatcher("guestHeader.jsp");
         header.include(req, resp);
+        
+        RequestDispatcher sideBar = req.getRequestDispatcher("sideBar.jsp");
+        sideBar.include(req, resp);
 
         RequestDispatcher body = req.getRequestDispatcher("products.html");
         body.include(req, resp);
@@ -57,11 +60,11 @@ public class SearchOnProduct extends HttpServlet {
             while (rs.next()) {
                 System.out.println("h");
                 out.println("<li class=\"span3\">\n"
-                        + "			  <div class=\"thumbnail\"  style=\"height:35vh; width:20vw\">\n"
-                        + "				<a href=\"product_details.html\"><img  style=\"height:15vh; width:12vw\" src=" + rs.getString("img_url") + " alt=\"\"/></a>\n"
+                        + "			  <div class=\"thumbnail\">\n"
+                        + "				<a href=\"product_details.html\"><img  style=\"height:170px;\" src=" + rs.getString("img_url") + " alt=\"\"/></a>\n"
                         + "				<div class=\"caption\">\n"
                         + "				  <h5>" + rs.getString("name") + "</h5>"
-                        + "				   <h4 style=\"text-align:center;\"><a class=\"btn\" href=\"product_details.html\"> <i class=\"icon-zoom-in\"></i></a> <a class=\"btn\" href=\"#\">Add to <i class=\"icon-shopping-cart\"></i></a> <a class=\"btn btn-primary\" href=\"#\">" + rs.getString("price") + " EGP</a></h4>\n"
+                        + "				   <h4 style=\"text-align:center;\"><a class=\"btn\" href=\"product_details.html\"> <i class=\"icon-zoom-in\"></i></a> <a class=\"btn\" href=\"#\">Add to <i class=\"icon-shopping-cart\"></i></a> <a class=\"btn btn-primary\" href=\"#\">" + rs.getString("price") + " $</a></h4>\n"
                         + "				</div>\n"
                         + "			  </div>\n"
                         + "			</li>"

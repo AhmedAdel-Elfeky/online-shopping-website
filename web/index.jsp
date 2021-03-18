@@ -6,7 +6,7 @@
 
 <%@page import="souq.com.DataBase"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -15,15 +15,15 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <!-- Bootstrap style --> 
+         Bootstrap style  
         <link id="callCss" rel="stylesheet" href="themes/bootshop/bootstrap.min.css" media="screen"/>
         <link href="themes/css/base.css" rel="stylesheet" media="screen"/>
-        <!-- Bootstrap style responsive -->	
+         Bootstrap style responsive 	
         <link href="themes/css/bootstrap-responsive.min.css" rel="stylesheet"/>
         <link href="themes/css/font-awesome.css" rel="stylesheet" type="text/css">
-        <!-- Google-code-prettify -->	
+         Google-code-prettify 	
         <link href="themes/js/google-code-prettify/prettify.css" rel="stylesheet"/>
-        <!-- fav and touch icons -->
+         fav and touch icons 
         <link rel="shortcut icon" href="themes/images/ico/favicon.ico">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="themes/images/ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="themes/images/ico/apple-touch-icon-114-precomposed.png">
@@ -37,15 +37,9 @@
 
                 <div id="welcomeLine" class="row">
                     <div class="span6">Welcome!<strong> User</strong></div>
-                    <div class="span6">
-                        <div class="pull-right">
-                            <span class="btn btn-mini">$0</span>
-                            <a href="product_summary.html"><span class="">$</span></a>
-                            <a href="product_summary.html"><span class="btn btn-mini btn-primary"><i class="icon-shopping-cart icon-white"></i> [ 0 ] Items in your cart </span> </a> 
-                        </div>
-                    </div>
+                   
                 </div>
-                <!-- Navbar ================================================== -->
+                 Navbar ================================================== 
                 <div id="logoArea" class="navbar">
                     <a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
                         <span class="icon-bar"></span>
@@ -54,9 +48,9 @@
                     </a>
                     <div class="navbar-inner">
                         <a class="brand" href="index.html"><img src="themes/images/logo2.png" alt="TADshop"/></a>
-                        <form class="form-inline navbar-search" method="post" action="products.html" >
-                            <input id="srchFld" class="srchTxt" type="text" />
-                            <select class="srchTxt">
+                        <form class="form-inline navbar-search" method="get" action="SearchOnProduct" >
+                            <input id="srchFld" class="srchTxt" type="text" name="search"/>
+                            <select class="srchTx" name="category">
                                 <option>All</option>
                                 <option>Mobiles </option>
                                 <option>Laptops </option>
@@ -75,7 +69,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
+        <%
+            RequestDispatcher header = request.getRequestDispatcher("guestHeader.jsp");
+            header.include(request, response);
+        %>
         <!-- Header End====================================================================== -->
         <div id="carouselBlk">
             <div id="myCarousel" class="carousel slide">
@@ -108,7 +106,7 @@
         <div id="mainBody">
             <div class="container">
                 <div class="row">
-                    <!-- Sidebar ================================================== -->
+                   <!--  Sidebar ================================================== -->
                     <div id="sidebar" class="span3">
                         <div class="well well-small"><a id="myCart" href="product_summary.html"><img src="themes/images/ico-cart.png" alt="cart">0 Items in your cart  <span class="badge badge-warning pull-right">$0</span></a></div>
                         <ul id="sideManu" class="nav nav-tabs nav-stacked">
@@ -162,7 +160,7 @@
                         <h4>Latest Products </h4>
                         <ul class="thumbnails">
                              <%
-                                                    d.getLatestProducts(out);
+                                    d.getLatestProducts(out);
                              %>
                         </ul>	
 
