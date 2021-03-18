@@ -5,8 +5,6 @@
  */
 package souq.com;
 
-
-
 /**
  *
  * @author Ahmed
@@ -15,6 +13,7 @@ import java.sql.*;
 import java.util.*;
 import javax.servlet.jsp.JspWriter;
 
+
 public class DataBase {
 
     // init database constants
@@ -22,6 +21,7 @@ public class DataBase {
     private static final String DATABASE_URL = "jdbc:postgresql://localhost:5432/e_commerce";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "postgres";
+
 
     // init connection object
     private Connection connection;
@@ -209,7 +209,6 @@ public class DataBase {
         }
           return numOfFeatured;
     }
-    
     
 
 }
