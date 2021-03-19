@@ -25,48 +25,49 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class checklogin extends HttpServlet {
 
-    static final String url = "jdbc:postgresql://localhost:5432/e_commerce";
-    static final String userName = "postgres";
-    static final String Password = "ayaabdelkader";
+     Connection c = null;
+    Statement ps;
+    String URL = "jdbc:postgresql://localhost:5432/e_commerce"; 
+    String uname;
+    String password;
+    ResultSet result = null;
     int flag;
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        PrintWriter out = resp.getWriter();
-        Connection conn = null;
-        Statement stmt = null;
-        try {
+@Override
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      String  uname = request.getParameter("username");
+      String  password = request.getParameter("password");
+             PrintWriter out = response.getWriter();
+        try{
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(url, userName, Password);
-            stmt = conn.createStatement();
-            String sql = "select * from customer where uname= '" + username + "' ;";
-            ResultSet rs = stmt.executeQuery(sql);
-
-            while (rs.next()) {
-                if (rs.getString(6).equals(username) && rs.getString(12).equals(password)) {
-                    resp.getWriter().println("the user exit in Database");
-                    flag = 0;
-                    break;
-                } else {
-                    flag = 1;
-                }
+            c = DriverManager.getConnection(URL,"postgres","ayaabdelkader");
+            ps = c.createStatement();
+            result= ps.executeQuery("select * from customer");
+            
+            while(result.next())
+            {
+                if(result.getString(6).equals(uname) && result.getString(12).equals(password))
+            {
+               out.println("exit");
+                flag=0;
+                break;
             }
-            if (flag == 1) {
-
-                resp.getWriter().println("No exit");
+            else
+                flag=1;
             }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(checklogin.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(checklogin.class.getName()).log(Level.SEVERE, null, ex);
+            if(flag==1){
+               out.println("not exit");
+            }
+             
+            ps.close();
+            c.close();
+            
         }
-
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println("failed");
+        }
+    
     }
+
 }
