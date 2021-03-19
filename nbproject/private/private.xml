@@ -3,23 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/product_summary.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/index.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/faq.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/login.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/legal_notice.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/normal.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/products.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/product_details.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/register.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/src/java/souq/com/HomePage.java</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/src/java/souq/com/SearchOnProduct.java</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/compair.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/contact.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/tac.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/components.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/forgetpass.html</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/special_offer.html</file>
+            <file>file:/D:/iti/wep%20develop/Lab%202/online-shopping-website/src/java/souq/com/HomePage.java</file>
+            <file>file:/D:/iti/wep%20develop/Lab%202/online-shopping-website/web/loginform.html</file>
+            <file>file:/D:/iti/wep%20develop/Lab%202/online-shopping-website/src/java/souq/com/checklogin.java</file>
+            <file>file:/D:/iti/wep%20develop/Lab%202/online-shopping-website/src/java/souq/com/DataBase.java</file>
+            <file>file:/D:/iti/wep%20develop/Lab%202/online-shopping-website/web/compair.html</file>
+            <file>file:/D:/iti/wep%20develop/Lab%202/online-shopping-website/src/java/souq/com/SearchOnProduct.java</file>
         </group>
     </open-files>
 </project-private>
