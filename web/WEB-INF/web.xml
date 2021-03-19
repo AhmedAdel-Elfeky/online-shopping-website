@@ -8,6 +8,10 @@
         <servlet-name>HomePage</servlet-name>
         <servlet-class>souq.com.HomePage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>checklogin</servlet-name>
+        <servlet-class>souq.com.checklogin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SearchOnProduct</servlet-name>
         <url-pattern>/SearchOnProduct</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/HomePage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>checklogin</servlet-name>
+        <url-pattern>/checklogin</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
