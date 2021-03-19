@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author m_elieba
  */
+    
+@WebServlet(name = "Register", urlPatterns = {"/Register"}) 
 public class Register extends HttpServlet {
-
-    DataBase db = new DataBase();
-
+DataBase db = new DataBase();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doPost(req, resp); //To change body of generated methods, choose Tools | Templates.
@@ -42,6 +43,7 @@ public class Register extends HttpServlet {
         String zip = req.getParameter("zip");
         String DOB = req.getParameter("age");
         String password = req.getParameter("password");
+        
         String full_address = addLine1 + " " + addLine2 + " " + city + "/" + zip;
         String job = req.getParameter("job");
         String interestsString = "";
