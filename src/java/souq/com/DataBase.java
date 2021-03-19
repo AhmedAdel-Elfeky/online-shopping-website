@@ -198,10 +198,31 @@ public class DataBase {
             }
              out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
 "                                <ul>\n" +
-"                                    <li><a href=\"products.html\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
-"                                    <li><a href=\"products.html\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
+"                                    <li><a href=\"SearchOnProduct?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
+"                                    <li><a href=\"SearchOnProduct?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
 "                                </ul>\n" +
 "                            </li>   ");
+            this.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+          return numOfFeatured;
+    }
+    
+    public int getNumOfFeatured(JspWriter out)
+    {
+        
+        int numOfFeatured=0;
+         try {
+                this.connect();
+           
+            ResultSet rs = this.select("select count(product_id) from product where featured= \'f\';");
+             
+            while(rs.next())
+            {
+                numOfFeatured = rs.getInt(1);
+            }
             this.disconnect();
 
         } catch (Exception e) {
