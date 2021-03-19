@@ -56,11 +56,11 @@
 		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
     </form>
     <ul id="topMenu" class="nav pull-right">
-        <li class=""><a href="index.html">Home</a></li>
-        <li class=""><a href="register.html">Sign up</a></li>
+        <li class=""><a href="index.jsp">Home</a></li>
+        <li class=""><a href="register.jsp">Sign up</a></li>
         <li class=""><a href="contact.html">Contact</a></li>
         <li class="">
-            <a href="login.html" role="button" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
+            <a href="login.jsp" role="button" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
         </li>
     </ul>
   </div>

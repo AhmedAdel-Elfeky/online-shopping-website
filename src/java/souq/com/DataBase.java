@@ -19,8 +19,8 @@ public class DataBase {
     // init database constants
 //    private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DATABASE_URL = "jdbc:postgresql://localhost/e_commerce";
-    private static final String USERNAME = "elieba";
-    private static final String PASSWORD = "13058";
+    private static final String USERNAME = "postgres";
+    private static final String PASSWORD = "postgres";
 
 
     // init connection object

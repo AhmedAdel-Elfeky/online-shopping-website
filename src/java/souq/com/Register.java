@@ -30,9 +30,7 @@ DataBase db = new DataBase();
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doPost(req, resp); //To change body of generated methods, choose Tools | Templates.
 
-        PrintWriter out = resp.getWriter();
-        String titleValue = req.getParameter("titleValue");
-        String title = null;
+        PrintWriter out = resp.getWriter();      
         String fname = req.getParameter("fname");
         String lname = req.getParameter("lname");
         String uname = req.getParameter("uname");
