@@ -47,10 +47,17 @@ DataBase db = new DataBase();
         String interestsString = "";
         String creditNumber = req.getParameter("creditnumber");
         String[] interests = req.getParameterValues("interests");
-
-        for (String interest : interests) {
-            interestsString += interest + ",";
-
+        
+        if(interests != null)
+        {
+            for (String interest : interests) {
+                interestsString += interest + ",";
+            }
+        
+        }
+        else
+        {
+            interestsString="";
         }
         interestsString = interestsString.replaceAll(",$", "");
 

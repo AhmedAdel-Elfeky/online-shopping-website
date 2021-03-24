@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
          <%
+            session.setAttribute("loginState", "false");
             RequestDispatcher header = request.getRequestDispatcher("guestHeader.jsp");
             header.include(request, response);
         %>

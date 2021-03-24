@@ -7,10 +7,11 @@
 <%@page import="souq.com.DataBase"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-        <%
-            RequestDispatcher header = request.getRequestDispatcher("guestHeader.jsp");
-            header.include(request, response);
-        %>
+        <%@ include file="checkSession.jsp" %>
+
+        
+           <%@ include file="guestHeader.jsp" %>
+        
         <!-- Header End====================================================================== -->
         <div id="carouselBlk">
             <div id="myCarousel" class="carousel slide">

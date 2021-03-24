@@ -17,7 +17,7 @@ import javax.servlet.jsp.JspWriter;
 public class DataBase {
 
     // init database constants
-//    private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
+    // private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DATABASE_URL = "jdbc:postgresql://localhost/e_commerce";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "postgres";
@@ -156,9 +156,6 @@ public class DataBase {
                         "   <a  href=\"product_details.html\"><img style=\"height:150px\" src=\""+rs.getString(2)+"\" alt=\"\"/></a>\n" +
                         "   <div class=\"caption\">\n" +
                         "      <h5>"+rs.getString(1)+"</h5>\n" +
-                        "     <p> \n" +
-                                  rs.getString(4)+" \n" +
-                        "      </p>\n" +
                         "\n" +
                         "        <h4 style=\"text-align:center\"><a class=\"btn\" href=\"product_details.html\"> <i class=\"icon-zoom-in\"></i></a> <a class=\"btn\" href=\"#\">Add to <i class=\"icon-shopping-cart\"></i></a> <a class=\"btn btn-primary\" >$"+rs.getString(3)+"</a></h4>\n" +
                         "      </div>\n" +
