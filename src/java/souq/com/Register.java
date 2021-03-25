@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,15 +23,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author m_elieba
  */
-    
-@WebServlet(name = "Register", urlPatterns = {"/Register"}) 
+@WebServlet(name = "Register", urlPatterns = {"/Register"})
 public class Register extends HttpServlet {
-DataBase db = new DataBase();
+
+    DataBase db = new DataBase();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        super.doPost(req, resp); //To change body of generated methods, choose Tools | Templates.
 
-        PrintWriter out = resp.getWriter();      
+        PrintWriter out = resp.getWriter();
         String fname = req.getParameter("fname");
         String lname = req.getParameter("lname");
         String uname = req.getParameter("uname");
@@ -41,16 +43,17 @@ DataBase db = new DataBase();
         String zip = req.getParameter("zip");
         String DOB = req.getParameter("age");
         String password = req.getParameter("password");
-        
+
         String full_address = addLine1 + " " + addLine2 + " " + city + "/" + zip;
         String job = req.getParameter("job");
         String interestsString = "";
         String creditNumber = req.getParameter("creditnumber");
         String[] interests = req.getParameterValues("interests");
+        if (interestsString != null) {
+            for (String interest : interests) {
+                interestsString += interest + ",";
 
-        for (String interest : interests) {
-            interestsString += interest + ",";
-
+            }
         }
         interestsString = interestsString.replaceAll(",$", "");
 
@@ -58,18 +61,28 @@ DataBase db = new DataBase();
             db.connect();
             ResultSet unameRS = db.select("select uname from customer where uname like '" + uname + "'");
             ResultSet emailRS = db.select("select mail from customer where mail like '" + email + "'");
-            ResultSet crediNumberRS = db.select("select credit_num from customer where credit_num like '" + creditNumber + "'");
+            ResultSet creditNumberRS = db.select("select credit_num from customer where credit_num like '" + creditNumber + "'");
+            req.setAttribute(uname, unameRS);
+            req.setAttribute(email, emailRS);
+            req.setAttribute(creditNumber, creditNumberRS);
+            req.getRequestDispatcher("register.jsp").forward(req, resp);
+
             if (unameRS.next()) {
-                out.println("This user name is already taken");
+
             } else if (emailRS.next()) {
-                out.println("This Email is already taken");
-            } else if (crediNumberRS.next()) {
-                out.println("This Credit Card belongs to someone else");
-            } else {
 
+            } else if (creditNumberRS.next()) {
+                System.out.println("Stucked");
+
+            }  else {
+                
+                
+              
                 db.DML("INSERT INTO customer (fname,lname,uname,password,mail,job,credit_num,address,interests,dob,role) VALUES ('" + fname + "','" + lname + "','" + uname + "','" + password + "','" + email + "','" + job + "','" + creditNumber + "','" + full_address + "','" + interestsString + "','" + DOB + "','c')");
-
+//                resp.sendRedirect("index.jsp");
+                
             }
+
             db.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);

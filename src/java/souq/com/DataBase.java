@@ -11,7 +11,7 @@ package souq.com;
  */
 import java.sql.*;
 import java.util.*;
-import javax.servlet.jsp.JspWriter;
+    import javax.servlet.jsp.JspWriter;
 
 
 public class DataBase {
@@ -19,8 +19,8 @@ public class DataBase {
     // init database constants
 //    private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DATABASE_URL = "jdbc:postgresql://localhost/e_commerce";
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "postgres";
+    private static final String USERNAME = "elieba";
+    private static final String PASSWORD = "13058";
 
 
     // init connection object

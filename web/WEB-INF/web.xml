@@ -8,6 +8,14 @@
         <servlet-name>checklogin</servlet-name>
         <servlet-class>souq.com.checklogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>action</servlet-name>
+        <servlet-class>souq.com.action</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartAction</servlet-name>
+        <servlet-class>souq.com.CartAction</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/HomePage</url-pattern>
