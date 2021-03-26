@@ -23,24 +23,24 @@
         ResultSet rs = null;
         int totalOrderPrice;
         boolean isEmpty;
+        String quant = null;
     %>
     <%  totalOrderPrice = 0;
-        isEmpty = true;
+        
         ids = "";
         Cookie[] cookie = request.getCookies();
         DataBase db = new DataBase();
         db.connect();
         if (cookie != null) {
             for (Cookie c : cookie) {
-               if (c.getName().startsWith("id")) {
-                        ids += c.getValue() + ",";
-                        isEmpty = false;
-                    }
+                if (c.getName().startsWith("id")) {
+                    ids += c.getName().substring(2) + ",";
                 }
-        if(!ids.equals("")){
-            StringBuffer sb = new StringBuffer(ids);
-            sb.deleteCharAt(sb.length() - 1);
-            rs = db.select("select product_id,price,name,img_url from product where product_id in (" + sb + ");"); 
+            }
+            if (!ids.equals("")) {
+                StringBuffer sb = new StringBuffer(ids);
+                sb.deleteCharAt(sb.length() - 1);
+                rs = db.select("select product_id,price,name,img_url from product where product_id in (" + sb + ");");
     %>
     <table class="table table-bordered">
         <thead>
@@ -55,13 +55,21 @@
             </tr>
         </thead>
         <tbody>
-            <%while (rs.next()){%>
+            <%while (rs.next()) {%>
+            <%for (Cookie c : cookie) {
+                    if (c.getName().startsWith("id") && c.getName().substring(2).equals(rs.getString("product_id"))) {
+                        quant = c.getValue();
+                        break;
+                    }
+                }
+            System.out.println(quant);
+            %>
             <tr id=<%="row" + rs.getString("product_id")%>>
                 <td> <img width="60" src= <%=rs.getString("img_url")%>   alt=""/></td>
                 <td style="text-align: center"><%=rs.getString("name")%></td>
 
                 <td>
-                    <div class="input-append"><input onChange="changeQuantity(this.id)" class="span1"  style="max-width:34px" size="16" type="text" value="1" id=<%="quantity" + rs.getString("product_id")%>>
+                    <div class="input-append"><input onChange="changeQuantity(this.id)" class="span1"  style="max-width:34px" size="16" type="text" value= <%=quant%> id=<%="quantity" + rs.getString("product_id")%>>
                         <button class="btn" type="button">
                             <i class="icon-minus" onclick="decrementQuantity(this.id)" id=<%="dec" + rs.getString("product_id")%> ></i>
                         </button><button class="btn" type="button">
@@ -76,7 +84,7 @@
 
 
             <%}
-               db.disconnect();%>
+                db.disconnect();%>
             <tr>
                 <td colspan="6" style="text-align:right">Total Price:	</td>
                 <td id="total-order-price1"><%=totalOrderPrice%></td>
@@ -95,16 +103,17 @@
             </tr>
         </tbody>
     </table>
-            <a href="OrderManagement"  class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-            <a href="OrderManagement" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
-        
-    <%}else{%>
-        <div style="background-color:#F8F1A2;padding:25px 35px;">Shopping cart is currently empty
-Add items to your cart and view them here before you checkout. </div> <br><br>
-        
-<a href="SearchOnProduct" class="btn btn-large" type="submit"><i class="icon-arrow-left"></i> Continue Shopping </a>
-    <%}}%>
-    
+    <a href="OrderManagement"  class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+    <a href="OrderManagement" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+
+    <%} else {%>
+    <div style="background-color:#F8F1A2;padding:25px 35px;">Shopping cart is currently empty
+        Add items to your cart and view them here before you checkout. </div> <br><br>
+
+    <a href="SearchOnProduct" class="btn btn-large" type="submit"><i class="icon-arrow-left"></i> Continue Shopping </a>
+    <%}
+        }%>
+
 </div>    
 
 </div></div>

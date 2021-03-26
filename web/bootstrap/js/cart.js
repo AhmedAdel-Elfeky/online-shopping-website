@@ -7,8 +7,10 @@ function incrementQuantity(id) {
     product_id = id.substring(4);
     document.getElementById("quantity" + product_id).value = parseInt(document.getElementById("quantity" + product_id).value) + 1;
     document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
+    
+    document.cookie = "id" + product_id + "=" +document.getElementById("quantity" + product_id).value;
+//    document.cookie=product_id+"="+document.getElementById("quantity-total" + product_id).innerText;
     updateCartinfo();
-    document.cookie=product_id+"="+document.getElementById("quantity-total" + product_id).innerText;
 }
 
 function decrementQuantity(id)
@@ -17,9 +19,10 @@ function decrementQuantity(id)
     if (document.getElementById("quantity" + product_id).value > 1) {
         document.getElementById("quantity" + product_id).value = parseInt(document.getElementById("quantity" + product_id).value) - 1;
         
-        document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
-        updateCartinfo();
-         document.cookie=product_id+"="+document.getElementById("quantity-total" + product_id).innerText;
+        document.getElemenupdateCartinfo();
+         document.cookie = "id" + product_id + "=" +document.getElementById("quantity" + product_id).value;
+//         document.cookie=product_id+"="+document.getElementById("quantity-total" + product_id).innerText;
+         updateCartinfo();
     }
 }
 
@@ -29,7 +32,7 @@ function deleteProduct(id)
     document.getElementById("row" + product_id).remove();
     document.cookie = "id" + product_id + "=";
     updateCartinfo(totalOrderPrice);
-     document.cookie=product_id+"="+"";
+    document.cookie=product_id+"="+"";
     
 }
 
@@ -58,6 +61,7 @@ function changeQuantity(id)
 {
     product_id = id.substring(8);
     document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
+    document.cookie = "id" + product_id + "=" +document.getElementById("quantity" + product_id).value;
     updateCartinfo();
 }
 

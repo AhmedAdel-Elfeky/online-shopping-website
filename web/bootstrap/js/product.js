@@ -12,7 +12,7 @@ let productInCart = 0;
 
 function addToCart(price, id, name) {
 
-    document.cookie = "id" + id + "=" +id;
+    document.cookie = "id" + id + "=" +"1";
     productInCart = parseInt(document.getElementById("add-tocart").innerHTML) + 1;
     // document.getElementById("add-tocart").innerHTML = productInCart;
     totalPrice = parseInt(document.getElementById("total-price").innerHTML) + parseInt(price);
