@@ -13,6 +13,9 @@
         //first time he entered web site
         session.setAttribute("loginState", "false");
         session.setAttribute("name", "");
+        session.setAttribute("fname", "");
+        session.setAttribute("lname", "");
+        session.setAttribute("role", "");
 
     } else {
         if (loginState.equals("true")) {

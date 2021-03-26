@@ -40,31 +40,33 @@ public class checklogin extends HttpServlet {
       uname = request.getParameter("username");
       password = request.getParameter("password");
         try{
-//            Class.forName("org.postgresql.Driver");
             session=request.getSession(false);
             c = DriverManager.getConnection(URL,"postgres","postgres");
             
-           ps = c.prepareStatement("select uname , password from customer where uname=? and password=?  ",
+           ps = c.prepareStatement("select uname , password ,role,fname,lname from customer where uname=? and password=?  ",
                     ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             ps.setString(1, uname);
             ps.setString(2, password);
             result = ps.executeQuery();
-            System.out.println("start");
-            if(result.next())
+             if(result.next())
             {
                 if(result.getString("uname").equals(uname) && result.getString("password").equals(password))
                 {            
                     session = request.getSession(true);
                     session.setAttribute("loginState", "true");
+                    session.setAttribute("role", result.getString(3));
                     session.setAttribute("name",uname);
-                     System.out.println("yes");
-                    response.sendRedirect("index.jsp");
+                    session.setAttribute("fname",result.getString(4));
+                    session.setAttribute("lname",result.getString(5));
+                    if(result.getString(3).equals("c"))
+                        response.sendRedirect("index.jsp");
+                    else
+                        response.sendRedirect("AdminSearchProducts");
                 }
             }
             else
             {
                 session.setAttribute("loginState", "false");
-                System.out.println("no");
                 response.sendRedirect("login.jsp");           
             }
                          

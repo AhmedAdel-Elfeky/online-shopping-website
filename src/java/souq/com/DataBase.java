@@ -11,7 +11,11 @@ package souq.com;
  */
 import java.sql.*;
 import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
+import javax.websocket.Session;
 
 
 public class DataBase {
@@ -157,7 +161,7 @@ public class DataBase {
                         "   <div class=\"caption\">\n" +
                         "      <h5>"+rs.getString(1)+"</h5>\n" +
                         "\n" +
-                        "        <h4 style=\"text-align:center\"><a class=\"btn\" href=\"product_details.html\"> <i class=\"icon-zoom-in\"></i></a> <a class=\"btn\" href=\"#\">Add to <i class=\"icon-shopping-cart\"></i></a> <a class=\"btn btn-primary\" >$"+rs.getString(3)+"</a></h4>\n" +
+                        "        <h4 style=\"text-align:center\"><a class=\"btn\" href=\"product_details.html\"> <i class=\"icon-zoom-in\"></i></a> <a class=\"btn\" href=\"#\">Add to <i class=\"icon-shopping-cart\"></i></a> <a class=\"btn btn-primary\" style=\"pointer-events: none; cursor: default;\" >$"+rs.getString(3)+"</a></h4>\n" +
                         "      </div>\n" +
                         "      </div>\n" +
                         "    </li>");
@@ -170,8 +174,9 @@ public class DataBase {
         
     }
     
-    public int getNumOfDev(JspWriter out)
+    public int getNumOfDev(JspWriter out,HttpServletRequest req,HttpSession s)
     {
+        s = req.getSession(false);
         int mobile=0;
         int laptop=0;
         int numOfFeatured=0;
@@ -193,12 +198,27 @@ public class DataBase {
             {
                 numOfFeatured = rs3.getInt(1);
             }
-             out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
+            String r = (String) s.getAttribute("role");
+            if(r.equals("c") || r.equals(""))
+            {
+                 out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
 "                                <ul>\n" +
 "                                    <li><a href=\"SearchOnProduct?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
 "                                    <li><a href=\"SearchOnProduct?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
 "                                </ul>\n" +
 "                            </li>   ");
+            }
+            else
+            {
+                 out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
+"                                <ul>\n" +
+"                                    <li><a href=\"AdminSearchProducts?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
+"                                    <li><a href=\"AdminSearchProducts?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
+"                                </ul>\n" +
+"                            </li>   ");
+            }
+                   
+            
             this.disconnect();
 
         } catch (Exception e) {
@@ -226,6 +246,41 @@ public class DataBase {
             e.printStackTrace();
         }
           return numOfFeatured;
+    }
+    
+    public enum featured_type {
+    f,
+    uf;
+ }
+    
+    public void addNewProduct(HttpServletResponse response, HttpServletRequest request) {
+        int cat_id = Integer.parseInt(request.getParameter("category"));
+        String name = request.getParameter("pname");
+        java.sql.Date date=java.sql.Date.valueOf(request.getParameter("pdate"));
+        int price = Integer.parseInt(request.getParameter("pprice"));
+        int quant = Integer.parseInt( request.getParameter("pquantity"));
+        String url = request.getParameter("purl");
+        String f = request.getParameter("featured");
+        String desc = request.getParameter("description");
+        try {
+            this.connect();
+            prepStatement = connection.prepareStatement("insert into product (category_id,price,description,qunatity,"
+                    + "name,img_url,date,featured) values (?,?,?,?,?,?,?, CAST(? AS featured_type))  ",
+                    ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            prepStatement.setInt(1, cat_id);
+            prepStatement.setInt(2, price);
+            prepStatement.setString(3, desc);
+            prepStatement.setInt(4, quant);
+            prepStatement.setString(5, name);
+            prepStatement.setString(6, url);
+            prepStatement.setDate(7, date);
+            prepStatement.setString(8, f);
+            prepStatement.execute();
+            this.disconnect();
+        } catch (Exception s) {
+            s.printStackTrace();
+            System.out.println("there is an error in adding product");
+        }
     }
     
 
