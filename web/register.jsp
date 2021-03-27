@@ -3,9 +3,10 @@
     Created on : Mar 19, 2021, 7:04:33 PM
     Author     : m_elieba
 --%>
+<%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.io.*,java.util.*" %>
-<%@page import="java.io.PrintWriter"%>
+<%@page import="javax.servlet.jsp.JspWriter"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="souq.com.DataBase"%>
 
@@ -17,7 +18,9 @@
 <%@ include file="sideBar.jsp" %> 
 <%    Cookie cooky = new Cookie("userExist", "true");
 %>
-
+<%!
+    boolean sucessFlag = true;
+%>
 <div class="span9">
     <ul class="breadcrumb">
         <li><a href="index.jsp">Home</a> <span class="divider">/</span></li>
@@ -55,6 +58,7 @@
                             + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
                             + "                <strong>Error!</strong> This User name is already taken \n"
                             + "         </div> ");
+                    sucessFlag = false;
                     
                 }
 
@@ -71,7 +75,7 @@
                             + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
                             + "                <strong>Error!</strong> This Email belongs to someone else\n"
                             + "         </div> ");
-             
+             sucessFlag = false;
                 }
 
             %>
@@ -106,19 +110,25 @@
                             + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
                             + "                <strong>Error!</strong> it doesn't seem to be your credit card \n"
                             + "         </div> ");
+                    sucessFlag = false;
                 }
                 db.disconnect();
+                %>
+            <%
                 if (request.getParameter("creditnumber")!=null){
                     try {
-                        Integer.parseInt(request.getParameter("creditnumber"));
+                        Long.parseLong(request.getParameter("creditnumber"));
+                         
                     } catch (NumberFormatException ex) {
                         out.println("<div class=\"alert alert-block alert-error fade in\">\n"
                             + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
-                            + "                <strong>Error!</strong> it's not a valid card Number\n"
+                            + "                <strong>Error!</strong> it's not a valid Credit Number\n"
                             + "         </div> ");
+                        sucessFlag = false;
+                         
                     }
                 }
-                    
+                   
             %>
             
 
@@ -153,12 +163,13 @@
 <%
     if (request.getParameter("zip")!=null){
                     try {
-                        Integer.parseInt(request.getParameter("zip"));
+                        Long.parseLong(request.getParameter("zip"));
                     } catch (NumberFormatException ex) {
                         out.println("<div class=\"alert alert-block alert-error fade in\">\n"
                             + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
                             + "                <strong>Error!</strong> it's not a valid ZIP\n"
                             + "         </div> ");
+                        sucessFlag = false;
                     }
                 }
 %>
@@ -172,12 +183,13 @@
             <%
     if (request.getParameter("phone")!=null){
                     try {
-                        Integer.parseInt(request.getParameter("zip"));
+                        Long.parseLong(request.getParameter("zip"));
                     } catch (NumberFormatException ex) {
                         out.println("<div class=\"alert alert-block alert-error fade in\">\n"
                             + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
                             + "                <strong>Error!</strong> it's not a valid phone number\n"
                             + "         </div> ");
+                        sucessFlag = false;
                     }
                 }
 %>

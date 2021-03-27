@@ -4,15 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/m_elieba/Repo/online-shopping-website/src/java/souq/com/SearchOnProduct.java</file>
-            <file>file:/home/m_elieba/Repo/online-shopping-website/src/java/souq/com/HomePage.java</file>
+            <file>file:/home/m_elieba/Repo/online-shopping-website/src/java/souq/com/SendEmail.java</file>
             <file>file:/home/m_elieba/Repo/online-shopping-website/web/themes/js/bootshop.js</file>
             <file>file:/home/m_elieba/Repo/online-shopping-website/web/Cart.jsp</file>
-            <file>file:/home/m_elieba/Repo/online-shopping-website/src/java/souq/com/checklogin.java</file>
+            <file>file:/home/m_elieba/Repo/online-shopping-website/src/java/souq/com/EmailUtil.java</file>
             <file>file:/home/m_elieba/Repo/online-shopping-website/web/product_summary.html</file>
             <file>file:/home/m_elieba/Repo/online-shopping-website/src/java/souq/com/DataBase.java</file>
             <file>file:/home/m_elieba/Repo/online-shopping-website/web/register.jsp</file>
             <file>file:/home/m_elieba/Repo/online-shopping-website/web/index.jsp</file>
             <file>file:/home/m_elieba/Repo/online-shopping-website/src/java/souq/com/Register.java</file>
+            <file>file:/home/m_elieba/Repo/online-shopping-website/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>

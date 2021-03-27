@@ -16,6 +16,10 @@
         <servlet-name>CartAction</servlet-name>
         <servlet-class>souq.com.CartAction</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SendEmail</servlet-name>
+        <servlet-class>souq.com.SendEmail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/HomePage</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>checklogin</servlet-name>
         <url-pattern>/checklogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendEmail</servlet-name>
+        <url-pattern>/SendEmail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

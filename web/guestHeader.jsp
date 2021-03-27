@@ -36,6 +36,7 @@
 <div class="container">
 <div id="welcomeLine" class="row">
 	<div class="span6">Welcome!<strong> User</strong></div>	
+        <!--session.getAttribute("name")-->
 </div>
 <!-- Navbar ================================================== -->
 <div id="logoArea" class="navbar">
@@ -57,11 +58,36 @@
     </form>
     <ul id="topMenu" class="nav pull-right">
         <li class=""><a href="index.jsp">Home</a></li>
-        <li class=""><a href="register.jsp">Sign up</a></li>
-        <li class=""><a href="contact.html">Contact</a></li>
-        <li class="">
-            <a href="login.jsp" role="button" style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
-        </li>
+        <%
+            if( ((String)session.getAttribute("loginState")) == null)
+            {
+                out.print("<li class=\"\"><a href=\"register.jsp\">Sign up</a></li>");
+                out.print("<li class=\"\"><a href=\"contact.html\">Contact</a></li>");
+                out.print("<li class=\"\">");
+                out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Login</span></a>");
+                out.print("</li>");
+            }
+            else
+            {
+                if(((String)session.getAttribute("loginState")).equals("false"))
+                {
+                    out.print("<li class=\"\"><a href=\"register.jsp\">Sign up</a></li>");
+                    out.print("<li class=\"\"><a href=\"contact.html\">Contact</a></li>");
+                    out.print("<li class=\"\">");
+                    out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Login</span></a>");
+                    out.print("</li>");
+                }
+                else{
+                    out.print("<li class=\"\"><a href=\"register.jsp\">Profile</a></li>");
+                    out.print("<li class=\"\" ><a href=\"SearchOnProduct\" >Products</a></li>");
+                    out.print("<li class=\"\">");
+                    out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Log Out</span></a>");
+                    out.print("</li>");
+                    session.setAttribute("loginState", "true");
+            }
+            }
+            
+        %>
     </ul>
   </div>
 </div>

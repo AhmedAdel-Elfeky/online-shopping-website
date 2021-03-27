@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,45 +48,49 @@ public class Register extends HttpServlet {
         String interestsString = "";
         String creditNumber = req.getParameter("creditnumber");
         String[] interests = req.getParameterValues("interests");
+         
+        
         if (interestsString != null) {
             for (String interest : interests) {
                 interestsString += interest + ",";
 
             }
         }
-        interestsString = interestsString.replaceAll(",$", "");
+         else {
+                interestsString = "";
+                 
+            }
+            interestsString = interestsString.replaceAll(",$", "");
 
-        try {
-            db.connect();
-            ResultSet unameRS = db.select("select uname from customer where uname like '" + uname + "'");
-            ResultSet emailRS = db.select("select mail from customer where mail like '" + email + "'");
-            ResultSet creditNumberRS = db.select("select credit_num from customer where credit_num like '" + creditNumber + "'");
-            req.setAttribute(uname, unameRS);
-            req.setAttribute(email, emailRS);
-            req.setAttribute(creditNumber, creditNumberRS);
-            req.getRequestDispatcher("register.jsp").forward(req, resp);
+            try {
+                db.connect();
+                ResultSet unameRS = db.select("select uname from customer where uname like '" + uname + "'");
+                ResultSet emailRS = db.select("select mail from customer where mail like '" + email + "'");
+                ResultSet creditNumberRS = db.select("select credit_num from customer where credit_num like '" + creditNumber + "'");
+                req.setAttribute(uname, unameRS);
+                req.setAttribute(email, emailRS);
+                req.setAttribute(creditNumber, creditNumberRS);
+                req.getRequestDispatcher("register.jsp").forward(req, resp);
 
-            if (unameRS.next()) {
+                if (unameRS.next()) {
 
-            } else if (emailRS.next()) {
+                } else if (emailRS.next()) {
 
-            } else if (creditNumberRS.next()) {
-                System.out.println("Stucked");
-
-            }  else {
+                } else if (creditNumberRS.next()) {
                 
-                
-              
-                db.DML("INSERT INTO customer (fname,lname,uname,password,mail,job,credit_num,address,interests,dob,role) VALUES ('" + fname + "','" + lname + "','" + uname + "','" + password + "','" + email + "','" + job + "','" + creditNumber + "','" + full_address + "','" + interestsString + "','" + DOB + "','c')");
-//                resp.sendRedirect("index.jsp");
-                
+                } else {
+
+                    db.DML("INSERT INTO customer (fname,lname,uname,password,mail,job,credit_num,address,interests,dob,role) VALUES ('" + fname + "','" + lname + "','" + uname + "','" + password + "','" + email + "','" + job + "','" + creditNumber + "','" + full_address + "','" + interestsString + "','" + DOB + "','c')");
+                    resp.sendRedirect("index.jsp");
+//                      req.getRequestDispatcher("index.jsp").forward(req, resp);
+
+                }
+
+                db.disconnect();
+            } catch (SQLException ex) {
+                Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            db.disconnect();
-        } catch (SQLException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-
-}
