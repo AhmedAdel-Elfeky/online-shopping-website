@@ -82,7 +82,7 @@ public class Register extends HttpServlet {
 
                     db.DML("INSERT INTO customer (fname,lname,uname,password,mail,job,credit_num,address,interests,dob,role) VALUES ('" + fname + "','" + lname + "','" + uname + "','" + password + "','" + email + "','" + job + "','" + creditNumber + "','" + full_address + "','" + interestsString + "','" + DOB + "','c')");
                     resp.sendRedirect("index.jsp");
-//                      req.getRequestDispatcher("index.jsp").forward(req, resp);
+                      req.getRequestDispatcher("index.jsp").forward(req, resp);
 
                 }
 
