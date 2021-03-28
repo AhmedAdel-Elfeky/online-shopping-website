@@ -40,9 +40,9 @@ public class checklogin extends HttpServlet {
       uname = request.getParameter("username");
       password = request.getParameter("password");
         try{
-//            Class.forName("org.postgresql.Driver");
+           Class.forName("org.postgresql.Driver");
             session=request.getSession(false);
-            c = DriverManager.getConnection(URL,"postgres","postgres");
+            c = DriverManager.getConnection(URL,"postgres","ayaabdelkader");
             
            ps = c.prepareStatement("select uname , password from customer where uname=? and password=?  ",
                     ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);

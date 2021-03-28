@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/login.jsp</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/guestHeader.jsp</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/src/java/souq/com/checklogin.java</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/checkSession.jsp</file>
-            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/index.jsp</file>
+            <file>file:/D:/iti/wep%20develop/finalprojectforprofile2/src/java/souq/com/checklogin.java</file>
+            <file>file:/D:/iti/wep%20develop/finalprojectforprofile2/src/java/souq/com/CheckProfile.java</file>
+            <file>file:/D:/iti/wep%20develop/finalprojectforprofile2/src/java/souq/com/UpdateProfile.java</file>
+            <file>file:/D:/iti/wep%20develop/finalprojectforprofile2/src/java/souq/com/Profile.java</file>
+            <file>file:/D:/iti/wep%20develop/finalprojectforprofile2/src/java/souq/com/Navbar.java</file>
+            <file>file:/D:/iti/wep%20develop/finalprojectforprofile2/src/java/souq/com/HomePage.java</file>
+            <file>file:/D:/iti/wep%20develop/finalprojectforprofile2/web/LoginProfile.html</file>
+            <file>file:/D:/iti/wep%20develop/finalprojectforprofile2/src/java/souq/com/EditProfile.java</file>
         </group>
     </open-files>
 </project-private>

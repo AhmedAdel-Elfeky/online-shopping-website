@@ -8,6 +8,26 @@
         <servlet-name>checklogin</servlet-name>
         <servlet-class>souq.com.checklogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Profile</servlet-name>
+        <servlet-class>souq.com.Profile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Navbar</servlet-name>
+        <servlet-class>souq.com.Navbar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfile</servlet-name>
+        <servlet-class>souq.com.EditProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProfile</servlet-name>
+        <servlet-class>souq.com.UpdateProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckProfile</servlet-name>
+        <servlet-class>souq.com.CheckProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/HomePage</url-pattern>
@@ -15,6 +35,26 @@
     <servlet-mapping>
         <servlet-name>checklogin</servlet-name>
         <url-pattern>/checklogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/Profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Navbar</servlet-name>
+        <url-pattern>/Navbar</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfile</servlet-name>
+        <url-pattern>/EditProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProfile</servlet-name>
+        <url-pattern>/UpdateProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckProfile</servlet-name>
+        <url-pattern>/CheckProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
