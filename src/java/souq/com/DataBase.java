@@ -11,8 +11,10 @@ package souq.com;
  */
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.Cookie;
 import javax.servlet.jsp.JspWriter;
-
 
 public class DataBase {
 
@@ -148,9 +150,6 @@ public class DataBase {
                         + "   <a href=\"ProductDetails?productId=" + rs.getString("product_id") + "\"><img  style=\"height:170px;\" src=" + rs.getString("img_url") + " alt=\"\"/></a>\n"
                         + "   <div class=\"caption\">\n"
                         + "      <h5>" + rs.getString(1) + "</h5>\n"
-                        + "     <p> \n"
-                        + rs.getString(4) + " \n"
-                        + "      </p>\n"
                         + "\n"
                         + "<h4 style=\"text-align:center;\"><a class=\"btn\" href=\"ProductDetails?productId=" + rs.getString("product_id") + "\"> <i class=\"icon-zoom-in\"></i></a> <button class=\"btn\"  data-price=" + rs.getString("price") + " id='" + rs.getString("product_id") + " ' onclick=\"addToCart(this.getAttribute('data-price'),this.id)\">Add to <i class=\"icon-shopping-cart\"></i></button> <button class=\"btn btn-primary\">" + rs.getString("price") + " $</button></h4>\n"
                         + "</div>\n"
@@ -236,8 +235,74 @@ public class DataBase {
         return numOfProduct;
     }
 
-    void createOrder() {
+    public String createOrder(Cookie[] cookie,String customerId) {
+        String productId = null;
+        String productPrice = null;
+        String productQuantity = null;
+        String orderId = null;
+        ResultSet rs = null;
+        int result = -1;
+        this.connect();
+        for (Cookie c : cookie) {
+            if (c.getName().equals("productInCart")) {
+                try {
+                    result = this.DML("INSERT INTO orders(quantity,status,date) VALUES ('" + c.getValue() + "','unconfirmed',now());");
+                    rs = this.select("select order_id from orders  order by order_id DESC limit(1);");
+                    if (rs.next()) {
+                        orderId = rs.getString("order_id");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (c.getName().startsWith("id")) {
+                productId = c.getName().substring(2);
+                productQuantity = c.getValue();
+                try {
+                    rs = this.select("select price from product where product_id = " + productId + ";");
+                    if (rs.next()) {
+                        productPrice = rs.getString("price");
+                    }
+                    result = this.DML("INSERT INTO customer_order_product(order_id,customer_id,product_id,quantity,price) VALUES ('" + orderId + "','" + customerId + "','" + productId + "','" + productQuantity + "','" + productPrice + "');");
+                } catch (SQLException ex) {
+                    Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+     return orderId;
     }
-    void updateOrder(){
+
+    void updateOrder(Cookie[] cookie,String orderId,String customerId) {
+        String productId = null;
+        String productPrice = null;
+        String productQuantity = null;
+        ResultSet rs = null;
+        int result = -1;
+        this.connect();
+        for (Cookie c : cookie) {
+            if (c.getName().equals("productInCart")) {
+                try {
+                    result = this.DML("INSERT INTO orders(quantity,status,date) VALUES ('" + c.getValue() + "','unconfirmed',now());");
+                    rs = this.select("select order_id from orders  order by order_id DESC limit(1);");
+                    if (rs.next()) {
+                        orderId = rs.getString("order_id");
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (c.getName().startsWith("id")) {
+                productId = c.getName().substring(2);
+                productQuantity = c.getValue();
+                try {
+                    rs = this.select("select price from product where product_id = " + productId + ";");
+                    if (rs.next()) {
+                        productPrice = rs.getString("price");
+                    }
+                    result = this.DML("INSERT INTO customer_order_product(order_id,customer_id,product_id,quantity,price) VALUES ('" + orderId + "','" + customerId + "','" + productId + "','" + productQuantity + "','" + productPrice + "');");
+                } catch (SQLException ex) {
+                    Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
     }
 }

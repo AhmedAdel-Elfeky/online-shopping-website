@@ -5,12 +5,14 @@ updateCartinfo();
 
 function incrementQuantity(id) {
     product_id = id.substring(4);
-    document.getElementById("quantity" + product_id).value = parseInt(document.getElementById("quantity" + product_id).value) + 1;
-    document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
-    
-    document.cookie = "id" + product_id + "=" +document.getElementById("quantity" + product_id).value;
+    if (document.getElementById("quantity" + product_id).value < document.getElementById("quantity" + product_id).getAttribute("data-max-qunatity")) {
+        document.getElementById("quantity" + product_id).value = parseInt(document.getElementById("quantity" + product_id).value) + 1;
+        document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
+
+        document.cookie = "id" + product_id + "=" + document.getElementById("quantity" + product_id).value;
 //    document.cookie=product_id+"="+document.getElementById("quantity-total" + product_id).innerText;
-    updateCartinfo();
+        updateCartinfo();
+    }
 }
 
 function decrementQuantity(id)
@@ -18,11 +20,11 @@ function decrementQuantity(id)
     product_id = id.substring(3);
     if (document.getElementById("quantity" + product_id).value > 1) {
         document.getElementById("quantity" + product_id).value = parseInt(document.getElementById("quantity" + product_id).value) - 1;
-        
-        document.getElemenupdateCartinfo();
-         document.cookie = "id" + product_id + "=" +document.getElementById("quantity" + product_id).value;
-//         document.cookie=product_id+"="+document.getElementById("quantity-total" + product_id).innerText;
-         updateCartinfo();
+        document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
+
+        document.cookie = "id" + product_id + "=" + document.getElementById("quantity" + product_id).value;
+//    document.cookie=product_id+"="+document.getElementById("quantity-total" + product_id).innerText;
+        updateCartinfo();
     }
 }
 
@@ -32,8 +34,8 @@ function deleteProduct(id)
     document.getElementById("row" + product_id).remove();
     document.cookie = "id" + product_id + "=";
     updateCartinfo(totalOrderPrice);
-    document.cookie=product_id+"="+"";
-    
+    document.cookie = product_id + "=" + "";
+
 }
 
 function updateCartinfo() {
@@ -44,7 +46,7 @@ function updateCartinfo() {
     }
     document.getElementById("total-order-price1").innerText = totalOrderPrice;
     document.getElementById("total-order-price2").innerText = totalOrderPrice;
-    
+
     let cartQuantity = document.getElementsByClassName("span1");
     productInCart = 0;
     for (let i = 0; i < cartQuantity.length; i++) {
@@ -54,28 +56,16 @@ function updateCartinfo() {
     document.getElementById("total-price").innerHTML = totalOrderPrice;
     document.cookie = "productInCart=" + productInCart;
     document.cookie = "totalPrice=" + totalOrderPrice;
-   // document.cookie = "cartChanged=true";
+    // document.cookie = "cartChanged=true";
 }
 
 function changeQuantity(id)
 {
     product_id = id.substring(8);
-    document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
-    document.cookie = "id" + product_id + "=" +document.getElementById("quantity" + product_id).value;
-    updateCartinfo();
+    if (document.getElementById("quantity" + product_id).value <= document.getElementById("quantity" + product_id).getAttribute("data-max-qunatity")) {
+        document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
+        document.cookie = "id" + product_id + "=" + document.getElementById("quantity" + product_id).value;
+        updateCartinfo();
+    }
 }
 
-var getCookies = function(){
-  var pairs = document.cookie.split(";");
-  var cookies = {};
-  for (var i=0; i<pairs.length; i++){
-    var pair = pairs[i].split("=");
-    cookies[(pair[0]+'').trim()] = unescape(pair.slice(1).join('='));
-  }
-  return cookies;
-}
-
-function reloadOrder()
-{
-    
-}

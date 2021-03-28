@@ -24,6 +24,7 @@
         int totalOrderPrice;
         boolean isEmpty;
         String quant = null;
+        int price ;
     %>
     <%  totalOrderPrice = 0;
         
@@ -32,15 +33,18 @@
         DataBase db = new DataBase();
         db.connect();
         if (cookie != null) {
+          //  db.createOrder(cookie);
             for (Cookie c : cookie) {
                 if (c.getName().startsWith("id")) {
                     ids += c.getName().substring(2) + ",";
                 }
             }
             if (!ids.equals("")) {
+                
+                // db.createOrder(cookie,"5");
                 StringBuffer sb = new StringBuffer(ids);
                 sb.deleteCharAt(sb.length() - 1);
-                rs = db.select("select product_id,price,name,img_url from product where product_id in (" + sb + ");");
+                rs = db.select("select product_id,price,name,img_url,qunatity from product where product_id in (" + sb + ");");
     %>
     <table class="table table-bordered">
         <thead>
@@ -59,6 +63,8 @@
             <%for (Cookie c : cookie) {
                     if (c.getName().startsWith("id") && c.getName().substring(2).equals(rs.getString("product_id"))) {
                         quant = c.getValue();
+                        price = Integer.parseInt(quant)*Integer.parseInt(rs.getString("price"));
+                        totalOrderPrice += price;
                         break;
                     }
                 }
@@ -69,17 +75,18 @@
                 <td style="text-align: center"><%=rs.getString("name")%></td>
 
                 <td>
-                    <div class="input-append"><input onChange="changeQuantity(this.id)" class="span1"  style="max-width:34px" size="16" type="text" value= <%=quant%> id=<%="quantity" + rs.getString("product_id")%>>
+                    <div class="input-append"><input onChange="changeQuantity(this.id)" class="span1"  style="max-width:34px" size="16" type="text" data-max-qunatity=<%=rs.getString("qunatity")%> value= <%=quant%> id=<%="quantity" + rs.getString("product_id")%>>
                         <button class="btn" type="button">
                             <i class="icon-minus" onclick="decrementQuantity(this.id)" id=<%="dec" + rs.getString("product_id")%> ></i>
                         </button><button class="btn" type="button">
                             <i class="icon-plus" onclick="incrementQuantity(this.id)" id=<%="incr" + rs.getString("product_id")%>></i>      
                         </button><button  class="btn btn-danger" type="button" ><i  class="icon-remove icon-white" onclick="deleteProduct(this.id)" id=<%="remove" + rs.getString("product_id")%> ></i></button>				</div>
+                <p style="color:rgb(236, 88, 64);font-weight: bold">only <%=rs.getString("qunatity")%> left in stock!</p>
                 </td>
                 <td style="text-align: center" id=<%="price" + rs.getString("product_id")%>><%=rs.getString("price")%></td>
                 <td style="text-align: center">0.00</td>
                 <td style="text-align: center">0.00</td>
-                <td class='product-total' id="<%="quantity-total" + rs.getString("product_id")%>"><%=rs.getString("price")%></td>
+                <td class='product-total' id="<%="quantity-total" + rs.getString("product_id")%>"><%=price%></td>
             </tr>
 
 
