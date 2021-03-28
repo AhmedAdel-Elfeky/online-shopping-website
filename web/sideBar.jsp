@@ -32,6 +32,8 @@
                                 DataBase d = new DataBase();
                                 numOfFeatured = d.getNumOfDev(out);
                                 numOfFeatured--;
+                                if(session.getAttribute("orderId") != null)
+                                   d.updateOrder(cookies,(Integer)session.getAttribute("orderId"),3);
                                 
                          %>
 		</ul>

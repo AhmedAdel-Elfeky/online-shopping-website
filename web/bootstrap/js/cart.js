@@ -34,7 +34,7 @@ function deleteProduct(id)
     document.getElementById("row" + product_id).remove();
     document.cookie = "id" + product_id + "=";
     updateCartinfo(totalOrderPrice);
-    document.cookie = product_id + "=" + "";
+    document.cookie =  "id" + product_id + "=" +"0";
 
 }
 

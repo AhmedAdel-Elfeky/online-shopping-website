@@ -33,15 +33,15 @@
         DataBase db = new DataBase();
         db.connect();
         if (cookie != null) {
-          //  db.createOrder(cookie);
             for (Cookie c : cookie) {
                 if (c.getName().startsWith("id")) {
                     ids += c.getName().substring(2) + ",";
                 }
             }
             if (!ids.equals("")) {
+                if(session.getAttribute("orderId") == null)
+                    session.setAttribute("orderId",db.createOrder(cookie,"3"));
                 
-                // db.createOrder(cookie,"5");
                 StringBuffer sb = new StringBuffer(ids);
                 sb.deleteCharAt(sb.length() - 1);
                 rs = db.select("select product_id,price,name,img_url,qunatity from product where product_id in (" + sb + ");");
