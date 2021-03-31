@@ -9,6 +9,7 @@
 <%@page import="javax.servlet.jsp.JspWriter"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="souq.com.DataBase"%>
+<%@page import="souq.com.Register"%>
 
 <%
     RequestDispatcher header = request.getRequestDispatcher("guestHeader.jsp");
@@ -59,7 +60,7 @@
                             + "                <strong>Error!</strong> This User name is already taken \n"
                             + "         </div> ");
                     sucessFlag = false;
-                    
+
                 }
 
             %>
@@ -75,8 +76,20 @@
                             + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
                             + "                <strong>Error!</strong> This Email belongs to someone else\n"
                             + "         </div> ");
-             sucessFlag = false;
+                    sucessFlag = false;
                 }
+
+            %>
+            
+              <%
+                if (request.getParameter("email") != null && !Register.isEmailValid(request.getParameter("email"))) {
+                    out.println("<div class=\"alert alert-block alert-error fade in\">\n"
+                            + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
+                            + "                <strong>Error!</strong>It's not a valid Email address\n"
+                            + "         </div> ");
+                }
+                
+
 
             %>
             <div class="control-group">
@@ -113,24 +126,32 @@
                     sucessFlag = false;
                 }
                 db.disconnect();
-                %>
+            %>
             <%
-                if (request.getParameter("creditnumber")!=null){
+                if (request.getParameter("creditnumber") != null ) {
                     try {
                         Long.parseLong(request.getParameter("creditnumber"));
-                         
+
                     } catch (NumberFormatException ex) {
                         out.println("<div class=\"alert alert-block alert-error fade in\">\n"
-                            + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
-                            + "                <strong>Error!</strong> it's not a valid Credit Number\n"
-                            + "         </div> ");
+                                + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
+                                + "                <strong>Error!</strong> it's not a valid Credit Number\n"
+                                + "         </div> ");
                         sucessFlag = false;
-                         
+
                     }
                 }
-                   
+                else if(request.getParameter("creditnumber") != null && !Register.isCreditCardValid(Long.parseLong(request.getParameter("creditnumber")))){
+                    out.println("<div class=\"alert alert-block alert-error fade in\">\n"
+                            + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
+                            + "                <strong>Error!</strong>It's not a valid Credit Number\n"
+                            + "         </div> ");
+                }
+                
+
             %>
             
+
 
 
             <div class="control-group">
@@ -160,19 +181,18 @@
                 </div>
             </div>
 
-<%
-    if (request.getParameter("zip")!=null){
+            <%    if (request.getParameter("zip") != null) {
                     try {
                         Long.parseLong(request.getParameter("zip"));
                     } catch (NumberFormatException ex) {
                         out.println("<div class=\"alert alert-block alert-error fade in\">\n"
-                            + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
-                            + "                <strong>Error!</strong> it's not a valid ZIP\n"
-                            + "         </div> ");
+                                + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
+                                + "                <strong>Error!</strong> it's not a valid ZIP\n"
+                                + "         </div> ");
                         sucessFlag = false;
                     }
                 }
-%>
+            %>
 
             <div class="control-group">
                 <label class="control-label" for="phone"> Phone <sup>*</sup></label>
@@ -181,18 +201,18 @@
                 </div>
             </div>
             <%
-    if (request.getParameter("phone")!=null){
+                if (request.getParameter("phone") != null) {
                     try {
                         Long.parseLong(request.getParameter("zip"));
                     } catch (NumberFormatException ex) {
                         out.println("<div class=\"alert alert-block alert-error fade in\">\n"
-                            + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
-                            + "                <strong>Error!</strong> it's not a valid phone number\n"
-                            + "         </div> ");
+                                + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
+                                + "                <strong>Error!</strong> it's not a valid phone number\n"
+                                + "         </div> ");
                         sucessFlag = false;
                     }
                 }
-%>
+            %>
             <div class="control-group">
                 <label class="control-label" for="aditionalInfo">Interests</label>
                 <div class="controls">
