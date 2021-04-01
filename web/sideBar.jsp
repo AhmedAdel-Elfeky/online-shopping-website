@@ -1,4 +1,4 @@
- <%-- 
+<%-- 
     Document   : sideBar
     Created on : Mar 19, 2021, 12:26:42 AM
     Author     : elfek
@@ -32,6 +32,8 @@
                                 DataBase d = new DataBase();
                                 numOfFeatured = d.getNumOfDev(out,request,session);
                                 numOfFeatured--;
+                                if(session.getAttribute("orderId") != null)
+                                   d.updateOrder(cookies,(Integer)session.getAttribute("orderId"),3,"unconfirmed");
                                 
                          %>
 		</ul>

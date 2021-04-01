@@ -16,7 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import jdk.internal.cmm.SystemResourcePressureImpl;
 
 /**
  *
@@ -37,8 +37,10 @@ public class ProductDetails extends HttpServlet {
         RequestDispatcher sideBar = req.getRequestDispatcher("sideBar.jsp");
         sideBar.include(req, resp);
         productId = req.getParameter("productId");
-
-        viewProductDetails(productId, out);
+         
+            viewProductDetails(productId, out);
+        
+        
         RequestDispatcher footer = req.getRequestDispatcher("Footer.html");
         footer.include(req, resp);
     }
@@ -53,6 +55,7 @@ public class ProductDetails extends HttpServlet {
                 for (String s : desc) {
                     System.out.println(s);
                 }
+                System.out.println(rs.getInt(1));
                 out.println("<div class=\"span9\">\n"
                         + "    <ul class=\"breadcrumb\">\n"
                         + "    <li><a href=\"index.html\">Home</a> <span class=\"divider\">/</span></li>\n"
@@ -122,15 +125,15 @@ public class ProductDetails extends HttpServlet {
                         + "                <table class=\"table table-bordered\">\n"
                         + "				<tbody>\n"
                         + "				<tr class=\"techSpecRow\"><th colspan=\"2\">Product Details</th></tr>\n"
-                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Brand: </td><td class=\"techSpecTD2\">"+desc[1]+"</td></tr>\n"
-                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Released on:</td><td class=\"techSpecTD2\">"+desc[2]+"</td></tr>\n"
-                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Package:</td><td class=\"techSpecTD2\">"+desc[3]+"</td></tr>\n"
-                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Display:</td><td class=\"techSpecTD2\">"+desc[4]+"</td></tr>\n"
+                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Brand: </td><td class=\"techSpecTD2\">" + desc[1] + "</td></tr>\n"
+                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Released on:</td><td class=\"techSpecTD2\">" + desc[2] + "</td></tr>\n"
+                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Package:</td><td class=\"techSpecTD2\">" + desc[3] + "</td></tr>\n"
+                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Display:</td><td class=\"techSpecTD2\">" + desc[4] + "</td></tr>\n"
                         + "				</tbody>\n"
                         + "				</table>\n"
                         + "				\n"
                         + "				<h5>Features</h5>\n"
-                        + "				<p>"+desc[5]+"</p>\n"
+                        + "				<p>" + desc[5] + "</p>\n"
                         + "              </div>");
             }
         } catch (SQLException ex) {
