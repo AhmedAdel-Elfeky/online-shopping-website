@@ -22,7 +22,7 @@
     <%! String ids = "";
         ResultSet rs = null;
         int totalOrderPrice;
-        boolean isEmpty;
+        boolean flag;
         String quant = null;
         int price ;
     %>
@@ -34,7 +34,7 @@
         db.connect();
         if (cookie != null) {
             for (Cookie c : cookie) {
-                if (c.getName().startsWith("id")) {
+                if (c.getName().startsWith("id")&& !(c.getValue().equals("0"))){
                     ids += c.getName().substring(2) + ",";
                 }
             }
@@ -117,7 +117,7 @@
     <a href="SearchOnProduct"  class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
     <a href="ConfirmOrder.jsp" class="btn btn-large pull-right">Proceed to Checkout <i class="icon-arrow-right"></i></a>
 
-    <%} else {%>
+    <%}else{%>
     <div style="background-color:#F8F1A2;padding:25px 35px;">Shopping cart is currently empty
         Add items to your cart and view them here before you checkout. </div> <br><br>
 
