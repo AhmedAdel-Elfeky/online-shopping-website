@@ -31,10 +31,10 @@
             for (Cookie c : cookie) {
                 c.setValue("");
                 c.setMaxAge(0);
-                c.setPath("/");
                 response.addCookie(c);
             }
     %>
+   
     <div style="text-align: center"><img src="themes/images/successfully.png" ></div><br>
     <a href="SearchOnProduct" class="btn btn-large" type="submit"><i class="icon-arrow-left"></i> Continue Shopping </a>
     <%}%>
