@@ -46,6 +46,10 @@
                 sb.deleteCharAt(sb.length() - 1);
                 rs = db.select("select product_id,price,name,img_url,qunatity from product where product_id in (" + sb + ");");
     %>
+    <%if(session.getAttribute("exceedLimit")!= null && session.getAttribute("exceedLimit").equals("true")){
+        %>
+    <div style="background-color:#E8C7C7;padding:25px 35px;">Total price is greater than your balance pleas recharge your wallet then try again.</div> <br><br>
+    <%}%>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -110,8 +114,8 @@
             </tr>
         </tbody>
     </table>
-    <a href="OrderManagement"  class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
-    <a href="OrderManagement" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+    <a href="SearchOnProduct"  class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+    <a href="ConfirmOrder.jsp" class="btn btn-large pull-right">Proceed to Checkout <i class="icon-arrow-right"></i></a>
 
     <%} else {%>
     <div style="background-color:#F8F1A2;padding:25px 35px;">Shopping cart is currently empty
@@ -130,7 +134,3 @@
 <!-- Footer ================================================================== -->
 <script src="bootstrap/js/cart.js"></script>
 <%@ include file="Footer.html" %>
-
-
-
-

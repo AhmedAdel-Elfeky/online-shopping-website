@@ -33,7 +33,7 @@
                                 numOfFeatured = d.getNumOfDev(out);
                                 numOfFeatured--;
                                 if(session.getAttribute("orderId") != null)
-                                   d.updateOrder(cookies,(Integer)session.getAttribute("orderId"),3);
+                                   d.updateOrder(cookies,(Integer)session.getAttribute("orderId"),3,"unconfirmed");
                                 
                          %>
 		</ul>

@@ -14,6 +14,8 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
 public class DataBase {
@@ -271,7 +273,7 @@ public class DataBase {
         return orderId;
     }
 
-    public void updateOrder(Cookie[] cookie, int orderId, int customerId) {
+    public void updateOrder(Cookie[] cookie, int orderId, int customerId,String status) {
         int productId = 0;
         int productQuantity = 0;
         ResultSet rs = null;
@@ -281,7 +283,7 @@ public class DataBase {
         for (Cookie c : cookie) {
             if (c.getName().equals("productInCart")) {
                 try {
-                    this.DML("update orders set quantity=" + Integer.parseInt(c.getValue()) + " where order_id =" + orderId + ";");
+                    this.DML("update orders set quantity=" + Integer.parseInt(c.getValue()) + ",status= '"+status+"' where order_id =" + orderId + ";");
                 } catch (SQLException ex) {
                     Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -321,4 +323,36 @@ public class DataBase {
         }
 
     }
+    public String confirmOrder(int customerId,int orderId,Cookie[]cookie){
+       ResultSet rs = null;
+       int balance;
+       int totalOrderPrice = 0;
+       this.connect();
+       if (cookie != null) {
+                    for (Cookie c : cookie) {
+                        if (c.getName().startsWith("totalPrice")){
+                            totalOrderPrice = Integer.parseInt(c.getValue());
+                        }
+                    }
+            }
+        try {
+            rs = this.select("select credit_limit from customer where customer_id="+customerId+";");
+            if(rs.next()){
+                balance =Integer.parseInt(rs.getString("credit_limit"));
+                if(totalOrderPrice < balance){
+                    this.updateOrder(cookie, orderId, customerId,"confirmed");
+                    return "confirmed";
+                }
+                else{
+                    return "unconfirmed";  
+                }
+                    
+            }
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          return null;
+    }
 }
+
