@@ -11,7 +11,11 @@ package souq.com;
  */
 import java.sql.*;
 import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
+import javax.websocket.Session;
 
 
 public class DataBase {
@@ -20,7 +24,7 @@ public class DataBase {
 //    private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
     private static final String DATABASE_URL = "jdbc:postgresql://localhost/e_commerce";
     private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "01018867111";
+    private static final String PASSWORD = "postgres";
 
     // init connection object
     private Connection connection;
@@ -137,6 +141,7 @@ public class DataBase {
             e.printStackTrace();
         }
     }
+ 
 
     public void getLatestProducts(JspWriter out) {
         try {
@@ -164,13 +169,16 @@ public class DataBase {
         }
 
     }
-
-    public int getNumOfDev(JspWriter out) {
-        int mobile = 0;
-        int laptop = 0;
-        int numOfFeatured = 0;
-        try {
-            this.connect();
+ 
+    
+    public int getNumOfDev(JspWriter out,HttpServletRequest req,HttpSession s)
+    {
+        s = req.getSession(false);
+        int mobile=0;
+        int laptop=0;
+        int numOfFeatured=0;
+         try {
+                this.connect();
             ResultSet rs1 = this.select("select count(product_id) from product where category_id= 1;");
             ResultSet rs2 = this.select("select count(product_id) from product where category_id= 2;");
             ResultSet rs3 = this.select("select count(product_id) from product where featured= \'f\';");
@@ -184,13 +192,29 @@ public class DataBase {
             while (rs3.next()) {
                 numOfFeatured = rs3.getInt(1);
             }
-            out.print(" <li class=\"subMenu open\"><a> ELECTRONICS [" + (laptop + mobile) + "]</a>\n"
-                    + "                                <ul>\n"
-                    + "                                    <li><a href=\"SearchOnProduct?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone (" + mobile + ")</a></li>\n"
-                    + "                                    <li><a href=\"SearchOnProduct?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop (" + laptop + ")</a></li>\n"
-                    + "                                </ul>\n"
-                    + "                            </li>   ");
-            this.disconnect();
+ 
+            String r = (String) s.getAttribute("role");
+            if(r.equals("c") || r.equals(""))
+            {
+                 out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
+"                                <ul>\n" +
+"                                    <li><a href=\"SearchOnProduct?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
+"                                    <li><a href=\"SearchOnProduct?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
+"                                </ul>\n" +
+"                            </li>   ");
+            }
+            else
+            {
+                 out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
+"                                <ul>\n" +
+"                                    <li><a href=\"AdminSearchProducts?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
+"                                    <li><a href=\"AdminSearchProducts?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
+"                                </ul>\n" +
+"                            </li>   ");
+            }
+                   
+            
+             this.disconnect();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -235,6 +259,99 @@ public class DataBase {
         }
         return numOfProduct;
     }
+
+    
+    public enum featured_type {
+    f,
+    uf;
+     }
+    
+    public void addNewProduct(HttpServletResponse response, HttpServletRequest request) {
+        int cat_id = Integer.parseInt(request.getParameter("category"));
+        String name = request.getParameter("pname");
+        java.sql.Date date=java.sql.Date.valueOf(request.getParameter("pdate"));
+        int price = Integer.parseInt(request.getParameter("pprice"));
+        int quant = Integer.parseInt( request.getParameter("pquantity"));
+        String url = request.getParameter("purl");
+        String f = request.getParameter("featured");
+        String desc = request.getParameter("description");
+        try {
+            this.connect();
+            prepStatement = connection.prepareStatement("insert into product (category_id,price,description,qunatity,"
+                    + "name,img_url,date,featured) values (?,?,?,?,?,?,?, CAST(? AS featured_type))  ",
+                    ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            prepStatement.setInt(1, cat_id);
+            prepStatement.setInt(2, price);
+            prepStatement.setString(3, desc);
+            prepStatement.setInt(4, quant);
+            prepStatement.setString(5, name);
+            prepStatement.setString(6, url);
+            prepStatement.setDate(7, date);
+            prepStatement.setString(8, f);
+            prepStatement.execute();
+            this.disconnect();
+        } catch (Exception s) {
+            s.printStackTrace();
+            System.out.println("there is an error in adding product");
+        }
+    }
+    
+    public ProductInfo getProductInfo(HttpServletResponse response, HttpServletRequest request,int product_id) {
+        ProductInfo p = new ProductInfo();
+        try {
+            this.connect();
+            ResultSet rs = this.select("select * from product where product_id = "+product_id+";");
+           
+            while (rs.next())
+            {                
+                p.categoryId = rs.getInt(2);
+                p.price = rs.getInt(3);
+                p.description = rs.getString(4);
+                p.qunatity = rs.getInt(5);
+                p.name = rs.getString(6);
+                p.imgUrl = rs.getString(7);
+                p.date = rs.getString(8);
+                p.featured = rs.getString(9);  
+            }
+            this.disconnect();
+        } catch (Exception s) {
+            s.printStackTrace();
+            System.out.println("there is an error in adding product");
+        }
+        return p;
+    }
+    
+    public void editProduct(HttpServletResponse response, HttpServletRequest request,int productId) {
+        int cat_id = Integer.parseInt(request.getParameter("category"));
+        String name = request.getParameter("pname");
+        java.sql.Date date=java.sql.Date.valueOf(request.getParameter("pdate"));
+        int price = Integer.parseInt(request.getParameter("pprice"));
+        int quant = Integer.parseInt( request.getParameter("pquantity"));
+        String url = request.getParameter("purl");
+        String f = request.getParameter("featured");
+        String desc = request.getParameter("description");
+        try {
+            this.connect();
+            prepStatement = connection.prepareStatement("update product SET category_id = ?,price=?,description=?,qunatity=?,"
+                    + "name=?,img_url=?,date=?,featured= CAST(? AS featured_type) where product_id = ?  ;",
+                    ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            prepStatement.setInt(1, cat_id);
+            prepStatement.setInt(2, price);
+            prepStatement.setString(3, desc);
+            prepStatement.setInt(4, quant);
+            prepStatement.setString(5, name);
+            prepStatement.setString(6, url);
+            prepStatement.setDate(7, date);
+            prepStatement.setString(8, f);
+            prepStatement.setInt(9, productId);
+            prepStatement.executeUpdate();
+            this.disconnect();
+        } catch (Exception s) {
+            s.printStackTrace();
+            System.out.println("there is an error in adding product");
+        }
+    }
+    
 
     void createOrder() {
     }
