@@ -283,5 +283,61 @@ public class DataBase {
         }
     }
     
+    public ProductInfo getProductInfo(HttpServletResponse response, HttpServletRequest request,int product_id) {
+        ProductInfo p = new ProductInfo();
+        try {
+            this.connect();
+            ResultSet rs = this.select("select * from product where product_id = "+product_id+";");
+           
+            while (rs.next())
+            {                
+                p.categoryId = rs.getInt(2);
+                p.price = rs.getInt(3);
+                p.description = rs.getString(4);
+                p.qunatity = rs.getInt(5);
+                p.name = rs.getString(6);
+                p.imgUrl = rs.getString(7);
+                p.date = rs.getString(8);
+                p.featured = rs.getString(9);  
+            }
+            this.disconnect();
+        } catch (Exception s) {
+            s.printStackTrace();
+            System.out.println("there is an error in adding product");
+        }
+        return p;
+    }
+    
+    public void editProduct(HttpServletResponse response, HttpServletRequest request,int productId) {
+        int cat_id = Integer.parseInt(request.getParameter("category"));
+        String name = request.getParameter("pname");
+        java.sql.Date date=java.sql.Date.valueOf(request.getParameter("pdate"));
+        int price = Integer.parseInt(request.getParameter("pprice"));
+        int quant = Integer.parseInt( request.getParameter("pquantity"));
+        String url = request.getParameter("purl");
+        String f = request.getParameter("featured");
+        String desc = request.getParameter("description");
+        try {
+            this.connect();
+            prepStatement = connection.prepareStatement("update product SET category_id = ?,price=?,description=?,qunatity=?,"
+                    + "name=?,img_url=?,date=?,featured= CAST(? AS featured_type) where product_id = ?  ;",
+                    ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            prepStatement.setInt(1, cat_id);
+            prepStatement.setInt(2, price);
+            prepStatement.setString(3, desc);
+            prepStatement.setInt(4, quant);
+            prepStatement.setString(5, name);
+            prepStatement.setString(6, url);
+            prepStatement.setDate(7, date);
+            prepStatement.setString(8, f);
+            prepStatement.setInt(9, productId);
+            prepStatement.executeUpdate();
+            this.disconnect();
+        } catch (Exception s) {
+            s.printStackTrace();
+            System.out.println("there is an error in adding product");
+        }
+    }
+    
 
 }

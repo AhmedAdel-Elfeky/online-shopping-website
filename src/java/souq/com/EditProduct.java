@@ -5,8 +5,12 @@
  */
 package souq.com;
 
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.concurrent.Delayed;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,38 +22,33 @@ import javax.servlet.http.HttpSession;
  *
  * @author elfek
  */
-public class AddProduct extends HttpServlet {
+public class EditProduct extends HttpServlet {
+
+    
 
    
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     }
+    }
 
+   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       DataBase d = new DataBase();
-       d.addNewProduct(response, request);
-       HttpSession session = request.getSession(false);
-       session.setAttribute("addproduct","yes");
-       
-       RequestDispatcher requestDispatcher = request.getRequestDispatcher("/AddProduct.jsp");
+ 
+             int productId = Integer.parseInt(request.getParameter("product_id"));
+             DataBase d = new DataBase();
+             d.editProduct(response, request,productId);
+            
+            HttpSession session = request.getSession(false);
+            session.setAttribute("Edditproduct","yes");
+           
+             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/EditProduct.jsp");
              requestDispatcher.forward(request,response);
-       
+           
         
-     }
+    }
 
-    
-    
-
+   
 }

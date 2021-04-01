@@ -58,10 +58,14 @@ public class checklogin extends HttpServlet {
                     session.setAttribute("name",uname);
                     session.setAttribute("fname",result.getString(4));
                     session.setAttribute("lname",result.getString(5));
+                    
                     if(result.getString(3).equals("c"))
                         response.sendRedirect("index.jsp");
                     else
+                    {
                         response.sendRedirect("AdminSearchProducts");
+                       
+                    }
                 }
             }
             else

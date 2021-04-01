@@ -101,10 +101,18 @@
 
 
         <p><sup>*</sup>Required field	</p>
-
+            
+         <%
+            String addsucssfull = (String) session.getAttribute("addproduct");
+            if(addsucssfull.equals("yes"))
+            {
+                out.print("<p style=\"margin-left: 18vw;color: green;margin-top: 2vh;position:absolute\" >you added a product successfully<p>");
+            }
+         %>
+        
         <div class="control-group">
             <div class="controls">
-                <input id="product_save" class="btn btn-large btn-success" type="submit" value="Save" style="margin-left:  20vw" />
+                <input id="product_save" class="btn btn-large btn-success" type="submit" value="Add" style="margin-left:  20vw" />
             </div>
         </div>		
     </form>

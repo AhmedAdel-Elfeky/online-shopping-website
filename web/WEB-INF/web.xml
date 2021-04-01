@@ -16,6 +16,10 @@
         <servlet-name>AddProduct</servlet-name>
         <servlet-class>souq.com.AddProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditProduct</servlet-name>
+        <servlet-class>souq.com.EditProduct</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/HomePage</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>AddProduct</servlet-name>
         <url-pattern>/AddProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProduct</servlet-name>
+        <url-pattern>/EditProduct</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
