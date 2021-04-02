@@ -359,6 +359,8 @@ public class DataBase {
         ResultSet rs = null;
         int result = -1;
         this.connect();
+        if(cookie != null)
+        {
         for (Cookie c : cookie) {
             if (c.getName().equals("productInCart")&&!(c.getValue().equals(""))) {
                 try {
@@ -383,6 +385,7 @@ public class DataBase {
                     Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
         }
         return orderId;
     }
