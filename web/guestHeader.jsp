@@ -35,7 +35,25 @@
 <div id="header">
 <div class="container">
 <div id="welcomeLine" class="row">
-	<div class="span6">Welcome!<strong> User</strong></div>	
+    <%
+        String loginstate = (String) session.getAttribute("loginState");
+        if(loginstate.equals("false"))
+        {
+            out.print("<div class=\"span6\">Welcome!<strong> User</strong></div>	");
+        }
+        else
+        {
+            String role = (String) session.getAttribute("role");
+            if(role.equals("a"))
+            {
+                out.print("<div class=\"span6\">Welcome!<strong> admin  "+(String) session.getAttribute("fname")+" "+(String) session.getAttribute("lname")+"</strong></div>");
+            }
+            else
+            {
+                out.print("<div class=\"span6\">Welcome!<strong> "+(String) session.getAttribute("fname")+" "+(String) session.getAttribute("lname")+"</strong></div>	");
+            }
+        }
+    %>
         <!--session.getAttribute("name")-->
 </div>
 <!-- Navbar ================================================== -->

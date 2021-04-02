@@ -1,4 +1,4 @@
-<%-- 
+ <%-- 
     Document   : sideBar
     Created on : Mar 19, 2021, 12:26:42 AM
     Author     : elfek
@@ -30,11 +30,10 @@
 			 <%
                                 int numOfFeatured=0;
                                 DataBase d = new DataBase();
-                                numOfFeatured = d.getNumOfDev(out);
+                                numOfFeatured = d.getNumOfDev(out,request,session);
                                 numOfFeatured--;
                                 if(session.getAttribute("orderId") != null)
-                                   d.updateOrder(cookies,(Integer)session.getAttribute("orderId"),3,"unconfirmed");
-                                
+                                   d.updateOrder(cookies,(Integer)session.getAttribute("orderId"),(Integer)session.getAttribute("customer_id"),"unconfirmed");
                          %>
 		</ul>
 		<br/>

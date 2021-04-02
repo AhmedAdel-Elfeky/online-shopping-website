@@ -27,7 +27,12 @@
         int price ;
     %>
     <%  totalOrderPrice = 0;
-        
+        if(session.getAttribute("customer_id") == null){
+            session.setAttribute("requestedPage","Cart.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
+        }
+        else{
         ids = "";
         Cookie[] cookie = request.getCookies();
         DataBase db = new DataBase();
@@ -40,8 +45,7 @@
             }
             if (!ids.equals("")) {
                 if(session.getAttribute("orderId") == null)
-                    session.setAttribute("orderId",db.createOrder(cookie,"3"));
-                
+                    session.setAttribute("orderId",db.createOrder(cookie,(Integer)session.getAttribute("customer_id")));
                 StringBuffer sb = new StringBuffer(ids);
                 sb.deleteCharAt(sb.length() - 1);
                 rs = db.select("select product_id,price,name,img_url,qunatity from product where product_id in (" + sb + ");");
@@ -123,7 +127,7 @@
 
     <a href="SearchOnProduct" class="btn btn-large" type="submit"><i class="icon-arrow-left"></i> Continue Shopping </a>
     <%}
-        }%>
+        }}%>
 
 </div>    
 

@@ -9,8 +9,16 @@
         <servlet-class>souq.com.checklogin</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ProductDetails</servlet-name>
-        <servlet-class>souq.com.ProductDetails</servlet-class>
+        <servlet-name>AdminSearchProducts</servlet-name>
+        <servlet-class>souq.com.AdminSearchProducts</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProduct</servlet-name>
+        <servlet-class>souq.com.AddProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProduct</servlet-name>
+        <servlet-class>souq.com.EditProduct</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
@@ -20,9 +28,17 @@
         <servlet-name>checklogin</servlet-name>
         <url-pattern>/checklogin</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
-        <servlet-name>ProductDetails</servlet-name>
-        <url-pattern>/ProductDetails</url-pattern>
+    <servlet-mapping>
+        <servlet-name>AdminSearchProducts</servlet-name>
+        <url-pattern>/AdminSearchProducts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProduct</servlet-name>
+        <url-pattern>/AddProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProduct</servlet-name>
+        <url-pattern>/EditProduct</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
