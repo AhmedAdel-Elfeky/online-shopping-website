@@ -8,7 +8,6 @@ function incrementQuantity(id) {
     if (document.getElementById("quantity" + product_id).value < document.getElementById("quantity" + product_id).getAttribute("data-max-qunatity")) {
         document.getElementById("quantity" + product_id).value = parseInt(document.getElementById("quantity" + product_id).value) + 1;
         document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
-
         document.cookie = "id" + product_id + "=" + document.getElementById("quantity" + product_id).value;
 //    document.cookie=product_id+"="+document.getElementById("quantity-total" + product_id).innerText;
         updateCartinfo();
@@ -32,7 +31,7 @@ function deleteProduct(id)
 {
     product_id = id.substring(6);
     document.getElementById("row" + product_id).remove();
-    document.cookie = "id" + product_id + "=";
+//    document.cookie = "id" + product_id + "=";
     updateCartinfo(totalOrderPrice);
     document.cookie =  "id" + product_id + "=" +"0";
 

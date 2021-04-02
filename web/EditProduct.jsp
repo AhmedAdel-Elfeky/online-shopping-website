@@ -19,6 +19,10 @@
         int product_id = Integer.parseInt(request.getParameter("product_id"));
         ProductInfo p = new ProductInfo();
         p = d.getProductInfo(response, request, product_id);
+        String[] desc = p.description.split("\\;");
+                for (String s : desc) {
+                    System.out.println(s);
+                }
     %>
     
     <hr class="soft"/>
@@ -143,12 +147,64 @@
             <label class="control-label" for="input_pdesc">Description <sup>*</sup></label>
             <div class="controls">
                  <%
-                    out.print("<textarea rows=\"6\" cols=\"790\"  name=\"description\" id=\"input_pdesc\" placeholder=\"Description\" >"+p.description+"</textarea>");
-                    %>
+                    out.print("<textarea rows=\"6\" cols=\"790\"  name=\"description\" id=\"input_pdesc\" placeholder=\"Description\" >"+desc[0]+"</textarea>");
+                 %>
                  <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter the description</p>
 
             </div>
         </div>	 
+        
+        <div class="control-group">
+            <label class="control-label" for="input_pbrand">Brand <sup>*</sup></label>
+            <div class="controls">
+                <%
+                    out.print("<textarea  name=\"pBrand\" id=\"input_pbrand\" placeholder=\"Brand\" >"+desc[1]+"</textarea>");
+                %>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product brand</p>
+
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="input_preleased">Released <sup>*</sup></label>
+            <div class="controls">
+                <%
+                    out.print("<textarea id=\"input_preleased\" name=\"pReleased\"  placeholder=\"Released\" >"+desc[2]+"</textarea>");
+                %>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product released</p>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="input_ppackage">Package <sup>*</sup></label>
+            <div class="controls">
+                <%
+                    out.print("<textarea id=\"input_ppackage\" name=\"pPackage\"  placeholder=\"Package\" >"+desc[3]+"</textarea>");
+                %>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product package</p>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="input_pdisplay">Display <sup>*</sup></label>
+            <div class="controls">
+                <%
+                    out.print("<textarea id=\"input_pdisplay\" name=\"pDisplay\"  placeholder=\"Display\" >"+desc[4]+"</textarea>");
+                %>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product display</p>
+
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="input_pFeatures">Features <sup>*</sup></label>
+            <div class="controls">
+                <%
+                    out.print("<textarea id=\"input_pFeatures\" name=\"pFeatures\"  placeholder=\"Features\" >"+desc[5]+"</textarea>");
+                %>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product features</p>
+            </div>
+        </div>
 
 
 

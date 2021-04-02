@@ -63,7 +63,7 @@ public class AdminSearchProducts extends HttpServlet {
                 System.out.println("h");
                 out.println("<li class=\"span3\">\n"
                         + "			  <div class=\"thumbnail\">\n"
-                        + "				<a href=\"ProductDetails?productId=11\"><img  style=\"height:170px;\" src=" + rs.getString("img_url") + " alt=\"\"/></a>\n"
+                        + "				<a href=\"ProductDetails?productId="+rs.getString("product_id")+"\"><img  style=\"height:170px;\" src=" + rs.getString("img_url") + " alt=\"\"/></a>\n"
                         + "				<div class=\"caption\">\n"
                         + "				  <h5>" + rs.getString("name") + "</h5>"
                         + "				   <h4 style=\"text-align:center;\"><a class=\"btn\" href=\"product_details.html\"> <i class=\"icon-zoom-in\"></i></a> <a class=\"btn\" href=\"EditProduct.jsp?product_id="+rs.getInt("product_id")+"\">Edit </a>  <a class=\"btn btn-primary\" style=\"pointer-events: none; cursor: default;\">" + rs.getString("price") + " $</a></h4>\n"

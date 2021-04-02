@@ -43,7 +43,7 @@ public class checklogin extends HttpServlet {
             session=request.getSession(false);
             c = DriverManager.getConnection(URL,"postgres","postgres");
             
-           ps = c.prepareStatement("select uname , password ,role,fname,lname from customer where uname=? and password=?  ",
+           ps = c.prepareStatement("select uname , password ,role,fname,lname,customer_id from customer where uname=? and password=?  ",
                     ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             ps.setString(1, uname);
             ps.setString(2, password);
@@ -58,6 +58,7 @@ public class checklogin extends HttpServlet {
                     session.setAttribute("name",uname);
                     session.setAttribute("fname",result.getString(4));
                     session.setAttribute("lname",result.getString(5));
+                    session.setAttribute("customer_id",result.getInt(6));
                     
                     if(result.getString(3).equals("c"))
                         response.sendRedirect("index.jsp");

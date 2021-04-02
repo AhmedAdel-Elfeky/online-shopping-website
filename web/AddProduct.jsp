@@ -91,14 +91,53 @@
         <div class="control-group">
             <label class="control-label" for="input_pdesc">Description <sup>*</sup></label>
             <div class="controls">
-                <textarea  id="input_pdesc" name="description" cols="790" rows="6" placeholder="Description"></textarea>
-                 <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter the description</p>
+                <textarea  id="input_pdesc" name="description"   rows="6" placeholder="Description"></textarea>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter the description</p>
 
             </div>
-        </div>	 
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="input_pbrand">Brand <sup>*</sup></label>
+            <div class="controls">
+                <textarea  id="input_pbrand" name="pBrand"    placeholder="Brand"></textarea>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product brand</p>
 
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="input_preleased">Released <sup>*</sup></label>
+            <div class="controls">
+                <textarea  id="input_preleased" name="pReleased"    placeholder="Released"></textarea>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product released</p>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="input_ppackage">Package <sup>*</sup></label>
+            <div class="controls">
+                <textarea  id="input_ppackage" name="pPackage"   placeholder="Package"></textarea>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product package</p>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="input_pdisplay">Display <sup>*</sup></label>
+            <div class="controls">
+                <textarea  id="input_pdisplay" name="pDisplay"    placeholder="Display"></textarea>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product display</p>
 
-
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="input_pFeatures">Features <sup>*</sup></label>
+            <div class="controls">
+                <textarea  id="input_pFeatures" name="pFeatures"   placeholder="Features"></textarea>
+                <p class="addproduct_errors" style="display:inline;color: red;visibility: hidden">  ERROR: you must enter product features</p>
+            </div>
+        </div>
 
         <p><sup>*</sup>Required field	</p>
             

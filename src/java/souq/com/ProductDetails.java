@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jdk.internal.cmm.SystemResourcePressureImpl;
 
 /**
@@ -38,14 +39,14 @@ public class ProductDetails extends HttpServlet {
         sideBar.include(req, resp);
         productId = req.getParameter("productId");
          
-            viewProductDetails(productId, out);
+            viewProductDetails(productId, out,req);
         
         
         RequestDispatcher footer = req.getRequestDispatcher("Footer.html");
         footer.include(req, resp);
     }
 
-    public void viewProductDetails(String id, PrintWriter out) {
+    public void viewProductDetails(String id, PrintWriter out,HttpServletRequest req) {
         DataBase db = new DataBase();
         db.connect();
         try {
@@ -55,8 +56,12 @@ public class ProductDetails extends HttpServlet {
                 for (String s : desc) {
                     System.out.println(s);
                 }
+                HttpSession session = req.getSession(false);
+                String r = (String)session.getAttribute("role");
                 System.out.println(rs.getInt(1));
-                out.println("<div class=\"span9\">\n"
+                if(r.equals("a"))
+                {
+                    out.println("<div class=\"span9\">\n"
                         + "    <ul class=\"breadcrumb\">\n"
                         + "    <li><a href=\"index.html\">Home</a> <span class=\"divider\">/</span></li>\n"
                         + "    <li><a href=\"products.html\">Products</a> <span class=\"divider\">/</span></li>\n"
@@ -82,12 +87,85 @@ public class ProductDetails extends HttpServlet {
                         + "              </div>"
                         + "<div class=\"btn-toolbar\">\n"
                         + "			  <div class=\"btn-group\">\n"
-                        + "				<span class=\"btn\"><i class=\"icon-envelope\"></i></span>\n"
-                        + "				<span class=\"btn\" ><i class=\"icon-print\"></i></span>\n"
-                        + "				<span class=\"btn\" ><i class=\"icon-zoom-in\"></i></span>\n"
-                        + "				<span class=\"btn\" ><i class=\"icon-star\"></i></span>\n"
-                        + "				<span class=\"btn\" ><i class=\" icon-thumbs-up\"></i></span>\n"
-                        + "				<span class=\"btn\" ><i class=\"icon-thumbs-down\"></i></span>\n"
+                        + "			  </div>\n"
+                        + "			</div>\n"
+                        + "			</div>\n"
+                        + "			<div class=\"span6\">\n"
+                        + "				<h3>" + rs.getString("name") + "</h3>\n"
+                        + "				<hr class=\"soft\"/>\n"
+                        + "				<form class=\"form-horizontal qtyFrm\">\n"
+                        + "				  <div class=\"control-group\">\n"
+                        + "					<label class=\"control-label\"><span>$" + rs.getString("price") + "</span></label>\n"
+                        + "					<div class=\"controls\">\n"
+                        + "					  <button  class=\"btn btn-large btn-primary pull-right\"> <a href=\"EditProduct.jsp?product_id="+id+"\">Edit</a> </button>\n"
+                        + "					</div>\n"
+                        + "				  </div>\n"
+                        + "				</form>\n"
+                        + "				\n"
+                        + "				<hr class=\"soft\"/>\n"
+                        + "				<h4>" + rs.getString("qunatity") + " items in stock</h4>\n"
+                        + "				<hr class=\"soft clr\"/>\n"
+                        + "				<p>" + desc[0] + "</p>\n"
+                        + "				<br class=\"clr\"/>\n"
+                        + "			<a href=\"#\" name=\"detail\"></a>\n"
+                        + "			<hr class=\"soft\"/>\n"
+                        + "			</div>\n"
+                        + "			\n"
+                        + "			<div class=\"span9\">\n"
+                        + "            <ul id=\"productDetail\" class=\"nav nav-tabs\">\n"
+                        + "              <li class=\"active\"><a href=\"#home\" data-toggle=\"tab\">Product Details</a></li>\n"
+                        + "            </ul>\n"
+                        + "            <div id=\"myTabContent\" class=\"tab-content\">\n"
+                        + "              <div class=\"tab-pane fade active in\" id=\"home\">\n"
+                        + "			  <h4>Product Information</h4>\n"
+                        + "                <table class=\"table table-bordered\">\n"
+                        + "				<tbody>\n"
+                        + "				<tr class=\"techSpecRow\"><th colspan=\"2\">Product Details</th></tr>\n"
+                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Brand: </td><td class=\"techSpecTD2\">" + desc[1] + "</td></tr>\n"
+                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Released on:</td><td class=\"techSpecTD2\">" + desc[2] + "</td></tr>\n"
+                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Package:</td><td class=\"techSpecTD2\">" + desc[3] + "</td></tr>\n"
+                        + "				<tr class=\"techSpecRow\"><td class=\"techSpecTD1\">Display:</td><td class=\"techSpecTD2\">" + desc[4] + "</td></tr>\n"
+                        + "				</tbody>\n"
+                        + "				</table>\n"
+                        + "				\n"
+                        + "				<h5>Features</h5>\n"
+                        + "				<p>" + desc[5] + "</p>\n"
+                        + "              </div>");
+                }
+                else
+                {
+                    out.println("<div class=\"span9\">\n"
+                        + "    <ul class=\"breadcrumb\">\n"
+                        + "    <li><a href=\"index.html\">Home</a> <span class=\"divider\">/</span></li>\n"
+                        + "    <li><a href=\"products.html\">Products</a> <span class=\"divider\">/</span></li>\n"
+                        + "    <li class=\"active\">product Details</li>\n"
+                        + "    </ul>	\n"
+                        + "	<div class=\"row\">	  \n"
+                        + "			<div id=\"gallery\" class=\"span3\">\n"
+                        + "            <a href='" + rs.getString("img_url") + "' title='" + rs.getString("name") + "'>\n"
+                        + "				<img src='" + rs.getString("img_url") + "' style=\"width:100%\" alt='" + rs.getString("name") + "'/>\n"
+                        + "            </a>\n"
+                        + "			<div id=\"differentview\" class=\"moreOptopm carousel slide\">\n"
+                        + "                <div class=\"carousel-inner\">\n"
+                        + "                  <div class=\"item\">\n"
+                        + "                   <a href=\"themes/images/products/large/f3.jpg\" > <img style=\"width:29%\" src=\"themes/images/products/large/f3.jpg\" alt=\"\"/></a>\n"
+                        + "                   <a href=\"themes/images/products/large/f1.jpg\"> <img style=\"width:29%\" src=\"themes/images/products/large/f1.jpg\" alt=\"\"/></a>\n"
+                        + "                   <a href=\"themes/images/products/large/f2.jpg\"> <img style=\"width:29%\" src=\"themes/images/products/large/f2.jpg\" alt=\"\"/></a>\n"
+                        + "                  </div>\n"
+                        + "                </div>\n"
+                        + "              <!--  \n"
+                        + "			  <a class=\"left carousel-control\" href=\"#myCarousel\" data-slide=\"prev\">‹</a>\n"
+                        + "              <a class=\"right carousel-control\" href=\"#myCarousel\" data-slide=\"next\">›</a> \n"
+                        + "			  -->\n"
+                        + "              </div>"
+                        + "<div class=\"btn-toolbar\">\n"
+                        + "			  <div class=\"btn-group\">\n"
+//                        + "				<span class=\"btn\"><i class=\"icon-envelope\"></i></span>\n"
+//                        + "				<span class=\"btn\" ><i class=\"icon-print\"></i></span>\n"
+//                        + "				<span class=\"btn\" ><i class=\"icon-zoom-in\"></i></span>\n"
+//                        + "				<span class=\"btn\" ><i class=\"icon-star\"></i></span>\n"
+//                        + "				<span class=\"btn\" ><i class=\" icon-thumbs-up\"></i></span>\n"
+//                        + "				<span class=\"btn\" ><i class=\"icon-thumbs-down\"></i></span>\n"
                         + "			  </div>\n"
                         + "			</div>\n"
                         + "			</div>\n"
@@ -108,7 +186,7 @@ public class ProductDetails extends HttpServlet {
                         + "				<h4>" + rs.getString("qunatity") + " items in stock</h4>\n"
                         + "				<hr class=\"soft clr\"/>\n"
                         + "				<p>" + desc[0] + "</p>\n"
-                        + "				<a class=\"btn btn-small pull-right\" href=\"#detail\">More Details</a>\n"
+//                        + "				<a class=\"btn btn-small pull-right\" href=\"#detail\">More Details</a>\n"
                         + "				<br class=\"clr\"/>\n"
                         + "			<a href=\"#\" name=\"detail\"></a>\n"
                         + "			<hr class=\"soft\"/>\n"
@@ -117,7 +195,7 @@ public class ProductDetails extends HttpServlet {
                         + "			<div class=\"span9\">\n"
                         + "            <ul id=\"productDetail\" class=\"nav nav-tabs\">\n"
                         + "              <li class=\"active\"><a href=\"#home\" data-toggle=\"tab\">Product Details</a></li>\n"
-                        + "              <li><a href=\"#profile\" data-toggle=\"tab\">Related Products</a></li>\n"
+//                        + "              <li><a href=\"#profile\" data-toggle=\"tab\">Related Products</a></li>\n"
                         + "            </ul>\n"
                         + "            <div id=\"myTabContent\" class=\"tab-content\">\n"
                         + "              <div class=\"tab-pane fade active in\" id=\"home\">\n"
@@ -135,6 +213,9 @@ public class ProductDetails extends HttpServlet {
                         + "				<h5>Features</h5>\n"
                         + "				<p>" + desc[5] + "</p>\n"
                         + "              </div>");
+                    
+                }
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDetails.class.getName()).log(Level.SEVERE, null, ex);

@@ -268,6 +268,13 @@ public class DataBase {
         String url = request.getParameter("purl");
         String f = request.getParameter("featured");
         String desc = request.getParameter("description");
+        String pBrand = request.getParameter("pBrand");
+        String pReleased = request.getParameter("pReleased");
+        String pPackage = request.getParameter("pPackage");
+        String pDisplay = request.getParameter("pDisplay");
+        String pFeatures = request.getParameter("pFeatures");
+        
+        String AllDesc = desc+";"+pBrand+";"+pReleased+";"+pPackage+";"+pDisplay+";"+pFeatures;
         try {
             this.connect();
             prepStatement = connection.prepareStatement("insert into product (category_id,price,description,qunatity,"
@@ -275,7 +282,7 @@ public class DataBase {
                     ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             prepStatement.setInt(1, cat_id);
             prepStatement.setInt(2, price);
-            prepStatement.setString(3, desc);
+            prepStatement.setString(3, AllDesc);
             prepStatement.setInt(4, quant);
             prepStatement.setString(5, name);
             prepStatement.setString(6, url);
@@ -322,6 +329,13 @@ public class DataBase {
         String url = request.getParameter("purl");
         String f = request.getParameter("featured");
         String desc = request.getParameter("description");
+        String pBrand = request.getParameter("pBrand");
+        String pReleased = request.getParameter("pReleased");
+        String pPackage = request.getParameter("pPackage");
+        String pDisplay = request.getParameter("pDisplay");
+        String pFeatures = request.getParameter("pFeatures");
+        
+        String AllDesc = desc+";"+pBrand+";"+pReleased+";"+pPackage+";"+pDisplay+";"+pFeatures;
         try {
             this.connect();
             prepStatement = connection.prepareStatement("update product SET category_id = ?,price=?,description=?,qunatity=?,"
@@ -329,7 +343,7 @@ public class DataBase {
                     ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             prepStatement.setInt(1, cat_id);
             prepStatement.setInt(2, price);
-            prepStatement.setString(3, desc);
+            prepStatement.setString(3, AllDesc);
             prepStatement.setInt(4, quant);
             prepStatement.setString(5, name);
             prepStatement.setString(6, url);
@@ -346,7 +360,7 @@ public class DataBase {
 
     
 
-    public int createOrder(Cookie[] cookie, String customerId) {
+    public int createOrder(Cookie[] cookie, int customerId) {
         int productId = 0;
         float productPrice = 0;
         int productQuantity = 0;
@@ -354,10 +368,11 @@ public class DataBase {
         ResultSet rs = null;
         int result = -1;
         this.connect();
-        for (Cookie c : cookie) {
+        for (Cookie c : cookie) {            
             if (c.getName().equals("productInCart")) {
+                System.err.println("sdadadadasddddddddddddddddddddddddddddddd"+c.getValue());
                 try {
-                    result = this.DML("INSERT INTO orders(quantity,status,date) VALUES (" + Integer.parseInt(c.getValue()) + ",'unconfirmed',now());");
+                    result = this.DML("INSERT INTO orders(quantity,status,date) VALUES ('" + c.getValue() + "','unconfirmed',now());");
                     rs = this.select("select order_id from orders  order by order_id DESC limit(1);");
                     if (rs.next()) {
                         orderId = Integer.parseInt(rs.getString("order_id"));
@@ -460,4 +475,5 @@ public class DataBase {
         }
         return null;
     }
+    
 }
