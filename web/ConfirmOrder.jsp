@@ -9,19 +9,19 @@
 <!-- Sidebar =============================================== -->
 <%@ include file="sideBar.jsp" %>
 <!-- Sidebar end=============================================== -->
-<div class="span9">
+<div clasSs="span9">
     <ul class="breadcrumb">
         <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-        <li class="active"> SHOPPING CART</li>
+        <li class="active">Confirm Order</li>
     </ul>
-    <h3> SHOPPING CART</h3>	
+    <h3>Confirm Order</h3>	
     <hr class="soft"/>
 
     <%!
         String state = "";
     %>
     <%    Cookie[] cookie = request.getCookies();
-        state = d.confirmOrder(3, (Integer) session.getAttribute("orderId"), cookie);
+        state = d.confirmOrder((Integer)session.getAttribute("customer_id"), (Integer) session.getAttribute("orderId"), cookie);
         if (state.equals("unconfirmed")) {
             session.setAttribute("exceedLimit", "true");
             RequestDispatcher rd = request.getRequestDispatcher("Cart.jsp");

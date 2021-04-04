@@ -14,21 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author elfek
+ * @author ELROWAD
  */
-public class HomePage extends HttpServlet {
-   
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.getWriter().println("");
-    }
+public class OrderManagement extends HttpServlet {
 
-   
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
     }
-
+    
+    
 
 }

@@ -59,13 +59,18 @@ public class checklogin extends HttpServlet {
                     session.setAttribute("fname",result.getString(4));
                     session.setAttribute("lname",result.getString(5));
                     session.setAttribute("customer_id",result.getInt(6));
-                    
-                    if(result.getString(3).equals("c"))
-                        response.sendRedirect("index.jsp");
+
+                    if(result.getString(3).equals("c")){
+                        if(session.getAttribute("requestedPage") == null){
+                            response.sendRedirect("index.jsp");
+                        }
+                        else{
+                            response.sendRedirect("Cart.jsp");
+                        }
+                    }
                     else
                     {
                         response.sendRedirect("AdminSearchProducts");
-                       
                     }
                 }
             }

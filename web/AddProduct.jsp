@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%-- 
     Document   : AddProduct
     Created on : Mar 25, 2021, 5:31:41 PM

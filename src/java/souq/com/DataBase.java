@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 import javax.websocket.Session;
@@ -25,7 +26,7 @@ public class DataBase {
 
     // init database constants
 //    private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-    private static final String DATABASE_URL = "jdbc:postgresql://localhost/e_commerce";
+   private static final String DATABASE_URL = "jdbc:postgresql://localhost/e_commerce";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "postgres";
 
@@ -144,6 +145,7 @@ public class DataBase {
             e.printStackTrace();
         }
     }
+ 
 
     public void getLatestProducts(JspWriter out) {
         try {
@@ -169,13 +171,15 @@ public class DataBase {
 
     }
 
-    public int getNumOfDev(JspWriter out, HttpServletRequest req, HttpSession s) {
+    
+    public int getNumOfDev(JspWriter out,HttpServletRequest req,HttpSession s)
+    {
         s = req.getSession(false);
-        int mobile = 0;
-        int laptop = 0;
-        int numOfFeatured = 0;
-        try {
-            this.connect();
+        int mobile=0;
+        int laptop=0;
+        int numOfFeatured=0;
+         try {
+                this.connect();
             ResultSet rs1 = this.select("select count(product_id) from product where category_id= 1;");
             ResultSet rs2 = this.select("select count(product_id) from product where category_id= 2;");
             ResultSet rs3 = this.select("select count(product_id) from product where featured= \'f\';");
@@ -191,23 +195,27 @@ public class DataBase {
             }
 
             String r = (String) s.getAttribute("role");
-            if (r.equals("c") || r.equals("")) {
-                out.print(" <li class=\"subMenu open\"><a> ELECTRONICS [" + (laptop + mobile) + "]</a>\n"
-                        + "                                <ul>\n"
-                        + "                                    <li><a href=\"SearchOnProduct?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone (" + mobile + ")</a></li>\n"
-                        + "                                    <li><a href=\"SearchOnProduct?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop (" + laptop + ")</a></li>\n"
-                        + "                                </ul>\n"
-                        + "                            </li>   ");
-            } else {
-                out.print(" <li class=\"subMenu open\"><a> ELECTRONICS [" + (laptop + mobile) + "]</a>\n"
-                        + "                                <ul>\n"
-                        + "                                    <li><a href=\"AdminSearchProducts?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone (" + mobile + ")</a></li>\n"
-                        + "                                    <li><a href=\"AdminSearchProducts?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop (" + laptop + ")</a></li>\n"
-                        + "                                </ul>\n"
-                        + "                            </li>   ");
+            if(r.equals("c") || r.equals(""))
+            {
+                 out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
+"                                <ul>\n" +
+"                                    <li><a href=\"SearchOnProduct?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
+"                                    <li><a href=\"SearchOnProduct?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
+"                                </ul>\n" +
+"                            </li>   ");
             }
-
-            this.disconnect();
+            else
+            {
+                 out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
+"                                <ul>\n" +
+"                                    <li><a href=\"AdminSearchProducts?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
+"                                    <li><a href=\"AdminSearchProducts?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
+"                                </ul>\n" +
+"                            </li>   ");
+            }
+                   
+            
+             this.disconnect();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -283,6 +291,7 @@ public class DataBase {
             prepStatement.setInt(1, cat_id);
             prepStatement.setInt(2, price);
             prepStatement.setString(3, AllDesc);
+            prepStatement.setString(3, desc);
             prepStatement.setInt(4, quant);
             prepStatement.setString(5, name);
             prepStatement.setString(6, url);
@@ -358,19 +367,18 @@ public class DataBase {
         }
     }
 
-    
-
     public int createOrder(Cookie[] cookie, int customerId) {
-        int productId = 0;
-        float productPrice = 0;
-        int productQuantity = 0;
+        int productId;
+        float productPrice =0 ;
+        int productQuantity =0;
         int orderId = 0;
         ResultSet rs = null;
         int result = -1;
         this.connect();
-        for (Cookie c : cookie) {            
-            if (c.getName().equals("productInCart")) {
-                System.err.println("sdadadadasddddddddddddddddddddddddddddddd"+c.getValue());
+        if(cookie != null)
+        {
+        for (Cookie c : cookie) {
+            if (c.getName().equals("productInCart")&&!(c.getValue().equals(""))) {
                 try {
                     result = this.DML("INSERT INTO orders(quantity,status,date) VALUES ('" + c.getValue() + "','unconfirmed',now());");
                     rs = this.select("select order_id from orders  order by order_id DESC limit(1);");
@@ -393,6 +401,7 @@ public class DataBase {
                     Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
         }
         return orderId;
     }
@@ -475,5 +484,8 @@ public class DataBase {
         }
         return null;
     }
-    
+
+    public String reloadCart(int customerId){
+        return "False";
+    }
 }

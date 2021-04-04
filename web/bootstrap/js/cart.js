@@ -5,7 +5,7 @@ updateCartinfo();
 
 function incrementQuantity(id) {
     product_id = id.substring(4);
-    if (document.getElementById("quantity" + product_id).value < document.getElementById("quantity" + product_id).getAttribute("data-max-qunatity")) {
+    if (parseInt(document.getElementById("quantity" + product_id).value) < parseInt(document.getElementById("quantity" + product_id).getAttribute("data-max-qunatity"))) {
         document.getElementById("quantity" + product_id).value = parseInt(document.getElementById("quantity" + product_id).value) + 1;
         document.getElementById("quantity-total" + product_id).innerText = parseInt(document.getElementById("price" + product_id).innerText) * parseInt(document.getElementById("quantity" + product_id).value);
         document.cookie = "id" + product_id + "=" + document.getElementById("quantity" + product_id).value;
