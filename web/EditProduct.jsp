@@ -214,7 +214,7 @@
             String edditsuccessfull = (String) session.getAttribute("Edditproduct");
             if(edditsuccessfull.equals("yes"))
             {
-                out.print("<p style=\"margin-left: 18vw;color: green;margin-top: 2vh;position:absolute\" >you edited a product successfully<p>");
+                out.print("<p id=\"editResult\" style=\"margin-left: 18vw;color: green;margin-top: 2vh;position:absolute\" >you edited a product successfully<p>");
             }
          %>
 

@@ -54,3 +54,37 @@
         </session-timeout>
     </session-config>
 </web-app>
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <servlet>
+        <servlet-name>HomePage</servlet-name>
+        <servlet-class>souq.com.HomePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>checklogin</servlet-name>
+        <servlet-class>souq.com.checklogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductDetails</servlet-name>
+        <servlet-class>souq.com.ProductDetails</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomePage</servlet-name>
+        <url-pattern>/HomePage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>checklogin</servlet-name>
+        <url-pattern>/checklogin</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>ProductDetails</servlet-name>
+        <url-pattern>/ProductDetails</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
+ -->

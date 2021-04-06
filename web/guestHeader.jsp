@@ -76,6 +76,7 @@
     </form>
     <ul id="topMenu" class="nav pull-right">
         <li class=""><a href="index.jsp">Home</a></li>
+        
         <%
             if( ((String)session.getAttribute("loginState")) == null)
             {
@@ -96,6 +97,7 @@
                     out.print("</li>");
                 }
                 else{
+                    out.print("<li class=\"\"><a href=\"ListOrders.jsp?id="+(int)session.getAttribute("customer_id")+"\">Orders</a></li>");
                     out.print("<li class=\"\"><a href=\"register.jsp\">Profile</a></li>");
                     out.print("<li class=\"\" ><a href=\"SearchOnProduct\" >Products</a></li>");
                     out.print("<li class=\"\">");
@@ -112,3 +114,4 @@
 </div>
 </div>
 <!-- Header End====================================================================== -->
+

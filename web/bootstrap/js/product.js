@@ -12,14 +12,14 @@ let productInCart = 0;
 
 function addToCart(price, id, name) {
 
-    document.cookie = "id" + id + "=" +"1";
+    document.cookie = "id" + id + "=" +"1"+";path=/";
     productInCart = parseInt(document.getElementById("add-tocart").innerHTML) + 1;
     // document.getElementById("add-tocart").innerHTML = productInCart;
     totalPrice = parseInt(document.getElementById("total-price").innerHTML) + parseInt(price);
     document.getElementById("add-tocart").innerHTML = productInCart;
     document.getElementById("total-price").innerHTML = totalPrice;
-    document.cookie = "productInCart=" + productInCart;
-    document.cookie = "totalPrice=" + totalPrice;
+    document.cookie = "productInCart=" + productInCart+";path=/";
+    document.cookie = "totalPrice=" + totalPrice+";path=/";
     document.getElementById(id).onclick = null;
 }
 

@@ -5,10 +5,10 @@
  */
 
 
-document.getElementById("add-tocart").innerHTML = 0;
-document.getElementById("total-price").innerHTML = 0;
-document.cookie = "productInCart=;0;path=/";
-document.cookie = "totalPrice=;0;paht=/";
+document.getElementById("add-tocart").innerHTML = "0";
+document.getElementById("total-price").innerHTML = "0";
+document.cookie = "productInCart=0;0;path=/";
+document.cookie = "totalPrice=0;0;paht=/";
 
 
 
