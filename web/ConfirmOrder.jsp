@@ -12,9 +12,9 @@
 <div clasSs="span9">
     <ul class="breadcrumb">
         <li><a href="index.html">Home</a> <span class="divider">/</span></li>
-        <li class="active">Confirm Order</li>
+        <li class="active">Order Confirmation</li>
     </ul>
-    <h3>Confirm Order</h3>	
+    <h3> Order Confirmation</h3>	
     <hr class="soft"/>
 
     <%!
@@ -29,18 +29,27 @@
         } else if (state.equals("confirmed")) {
             session.setAttribute("exceedLimit", "false");
             for (Cookie c : cookie) {
+                 if(c.getName().equals("totalPrice")){
+                   d.DML("update customer set credit_limit=credit_limit - "+c.getValue()+" where customer_id="+session.getAttribute("customer_id")+";");
+                 }
+                 else if(c.getName().startsWith("id") && !(c.getValue().equals("0"))){
+                     d.DML("update product set qunatity=qunatity - "+c.getValue()+" where product_id="+c.getName().substring(2)+";");
+                 }
                 c.setValue("");
                 c.setMaxAge(0);
+                c.setPath("/");
                 response.addCookie(c);
             }
+            session.removeAttribute("orderId");
     %>
    
     <div style="text-align: center"><img src="themes/images/successfully.png" ></div><br>
     <a href="SearchOnProduct" class="btn btn-large" type="submit"><i class="icon-arrow-left"></i> Continue Shopping </a>
+    <script src="bootstrap/js/deleteCart.js"></script>
     <%}%>
 
-</div></div>
 </div>
+</div></div> 
 
 <!-- MainBody End ============================= -->
 <!-- Footer ================================================================== -->
