@@ -20,6 +20,10 @@
         <servlet-name>SendEmail</servlet-name>
         <servlet-class>souq.com.SendEmail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpddateLimit</servlet-name>
+        <servlet-class>souq.com.UpddateLimit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/HomePage</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>SendEmail</servlet-name>
         <url-pattern>/SendEmail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpddateLimit</servlet-name>
+        <url-pattern>/UpddateLimit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

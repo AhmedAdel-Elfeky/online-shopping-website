@@ -17,13 +17,13 @@ public class SendEmail extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out =response.getWriter();
+        PrintWriter out = response.getWriter();
         DataBase db = new DataBase();
         String from = "mohamed.eliba712@gmail.com";
         String host = "smtp.gmail.com";
         String port = "465";
         String to = request.getParameter("email");
-        
+
         Properties props = new Properties();
         props.put("mail.smtp.user", from);
         props.put("mail.smtp.host", host);
@@ -49,44 +49,40 @@ public class SendEmail extends HttpServlet {
         session.setDebug(true);
 
         db.connect();
-        
+
         try {
             
             ResultSet rs = db.select("select * from customer where mail like '" + to + "'");
             if (rs.next()) {
-                
-                
-               
+
                 String uname = rs.getString("uname");
                 String password = rs.getString("password");
 //                ResultSet passwordRS = db.select("select password from customer where mail like '" + to + "'");
-            // Set From: header field of the header.
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(from));
+                // Set From: header field of the header.
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(from));
 
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                // Set To: header field of the header.
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
-            // Set Subject: header field
-            message.setSubject("This is the Subject Line!");
+                // Set Subject: header field
+                message.setSubject("This is the Subject Line!");
 
-            // Now set the actual message
-            message.setText("your user name is: "+uname+"\n"+"and, your password is: "+password);
+                // Now set the actual message
+                message.setText("your user name is: " + uname + "\n" + "and, your password is: " + password);
 
-            System.out.println("sending...");
-            // Send message
-            Transport.send(message);
-            out.println("an email with your user name and password is sent to your email");
-            }
-            else{
+                System.out.println("sending...");
+                
+                // Send message
+                Transport.send(message);
+                out.println("an email with your user name and password is sent to your email");
+            } else {
                 out.println("You don't have account");
             }
         } catch (SQLException | MessagingException ex) {
             ex.printStackTrace();
         }
         db.disconnect();
-
-        
 
     }
 

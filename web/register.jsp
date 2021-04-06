@@ -33,19 +33,19 @@
             <h4>Your personal information</h4>
 
             <div class="control-group">
-                <label class="control-label" for="inputFname1">First name <sup>*</sup></label>
+                <label class="control-label" for="inputFname1">First name <sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="text" id="inputFname1" placeholder="First Name" name="fname" required>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="inputLnam">Last name <sup>*</sup></label>
+                <label class="control-label" for="inputLnam">Last name <sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="text" id="inputLnam" placeholder="Last Name" name="lname" required>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="inputLnam">User name <sup>*</sup></label>
+                <label class="control-label" for="inputLnam">User name <sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="text" id="inputLnam" placeholder="user name" name="uname" required>
                 </div>
@@ -65,7 +65,7 @@
 
             %>
             <div class="control-group">
-                <label class="control-label" for="input_email">Email <sup>*</sup></label>
+                <label class="control-label" for="input_email">Email <sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="email" id="input_email" placeholder="Email" name="email" required>
                 </div>
@@ -80,30 +80,28 @@
                 }
 
             %>
-            
-              <%
-                if (request.getParameter("email") != null && !Register.isEmailValid(request.getParameter("email"))) {
+
+            <%                  if (request.getParameter("email") != null && !Register.isEmailValid(request.getParameter("email"))) {
                     out.println("<div class=\"alert alert-block alert-error fade in\">\n"
                             + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
                             + "                <strong>Error!</strong>It's not a valid Email address\n"
                             + "         </div> ");
                 }
-                
 
 
             %>
             <div class="control-group">
-                <label class="control-label" for="inputPassword1">Password <sup>*</sup></label>
+                <label class="control-label" for="inputPassword1">Password <sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="password" id="inputPassword1" placeholder="Password" name="password" required>
                 </div>
             </div>	  
             <div class="control-group">
-                <label class="control-label">Date of Birth <sup>*</sup></label>
+                <label class="control-label">Date of Birth <sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="date" name="age" max="2000-01-01" required>
                 </div>
-            </div>
+            </div>  
 
             <div class="control-group">
                 <label class="control-label" for="company">Job</label>
@@ -112,7 +110,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="company">Credit Number</label>
+                <label class="control-label" for="company">Credit Number<sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="text" id="company" placeholder="Enter your credit number" name="creditnumber"/>
                 </div>
@@ -128,60 +126,59 @@
                 db.disconnect();
             %>
             <%
-                if (request.getParameter("creditnumber") != null ) {
-                    try {
-                        Long.parseLong(request.getParameter("creditnumber"));
-
-                    } catch (NumberFormatException ex) {
-                        out.println("<div class=\"alert alert-block alert-error fade in\">\n"
-                                + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
-                                + "                <strong>Error!</strong> it's not a valid Credit Number\n"
-                                + "         </div> ");
-                        sucessFlag = false;
+////                String creditNumber = request.getParameter("creditnumber");
+                    if (request.getParameter("creditnumber") != null) {
+                        try {
+                            Long.parseLong(request.getParameter("creditnumber"));
+                            if (!Register.isCreditCardValid(Long.parseLong(request.getParameter("creditnumber")))) {
+                                out.println("<div class=\"alert alert-block alert-error fade in\">\n"
+                                        + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
+                                        + "                <strong>Error!</strong> it's not a valid Credit Number\n"
+                                        + "         </div> ");
+                            }
+                        } catch (NumberFormatException ex) {
+                            out.println("<div class=\"alert alert-block alert-error fade in\">\n"
+                                    + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
+                                    + "                <strong>Error!</strong>It's not a valid Credit Number\n"
+                                    + "         </div> ");
+                        }
 
                     }
-                }
-                else if(request.getParameter("creditnumber") != null && !Register.isCreditCardValid(Long.parseLong(request.getParameter("creditnumber")))){
-                    out.println("<div class=\"alert alert-block alert-error fade in\">\n"
-                            + "                <button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>\n"
-                            + "                <strong>Error!</strong>It's not a valid Credit Number\n"
-                            + "         </div> ");
-                }
-                
 
             %>
-            
+
 
 
 
             <div class="control-group">
-                <label class="control-label" for="address">Address<sup>*</sup></label>
+                <label class="control-label" for="address">Address<sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="text" id="address" placeholder="Adress" name="addl1" required/> <span>Street address, P.O. box, company name, c/o</span>
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="address2">Address (Line 2)<sup>*</sup></label>
+                <label class="control-label" for="address2">Address (Line 2)<sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="text" id="address2" placeholder="Adress line 2" name="addl2" required/> <span>Apartment, suite, unit, building, floor, etc.</span>
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="city">City<sup>*</sup></label>
+                <label class="control-label" for="city">City<sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="text" id="city" placeholder="city" name="city" required/> 
                 </div>
             </div>
 
             <div class="control-group">
-                <label class="control-label" for="postcode">Zip / Postal Code<sup>*</sup></label>
+                <label class="control-label" for="postcode">Zip / Postal Code<sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="text" id="postcode" placeholder="Zip / Postal Code" name="zip" required/> 
                 </div>
             </div>
 
-            <%    if (request.getParameter("zip") != null) {
+            <%    if (request.getParameter ( 
+                    "zip") != null) {
                     try {
                         Long.parseLong(request.getParameter("zip"));
                     } catch (NumberFormatException ex) {
@@ -195,13 +192,14 @@
             %>
 
             <div class="control-group">
-                <label class="control-label" for="phone"> Phone <sup>*</sup></label>
+                <label class="control-label" for="phone"> Phone <sup sup style="color: red">*</sup></label>
                 <div class="controls">
                     <input type="text"  name="phone" id="phone" placeholder="phone" required/>
                 </div>
             </div>
             <%
-                if (request.getParameter("phone") != null) {
+                if (request.getParameter ( 
+                    "phone") != null) {
                     try {
                         Long.parseLong(request.getParameter("zip"));
                     } catch (NumberFormatException ex) {
@@ -230,7 +228,7 @@
                 </div>
             </div>
 
-            <p>Fields marked with * are required</p>
+            <p sup style="color: red">Fields marked with * are required</p>
 
             <div class="control-group">
                 <div class="controls">
