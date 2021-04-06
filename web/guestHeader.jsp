@@ -75,10 +75,12 @@
 		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
     </form>
     <ul id="topMenu" class="nav pull-right">
-        <li class=""><a href="index.jsp">Home</a></li>
+       
+        
         <%
             if( ((String)session.getAttribute("loginState")) == null)
             {
+                 out.print("<li class=\"\"><a href=\"index.jsp\">Home</a></li>");
                 out.print("<li class=\"\"><a href=\"register.jsp\">Sign up</a></li>");
                 out.print("<li class=\"\"><a href=\"contact.html\">Contact</a></li>");
                 out.print("<li class=\"\">");
@@ -89,6 +91,7 @@
             {
                 if(((String)session.getAttribute("loginState")).equals("false"))
                 {
+                     out.print("<li class=\"\"><a href=\"index.jsp\">Home</a></li>");
                     out.print("<li class=\"\"><a href=\"register.jsp\">Sign up</a></li>");
                     out.print("<li class=\"\"><a href=\"contact.html\">Contact</a></li>");
                     out.print("<li class=\"\">");
@@ -96,12 +99,31 @@
                     out.print("</li>");
                 }
                 else{
-                    out.print("<li class=\"\"><a href=\"register.jsp\">Profile</a></li>");
-                    out.print("<li class=\"\" ><a href=\"SearchOnProduct\" >Products</a></li>");
-                    out.print("<li class=\"\">");
-                    out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Log Out</span></a>");
-                    out.print("</li>");
+                    String role = (String) session.getAttribute("role");
+                    if(role.equals("a"))
+                    {
+                        out.print("<li class=\"\"><a href=\"AddProduct.jsp\">Add Product</a></li>");
+                        out.print("<li class=\"\"><a href=\"\">Customers</a></li>");
+                        out.print("<li class=\"\"><a href=\"register.jsp\">Profile</a></li>");
+                        out.print("<li class=\"\" ><a href=\"AdminSearchProducts\" >Products</a></li>");
+                        out.print("<li class=\"\">");
+                        out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Log Out</span></a>");
+                        out.print("</li>");
+                        
+                    }
+                    else
+                    {
+                         out.print("<li class=\"\"><a href=\"index.jsp\">Home</a></li>");
+                        out.print("<li class=\"\"><a href=\"ListOrders.jsp?id="+(int)session.getAttribute("customer_id")+"\">Orders</a></li>");
+                        out.print("<li class=\"\"><a href=\"register.jsp\">Profile</a></li>");
+                        out.print("<li class=\"\" ><a href=\"SearchOnProduct\" >Products</a></li>");
+                        out.print("<li class=\"\">");
+                        out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Log Out</span></a>");
+                        out.print("</li>");
+                    }
                     session.setAttribute("loginState", "true");
+
+                    
             }
             }
             

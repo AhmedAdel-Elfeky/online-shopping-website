@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%-- 
     Document   : AddProduct
     Created on : Mar 25, 2021, 5:31:41 PM
@@ -6,8 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="AdminHeader.jsp" %>
-<%@ include file="AdminSideBar.jsp" %>
+<%@ include file="guestHeader.jsp" %>
+<%@ include file="sideBar.jsp" %>
 
 <div class="span9">
     <ul class="breadcrumb">

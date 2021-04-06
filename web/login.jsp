@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
          <%
             session.setAttribute("loginState", "false");
+            session.setAttribute("role", "c");
+            session.setAttribute("customer_id",-1);
             RequestDispatcher header = request.getRequestDispatcher("guestHeader.jsp");
             header.include(request, response);
         %>

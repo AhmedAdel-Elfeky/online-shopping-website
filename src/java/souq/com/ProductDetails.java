@@ -63,8 +63,8 @@ public class ProductDetails extends HttpServlet {
                 {
                     out.println("<div class=\"span9\">\n"
                         + "    <ul class=\"breadcrumb\">\n"
-                        + "    <li><a href=\"index.html\">Home</a> <span class=\"divider\">/</span></li>\n"
-                        + "    <li><a href=\"products.html\">Products</a> <span class=\"divider\">/</span></li>\n"
+                        + "    <li><a href=\"AdminSearchProducts\">Home</a> <span class=\"divider\">/</span></li>\n"
+                        + "    <li><a href=\"AdminSearchProducts\">Products</a> <span class=\"divider\">/</span></li>\n"
                         + "    <li class=\"active\">product Details</li>\n"
                         + "    </ul>	\n"
                         + "	<div class=\"row\">	  \n"

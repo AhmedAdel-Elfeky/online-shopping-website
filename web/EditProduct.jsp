@@ -6,8 +6,8 @@
 
 <%@page import="souq.com.ProductInfo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="AdminHeader.jsp" %>
-<%@ include file="AdminSideBar.jsp" %>
+<%@ include file="guestHeader.jsp" %>
+<%@ include file="sideBar.jsp" %>
 
 <div class="span9">
     <ul class="breadcrumb">
@@ -214,7 +214,7 @@
             String edditsuccessfull = (String) session.getAttribute("Edditproduct");
             if(edditsuccessfull.equals("yes"))
             {
-                out.print("<p style=\"margin-left: 18vw;color: green;margin-top: 2vh;position:absolute\" >you edited a product successfully<p>");
+                out.print("<p id=\"editResult\" style=\"margin-left: 18vw;color: green;margin-top: 2vh;position:absolute\" >you edited a product successfully<p>");
             }
          %>
 

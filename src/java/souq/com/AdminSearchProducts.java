@@ -33,13 +33,13 @@ public class AdminSearchProducts extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
         DataBase db = new DataBase();
-        RequestDispatcher header = req.getRequestDispatcher("AdminHeader.jsp");
+        RequestDispatcher header = req.getRequestDispatcher("guestHeader.jsp");
         header.include(req, resp);
         HttpSession session = req.getSession(false);
         session.setAttribute("Edditproduct","no");
         session.setAttribute("addproduct","no");
         
-        RequestDispatcher sideBar = req.getRequestDispatcher("AdminSideBar.jsp");
+        RequestDispatcher sideBar = req.getRequestDispatcher("sideBar.jsp");
         sideBar.include(req, resp);
 
         RequestDispatcher body = req.getRequestDispatcher("products.html");
@@ -66,7 +66,7 @@ public class AdminSearchProducts extends HttpServlet {
                         + "				<a href=\"ProductDetails?productId="+rs.getString("product_id")+"\"><img  style=\"height:170px;\" src=" + rs.getString("img_url") + " alt=\"\"/></a>\n"
                         + "				<div class=\"caption\">\n"
                         + "				  <h5>" + rs.getString("name") + "</h5>"
-                        + "				   <h4 style=\"text-align:center;\"><a class=\"btn\" href=\"product_details.html\"> <i class=\"icon-zoom-in\"></i></a> <a class=\"btn\" href=\"EditProduct.jsp?product_id="+rs.getInt("product_id")+"\">Edit </a>  <a class=\"btn btn-primary\" style=\"pointer-events: none; cursor: default;\">" + rs.getString("price") + " $</a></h4>\n"
+                        + "				   <h4 style=\"text-align:center;\"><a class=\"btn\" href=\"ProductDetails?productId="+rs.getString("product_id")+"\"> <i class=\"icon-zoom-in\"></i></a> <a class=\"btn\" href=\"EditProduct.jsp?product_id="+rs.getInt("product_id")+"\">Edit </a>  <a class=\"btn btn-primary\" style=\"pointer-events: none; cursor: default;\">" + rs.getString("price") + " $</a></h4>\n"
                         + "				</div>\n"
                         + "			  </div>\n"
                         + "			</li>"
@@ -82,19 +82,6 @@ public class AdminSearchProducts extends HttpServlet {
                 + "	</div>\n"
                 + "</div>\n"
                 + "\n"
-                + "	<a href=\"compair.html\" class=\"btn btn-large pull-right\">Compair Product</a>\n"
-                + "	<div class=\"pagination\">\n"
-                + "			<ul>\n"
-                + "			<li><a href=\"#\">&lsaquo;</a></li>\n"
-                + "			<li><a href=\"#\">1</a></li>\n"
-                + "			<li><a href=\"#\">2</a></li>\n"
-                + "			<li><a href=\"#\">3</a></li>\n"
-                + "			<li><a href=\"#\">4</a></li>\n"
-                + "			<li><a href=\"#\">...</a></li>\n"
-                + "			<li><a href=\"#\">&rsaquo;</a></li>\n"
-                + "			</ul>\n"
-                + "			</div>\n"
-                + "			<br class=\"clr\"/>\n"
                 + "</div>\n"
                 + "</div>\n"
                 + "</div>\n"

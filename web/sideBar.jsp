@@ -25,7 +25,14 @@
             }
         %>
 	<div id="sidebar" class="span3">
-            <div class="well well-small"><a   id="myCart" href="Cart.jsp"><img src="themes/images/ico-cart.png" alt="cart"><span id="add-tocart"><%=numOfProduct%></span> Items in your cart  <span class="badge badge-warning pull-right" >$<span id="total-price"> <%=totalPrice%> </span></span></a></div>
+            <%
+                String r = (String) session.getAttribute("role");
+                 if(r.equals("c"))
+                 {
+                   out.print("<div class=\"well well-small\"><a   id=\"myCart\" href=\"Cart.jsp\"><img src=\"themes/images/ico-cart.png\" alt=\"cart\"><span id=\"add-tocart\">"+numOfProduct+"</span> Items in your cart  <span class=\"badge badge-warning pull-right\" >$<span id=\"total-price\"> "+totalPrice+" </span></span></a></div>");
+                 }
+            %>
+            
 		<ul id="sideManu" class="nav nav-tabs nav-stacked">
 			 <%
                                 int numOfFeatured=0;
@@ -34,6 +41,7 @@
                                 numOfFeatured--;
                                 if(session.getAttribute("orderId") != null)
                                    d.updateOrder(cookies,(Integer)session.getAttribute("orderId"),(Integer)session.getAttribute("customer_id"),"unconfirmed");
+//                             }
                          %>
 		</ul>
 		<br/>

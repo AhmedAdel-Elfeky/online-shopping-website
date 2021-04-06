@@ -15,7 +15,8 @@
         session.setAttribute("name", "");
         session.setAttribute("fname", "");
         session.setAttribute("lname", "");
-        session.setAttribute("role", "");
+        session.setAttribute("role", "c");
+        session.setAttribute("customer_id",-1);
 
     } else {
         if (loginState.equals("true")) {
