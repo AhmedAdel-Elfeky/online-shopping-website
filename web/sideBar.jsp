@@ -1,4 +1,5 @@
-<%@page import="java.util.ArrayList"%>
+ <%@page import="java.util.ArrayList"%>
+ 
 <%@page import="java.util.HashMap"%>
 <%@page import="java.sql.ResultSet"%>
 <%-- 
@@ -12,7 +13,7 @@
     <div class="container">
         <div class="row">
             <!-- Sidebar ================================================== -->
-            <%! int numOfProduct = 0;
+             <%! int numOfProduct = 0;
                 int totalPrice = 0;
                 DataBase d = new DataBase();
                 int orderPrice;

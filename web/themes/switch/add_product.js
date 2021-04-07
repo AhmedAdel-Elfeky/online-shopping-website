@@ -26,12 +26,10 @@ var editStatus = document.getElmentById("editResult");
 
 function validateMyForm()
 {
-
     if (pprice.value == "" || pname.value == "" || pdate.value == "" || pquantity.value == ""
             || purl.value == "" || pdesc.value == "" || pbrand.value == "" || preleased.value == "" || ppkg.value == ""
             || pdisplay.value == "" || pfeature.value == "")
     {
-//         editStatus.style.visibility = "hidden";
          if (pprice.value == "")
         {
             error[2].style.visibility = "visible";
@@ -85,9 +83,6 @@ function validateMyForm()
         {
             error[5].style.visibility = "hidden";
         }
-
-        
-
         if (preleased.value == "")
         {
             error[7].style.visibility = "visible";
@@ -120,7 +115,6 @@ function validateMyForm()
         {
             error[10].style.visibility = "hidden";
         }
-       
         return false;
     }
 
@@ -132,4 +126,6 @@ function validateMyForm()
     return true;
 }
 
-savebtn.addEventListener("click",validateMyForm);
+ 
+ savebtn.addEventListener("click");
+ 

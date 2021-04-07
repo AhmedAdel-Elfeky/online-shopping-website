@@ -22,40 +22,36 @@
     <%! String ids = "";
         ResultSet rs = null;
         int totalOrderPrice;
-        int totalProductNum;
         boolean flag;
         String quant = null;
-        int price;
-        Cookie[] product;
-        int i = 0 ;
+        int price ;
     %>
     <%  totalOrderPrice = 0;
-        if (session.getAttribute("loginState").equals("false")) {
-            session.setAttribute("requestedPage", "Cart.jsp");
+        if(session.getAttribute("loginState").equals("false")){
+            session.setAttribute("requestedPage","Cart.jsp");
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);
-        } else {
-            ids = "";
-            Cookie[] cookie = request.getCookies();
-            DataBase db = new DataBase();
-            db.connect();
-            if (cookie != null) {
-                for (Cookie c : cookie) {
-                    if (c.getName().startsWith("id") && !(c.getValue().equals("0"))) {
-                        ids += c.getName().substring(2) + ",";
-                    }
-                }
-
-      if (!ids.equals("")) {
-        if (session.getAttribute("orderId") == null) {
-            session.setAttribute("orderId", db.createOrder(cookie, (Integer) session.getAttribute("customer_id")));
         }
-        StringBuffer sb = new StringBuffer(ids);
-        sb.deleteCharAt(sb.length() - 1);
-        rs = db.select("select product_id,price,name,img_url,qunatity from product where product_id in (" + sb + ");");
+        else{
+        ids = "";
+        Cookie[] cookie = request.getCookies();
+        DataBase db = new DataBase();
+        db.connect();
+        if (cookie != null) {
+            for (Cookie c : cookie) {
+                if (c.getName().startsWith("id")&& !(c.getValue().equals("0"))){
+                    ids += c.getName().substring(2) + ",";
+                }
+            }
+            if (!ids.equals("")) {
+                if(session.getAttribute("orderId") == null)
+                    session.setAttribute("orderId",db.createOrder(cookie,(Integer)session.getAttribute("customer_id")));
+                StringBuffer sb = new StringBuffer(ids);
+                sb.deleteCharAt(sb.length() - 1);
+                rs = db.select("select product_id,price,name,img_url,qunatity from product where product_id in (" + sb + ");");
     %>
-    <%if (session.getAttribute("exceedLimit") != null && session.getAttribute("exceedLimit").equals("true")) {
-    %>
+    <%if(session.getAttribute("exceedLimit")!= null && session.getAttribute("exceedLimit").equals("true")){
+        %>
     <div style="background-color:#E8C7C7;padding:25px 35px;">Total price is greater than your balance pleas recharge your wallet then try again.</div> <br><br>
     <%}%>
     <table class="table table-bordered">
@@ -75,12 +71,12 @@
             <%for (Cookie c : cookie) {
                     if (c.getName().startsWith("id") && c.getName().substring(2).equals(rs.getString("product_id"))) {
                         quant = c.getValue();
-                        price = Integer.parseInt(quant) * Integer.parseInt(rs.getString("price"));
+                        price = Integer.parseInt(quant)*Integer.parseInt(rs.getString("price"));
                         totalOrderPrice += price;
                         break;
                     }
                 }
-                System.out.println(quant);
+            System.out.println(quant);
             %>
             <tr id=<%="row" + rs.getString("product_id")%>>
                 <td> <img width="60" src= <%=rs.getString("img_url")%>   alt=""/></td>
@@ -93,7 +89,7 @@
                         </button><button class="btn" type="button">
                             <i class="icon-plus" onclick="incrementQuantity(this.id)" id=<%="incr" + rs.getString("product_id")%>></i>      
                         </button><button  class="btn btn-danger" type="button" ><i  class="icon-remove icon-white" onclick="deleteProduct(this.id)" id=<%="remove" + rs.getString("product_id")%> ></i></button>				</div>
-                    <p style="color:rgb(236, 88, 64);font-weight: bold">only <%=rs.getString("qunatity")%> left in stock!</p>
+                <p style="color:rgb(236, 88, 64);font-weight: bold">only <%=rs.getString("qunatity")%> left in stock!</p>
                 </td>
                 <td style="text-align: center" id=<%="price" + rs.getString("product_id")%>><%=rs.getString("price")%></td>
                 <td style="text-align: center">0.00</td>
@@ -124,13 +120,15 @@
     </table>
     <a href="SearchOnProduct"  class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
     <a href="ConfirmOrder.jsp" class="btn btn-large pull-right">Proceed to Checkout <i class="icon-arrow-right"></i></a>
+
     <%}else{%>
-    <div style="background-color:#F8F1A2;padding:25px 35px;">Shopping cart is currently empty
+     <div style="background-color:#F8F1A2;padding:25px 35px;">Shopping cart is currently empty
         Add items to your cart and view them here before you checkout. </div> <br><br>
     <a href="SearchOnProduct" class="btn btn-large" type="submit"><i class="icon-arrow-left"></i> Continue Shopping </a>
-    <%
-    }}}%>
-
+ 
+    <%}
+        }}%>
+ 
 </div>    
 
 </div></div>
