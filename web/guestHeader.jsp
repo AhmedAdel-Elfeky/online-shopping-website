@@ -67,10 +67,17 @@
     <a class="brand" href="index.jsp"><img src="themes/images/logo2.png" alt="Bootsshop"/></a>
 		<form class="form-inline navbar-search" method="get" action="SearchOnProduct" >
 		<input id="srchFld" class="srchTxt" type="text" name="search" />
-		  <select class="srchTxt" name="category">
+		  <select style="width:90px" class="srchTxt" name="category">
                       <option value="All">All</option>
                       <option value="mobile">Mobiles</option>
                       <option value="labtop">Labtops</option>
+		</select>
+                 <select style="width:90px" class="price" name="price">
+                      <option value="">All</option>
+                      <option value="1000 and 5000">1000 - 5000</option>
+                      <option value="5001 and 10000">5000 - 10000</option>
+                      <option value="10001 and 20000">10000 - 20000</option>
+                      <option value="20001 and 30000">20000 - 30000</option>
 		</select> 
 		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
     </form>

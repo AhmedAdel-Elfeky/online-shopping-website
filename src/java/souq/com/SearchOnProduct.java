@@ -35,7 +35,7 @@ public class SearchOnProduct extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
+
         PrintWriter out = resp.getWriter();
         RequestDispatcher header = req.getRequestDispatcher("guestHeader.jsp");
         header.include(req, resp);
@@ -44,6 +44,7 @@ public class SearchOnProduct extends HttpServlet {
         sideBar.include(req, resp);
 
         String name = req.getParameter("search");
+        String price = req.getParameter("price");
         category = req.getParameter("category");
         if (name == null) {
             name = "";
@@ -51,19 +52,21 @@ public class SearchOnProduct extends HttpServlet {
 
         if (category == null || category.equals("All")) {
             category = "";
-
+        }
+        if (price == null || price.equals("All")) {
+            price = "";
         }
 
-        viewSearchedProduct(name, category, out);
+        viewSearchedProduct(name, category, out, price);
         RequestDispatcher footer = req.getRequestDispatcher("Footer.html");
         footer.include(req, resp);
     }
 
-    public void viewSearchedProduct(String name, String category, PrintWriter out) {
+    public void viewSearchedProduct(String name, String category, PrintWriter out, String price) {
 
         DataBase db = new DataBase();
         boolean rsFlag = false;
-        int numOfProducts = db.getNumOfProducts(name, category);
+        int numOfProducts = db.getNumOfProducts(name, category,price);
         if (!name.equals("")) {
             searchedItem = name;
         } else {
@@ -89,18 +92,18 @@ public class SearchOnProduct extends HttpServlet {
                     + "    </ul>\n"
                     + "    <h3>" + searchedItem + "<small class=\"pull-right\">" + numOfProducts + "  " + "products are available </small></h3>	\n"
                     + "    <hr class=\"soft\"/>\n"
-                    + "    <p>\n"
-                    + "        Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies - that is why our goods are so popular and we have a great number of faithful customers all over the country.\n"
-                    + "    </p>\n"
                     + "    <hr class=\"soft\"/>\n"
                     + "    <br class=\"clr\"/>\n"
                     + "   \n"
                     + "        <div class=\"tab-pane  active\" id=\"blockView\">\n"
                     + "            <ul class=\"thumbnails\">\n"
                     + "");
-            rs = db.select("select name,price,img_url,product_id from product where name ILIKE '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%');");
-
-            while (rs.next()) {
+            if(price.equals("")){
+               rs = db.select("select name,price,img_url,product_id from product where name ILIKE '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%');");
+            }
+            else{
+                 rs = db.select("select name,price,img_url,product_id from product where name ILIKE '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%' and price between "+price+" );");
+            }while (rs.next()) {
                 rsFlag = true;
                 out.println("<li class=\"span3\">\n"
                         + "			  <div class=\"thumbnail\">\n"
@@ -115,7 +118,7 @@ public class SearchOnProduct extends HttpServlet {
             }
 
             if (!rsFlag) {
-                out.println("<div style=\"background-color:#F8F1A2;padding:15px 35px;\">0 Results found for" + "  <u>" + name + "</u> <div>");
+                out.println("<div style=\"background-color:#F8F1A2;padding:15px 35px;\">0 Results found for" + "<u>" + name + "</u> <div>");
             }
             db.disconnect();
         } catch (SQLException ex) {
@@ -126,25 +129,9 @@ public class SearchOnProduct extends HttpServlet {
                 + "	<hr class=\"soft\"/>\n"
                 + "	</div>\n"
                 + "</div>\n"
-                + "\n"
-                + "	<a href=\"compair.html\" class=\"btn btn-large pull-right\">Compair Product</a>\n"
-                + "	<div class=\"pagination\">\n"
-                + "			<ul>\n"
-                + "			<li><a href=\"#\">&lsaquo;</a></li>\n"
-                + "			<li><a href=\"#\">1</a></li>\n"
-                + "			<li><a href=\"#\">2</a></li>\n"
-                + "			<li><a href=\"#\">3</a></li>\n"
-                + "			<li><a href=\"#\">4</a></li>\n"
-                + "			<li><a href=\"#\">...</a></li>\n"
-                + "			<li><a href=\"#\">&rsaquo;</a></li>\n"
-                + "			</ul>\n"
-                + "			</div>\n"
-                + "			<br class=\"clr\"/>\n"
                 + "</div>\n"
                 + "</div>\n"
-                + "</div>\n"
-                + "</div>\n"
-                + "<!-- MainBody End ============================= -->");        
+                + "<!-- MainBody End ============================= -->");
     }
 
 }
