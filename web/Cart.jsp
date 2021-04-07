@@ -30,7 +30,7 @@
         int i = 0 ;
     %>
     <%  totalOrderPrice = 0;
-        if (session.getAttribute("customer_id") == null) {
+        if (session.getAttribute("loginState").equals("false")) {
             session.setAttribute("requestedPage", "Cart.jsp");
             RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
             rd.forward(request, response);

@@ -8,8 +8,9 @@
          <%
              
             session.setAttribute("loginState", "false");
+            session.setAttribute("customer_id",-1);
             session.setAttribute("role", "c");
-            session.setAttribute("customer_id",0);
+           
             RequestDispatcher header = request.getRequestDispatcher("guestHeader.jsp");
             header.include(request, response);
         %>

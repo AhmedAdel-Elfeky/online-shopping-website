@@ -123,7 +123,7 @@
                         out.print("<li class=\"\"><a href=\"Profile?customer_id="+(int)session.getAttribute("customer_id")+"\">Profile</a></li>");
                         out.print("<li class=\"\" ><a href=\"AdminSearchProducts\" >Products</a></li>");
                         out.print("<li class=\"\">");
-                        out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Log Out</span></a>");
+                        out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Login</span></a>");
                         out.print("</li>");
                         
                     }
@@ -134,7 +134,7 @@
                         out.print("<li class=\"\"><a href=\"Profile?customer_id="+(int)session.getAttribute("customer_id")+"\">Profile</a></li>");
                         out.print("<li class=\"\" ><a href=\"SearchOnProduct\" >Products</a></li>");
                         out.print("<li class=\"\">");
-                        out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Log Out</span></a>");
+                        out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Login</span></a>");
                         out.print("</li>");
                     }
                     session.setAttribute("loginState", "true");
