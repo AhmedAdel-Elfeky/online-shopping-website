@@ -104,7 +104,7 @@
                     {
                         out.print("<li class=\"\"><a href=\"AddProduct.jsp\">Add Product</a></li>");
                         out.print("<li class=\"\"><a href=\"\">Customers</a></li>");
-                        out.print("<li class=\"\"><a href=\"register.jsp\">Profile</a></li>");
+                        out.print("<li class=\"\"><a href=\"Profile?customer_id="+(int)session.getAttribute("customer_id")+"\">Profile</a></li>");
                         out.print("<li class=\"\" ><a href=\"AdminSearchProducts\" >Products</a></li>");
                         out.print("<li class=\"\">");
                         out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Log Out</span></a>");
@@ -115,7 +115,7 @@
                     {
                          out.print("<li class=\"\"><a href=\"index.jsp\">Home</a></li>");
                         out.print("<li class=\"\"><a href=\"ListOrders.jsp?id="+(int)session.getAttribute("customer_id")+"\">Orders</a></li>");
-                        out.print("<li class=\"\"><a href=\"register.jsp\">Profile</a></li>");
+                        out.print("<li class=\"\"><a href=\"Profile?customer_id="+(int)session.getAttribute("customer_id")+"\">Profile</a></li>");
                         out.print("<li class=\"\" ><a href=\"SearchOnProduct\" >Products</a></li>");
                         out.print("<li class=\"\">");
                         out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Log Out</span></a>");
