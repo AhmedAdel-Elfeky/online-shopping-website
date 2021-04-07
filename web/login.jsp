@@ -6,9 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
          <%
+             
             session.setAttribute("loginState", "false");
             session.setAttribute("role", "c");
-            session.setAttribute("customer_id",-1);
+            session.setAttribute("customer_id",0);
             RequestDispatcher header = request.getRequestDispatcher("guestHeader.jsp");
             header.include(request, response);
         %>
@@ -47,7 +48,7 @@
 
                                     <div class="control-group">
                                         <div class="controls">
-                                            <button type="submit" class="btn">Sign in</button> <a href="forgetpass.html">Forget password?</a>
+                                            <button type="submit" class="btn">Sign in</button> <a href="forgetpass.jsp">Forget password?</a>
 
                                         </div>
                                     </div>

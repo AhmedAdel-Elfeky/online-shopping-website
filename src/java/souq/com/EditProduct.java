@@ -5,7 +5,7 @@
  */
 package souq.com;
 
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
+//import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.concurrent.Delayed;

@@ -78,7 +78,7 @@ public class EditProfile extends HttpServlet {
                         + "            Password &ensp;  &ensp;  &emsp; &emsp;  <input type=\"password\" name=\"Password\" value=" + result.getString(12) + " style=\"font-size: 17px \">\n"
                         + "        </div><br>\n"
                         + "        <div style=\"position: relative;left: 500px;top: 2px;font-size:20px  \">\n"
-                        + "            Interests &emsp;  &ensp; &emsp; &emsp; <input type=\"text\" name=\"intersts\" value=" + result.getString(13) + " style=\"font-size: 17px \">\n"
+                        + "            Interests &emsp;  &ensp; &emsp; &emsp; <input type=\"text\" name=\"intersts\" value=\"" + result.getString(13)+ "\" style=\"font-size: 17px \">\n"
                         + "        </div> <br>\n"
                         + "        <input type=\"submit\" value=\"Confirm Editing\" style=\"position: relative;left: 500px;top: 2px;font-size:20px  \" >\n"
                         + "        </form>"

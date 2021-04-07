@@ -319,13 +319,16 @@ public class DataBase {
         return numOfFeatured;
     }
 
-    public int getNumOfProducts(String name, String category) {
+    public int getNumOfProducts(String name, String category,String price) {
 
         int numOfProduct = 0;
+        ResultSet rs = null;
         try {
             this.connect();
-
-            ResultSet rs = this.select("select count(product_id) from product where name Ilike '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%');");
+           if(price.equals(""))
+             rs = this.select("select count(product_id) from product where name Ilike '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%');");   
+           else
+             rs = this.select("select count(product_id) from product where name Ilike '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%'and price between "+price+");");
 
             if (rs.next()) {
                 numOfProduct = rs.getInt(1);

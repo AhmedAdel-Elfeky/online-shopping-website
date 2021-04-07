@@ -17,6 +17,7 @@
         session.setAttribute("lname", "");
         session.setAttribute("role", "c");
         session.setAttribute("customer_id",-1);
+        session.setAttribute("emailState","");
 
     } else {
         if (loginState.equals("true")) {

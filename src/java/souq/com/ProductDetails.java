@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import jdk.internal.cmm.SystemResourcePressureImpl;
 
 /**
  *
@@ -51,6 +50,7 @@ public class ProductDetails extends HttpServlet {
         db.connect();
         try {
             rs = db.select("select qunatity,name,price,img_url,description from product where product_id=" + id + ";");
+            System.out.println("begin:"+id);
             if (rs.next()) {
                 String[] desc = rs.getString("description").split("\\;");
                 for (String s : desc) {
@@ -176,8 +176,8 @@ public class ProductDetails extends HttpServlet {
                         + "				  <div class=\"control-group\">\n"
                         + "					<label class=\"control-label\"><span>$" + rs.getString("price") + "</span></label>\n"
                         + "					<div class=\"controls\">\n"
-                        + "					<input type=\"number\" class=\"span1\" placeholder=\"Qty.\"/>\n"
-                        + "					  <button type=\"submit\" class=\"btn btn-large btn-primary pull-right\"> Add to cart <i class=\" icon-shopping-cart\"></i></button>\n"
+                        + "					<input value='1' id='Qty"+id+"' type=\"number\" class=\"span1\" placeholder=\"Qty.\"/>\n"
+                        + "					  <button data-price="+rs.getString("price")+" type=\"button\" class=\"btn btn-large btn-primary pull-right\" id='"+id+"' onclick=\"changeQuantityOfProduct(this.id,this.getAttribute('data-price'))\"> Add to cart <i class=\" icon-shopping-cart\"></i></button>\n"
                         + "					</div>\n"
                         + "				  </div>\n"
                         + "				</form>\n"
@@ -195,7 +195,6 @@ public class ProductDetails extends HttpServlet {
                         + "			<div class=\"span9\">\n"
                         + "            <ul id=\"productDetail\" class=\"nav nav-tabs\">\n"
                         + "              <li class=\"active\"><a href=\"#home\" data-toggle=\"tab\">Product Details</a></li>\n"
-//                        + "              <li><a href=\"#profile\" data-toggle=\"tab\">Related Products</a></li>\n"
                         + "            </ul>\n"
                         + "            <div id=\"myTabContent\" class=\"tab-content\">\n"
                         + "              <div class=\"tab-pane fade active in\" id=\"home\">\n"
@@ -217,6 +216,7 @@ public class ProductDetails extends HttpServlet {
                 }
                 
             }
+            System.out.println("end:"+id);
         } catch (SQLException ex) {
             Logger.getLogger(ProductDetails.class.getName()).log(Level.SEVERE, null, ex);
         }

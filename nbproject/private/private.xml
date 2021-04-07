@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/login.jsp</file>
+            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/src/java/souq/com/SendEmail.java</file>
+            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/src/java/souq/com/checklogin.java</file>
+            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/products.html</file>
+            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/src/java/souq/com/AdminSearchProducts.java</file>
+            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/forgetpass.jsp</file>
+            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/Cart.jsp</file>
+            <file>file:/F:/Engineering/ITI/Web%20App/project/online_shopping_website/web/index.jsp</file>
+        </group>
     </open-files>
 </project-private>

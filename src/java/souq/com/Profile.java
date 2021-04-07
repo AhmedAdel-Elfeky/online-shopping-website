@@ -43,7 +43,6 @@ public class Profile extends HttpServlet {
             result = ps.executeQuery("select * from customer where customer_id=" + cus_id + ";");
 
             response.setContentType("text/html");
-            out.println("<table  style=width:50%");
 
             RequestDispatcher disp = request.getRequestDispatcher("guestHeader.jsp");
             disp.include(request, response);
@@ -53,9 +52,9 @@ public class Profile extends HttpServlet {
 
             while (result.next()) {
 
-                out.println("<h1 style=\"position: relative;left: 250px;top: 2px  \">Your Profile</h1><br>\n"
+                out.println("<div> <h1 style=\"position: relative;left: 250px;top: 2px  \">Your Profile</h1><br>\n"
                         //                        + "        <form action=\"UpdateProfile\" method=\"get\">\n"
-                        + "        <div style=\"position: relative;left: 230px;top: 2px;font-size:20px  \">\n"
+                        + "        <div class=\"control-group\"  style=\"position:relative;left: 230px;top: 2px;font-size:20px  \">\n"
                         + "            Date Of Birth &emsp;: &emsp;" + result.getString(2) + " \n"
                         + "        </div> <br>\n"
                         + "        <div style=\"position: relative;left: 230px;top: 2px;font-size:20px  \">\n"
@@ -70,10 +69,10 @@ public class Profile extends HttpServlet {
                         + "        <div style=\"position: relative;left: 230px;top: 2px ;font-size:20px \">\n"
                         + "            User Name &ensp; &emsp; : &emsp;" + result.getString(6) + "\n"
                         + "        </div> <br>\n"
-                        + "        <div style=\"position: relative;left: 230px;top: 2px ;font-size:20px \">\n"
+                        + "        <div class=\"control-group\" style=\"position: relative;left: 230px;top: 2px ;font-size:20px \">\n"
                         + "            Email  &emsp;&emsp;&emsp;&emsp; &ensp;: &emsp;" + result.getString(8) + "\n"
                         + "        </div> <br>\n"
-                        + "        <div style=\"position: relative;left: 230px;top: 2px ;font-size:20px \">\n"
+                        + "        <div style=\"position: relative;left: 530px;top: 2px ;font-size:20px \">\n"
                         + "            Credit Limit  &emsp; &ensp; : &emsp;" + result.getString(9) + "\n"
                         + "        </div> <br>\n"
                         + "        <div style=\"position: relative;left: 530px;top: 2px ;font-size:20px \">\n"
@@ -89,7 +88,7 @@ public class Profile extends HttpServlet {
                         + "            Interests &emsp; &ensp;&ensp;  &ensp;  : &emsp;  " + result.getString(13) + "\n"
                         + "        </div> <br>\n"
                         //                        + "        </form>"
-                        + "");
+                        + "</div>");
 
             }
 

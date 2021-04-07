@@ -22,9 +22,12 @@
     <%! String ids = "";
         ResultSet rs = null;
         int totalOrderPrice;
+        int totalProductNum;
         boolean flag;
         String quant = null;
         int price;
+        Cookie[] product;
+        int i = 0 ;
     %>
     <%  totalOrderPrice = 0;
         if (session.getAttribute("customer_id") == null) {
@@ -42,13 +45,14 @@
                         ids += c.getName().substring(2) + ",";
                     }
                 }
-                if (!ids.equals("")) {
-                    if (session.getAttribute("orderId") == null) {
-                        session.setAttribute("orderId", db.createOrder(cookie, (Integer) session.getAttribute("customer_id")));
-                    }
-                    StringBuffer sb = new StringBuffer(ids);
-                    sb.deleteCharAt(sb.length() - 1);
-                    rs = db.select("select product_id,price,name,img_url,qunatity from product where product_id in (" + sb + ");");
+
+      if (!ids.equals("")) {
+        if (session.getAttribute("orderId") == null) {
+            session.setAttribute("orderId", db.createOrder(cookie, (Integer) session.getAttribute("customer_id")));
+        }
+        StringBuffer sb = new StringBuffer(ids);
+        sb.deleteCharAt(sb.length() - 1);
+        rs = db.select("select product_id,price,name,img_url,qunatity from product where product_id in (" + sb + ");");
     %>
     <%if (session.getAttribute("exceedLimit") != null && session.getAttribute("exceedLimit").equals("true")) {
     %>
@@ -120,15 +124,12 @@
     </table>
     <a href="SearchOnProduct"  class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
     <a href="ConfirmOrder.jsp" class="btn btn-large pull-right">Proceed to Checkout <i class="icon-arrow-right"></i></a>
-
-    <%} else {%>
+    <%}else{%>
     <div style="background-color:#F8F1A2;padding:25px 35px;">Shopping cart is currently empty
         Add items to your cart and view them here before you checkout. </div> <br><br>
-
     <a href="SearchOnProduct" class="btn btn-large" type="submit"><i class="icon-arrow-left"></i> Continue Shopping </a>
-    <%}
-            }
-        }%>
+    <%
+    }}}%>
 
 </div>    
 

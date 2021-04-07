@@ -28,9 +28,10 @@ public class AdminSearchProducts extends HttpServlet {
      ResultSet rs = null;
      String name = null;
      String category =null;
+     String price;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        price = req.getParameter("price");
         PrintWriter out = resp.getWriter();
         DataBase db = new DataBase();
         RequestDispatcher header = req.getRequestDispatcher("guestHeader.jsp");
@@ -41,9 +42,10 @@ public class AdminSearchProducts extends HttpServlet {
         
         RequestDispatcher sideBar = req.getRequestDispatcher("sideBar.jsp");
         sideBar.include(req, resp);
-
-        RequestDispatcher body = req.getRequestDispatcher("products.html");
-        body.include(req, resp);
+        
+//        RequestDispatcher body = req.getRequestDispatcher("products.html");
+//        body.include(req, resp);
+ 
         String name = req.getParameter("search");
         category = req.getParameter("category");
         if (name == null) {
@@ -53,12 +55,32 @@ public class AdminSearchProducts extends HttpServlet {
         if (category == null || category.equals("All") ) {
             category = "";
         }
+         if (price == null || price.equals("All")) {
+            price = "";
+        }
+         int numOfProducts = db.getNumOfProducts(name, category,price);
+        out.print("<div class=\"span9\">\n" +
+            "\n" +
+            "    <h3> Products<small class=\"pull-right\"> "+numOfProducts+" products are available </small></h3>	\n" +
+            "    <hr class=\"soft\"/>\n" +
+            "\n" +
+            "    <br class=\"clr\"/>\n" +
+            "    <div class=\"tab-content\">\n" +
+            "        <div class=\"tab-pane  active\" id=\"blockView\">\n" +
+            "            <ul class=\"thumbnails\">\n" +
+            "");
+         
 
         db.connect();
         try {
             System.out.println(category);
             System.out.println(name);
-            rs = db.select("select name,price,img_url,product_id from product where name Like '%"+name+"%'and category_id in (select category_id from category where name Like '%" + category + "%');");
+             if(price.equals("")){
+               rs = db.select("select name,price,img_url,product_id from product where name ILIKE '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%');");
+            }
+            else{
+                 rs = db.select("select name,price,img_url,product_id from product where name ILIKE '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%' and price between "+price+" );");
+            }
             while (rs.next()) {
                 System.out.println("h");
                 out.println("<li class=\"span3\">\n"

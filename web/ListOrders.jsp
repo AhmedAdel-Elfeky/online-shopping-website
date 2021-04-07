@@ -18,7 +18,7 @@
     <hr class="soft"/>
     
     <%
-        int id = (int)session.getAttribute("customer_id");
+        int id = Integer.parseInt(request.getParameter("id"));
         d.listOrders(out,id);
         %>
     

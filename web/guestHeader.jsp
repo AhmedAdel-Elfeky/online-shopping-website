@@ -29,6 +29,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="themes/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="themes/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="themes/images/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="stylesheet" href="bootstrap/css/font-awesome.min.css">
 	<style type="text/css" id="enject"></style>
   </head>
 <body>
@@ -64,20 +65,35 @@
 	<span class="icon-bar"></span>
 </a>
   <div class="navbar-inner">
+      
     <a class="brand" href="index.jsp"><img src="themes/images/logo2.png" alt="Bootsshop"/></a>
-		<form class="form-inline navbar-search" method="get" action="SearchOnProduct" >
-		<input id="srchFld" class="srchTxt" type="text" name="search" />
-		  <select class="srchTxt" name="category">
+    <%
+        if( ((String) session.getAttribute("role")).equals("a"))
+        {
+            out.print("<form class=\"form-inline navbar-search\" method=\"get\" action=\"AdminSearchProducts\" >");
+        }
+        else 
+        {
+            out.print("<form class=\"form-inline navbar-search\" method=\"get\" action=\"SearchOnProduct\" >");
+        }
+        %>
+                    <input style="width: 130px;" id="srchFld" class="srchTxt" type="text" name="search" />
+		  <select style="width:90px" class="srchTxt" name="category">
                       <option value="All">All</option>
                       <option value="mobile">Mobiles</option>
                       <option value="labtop">Labtops</option>
+		</select>
+                 <select style="width:140px" class="price" name="price">
+                      <option value="">All</option>
+                      <option value="1000 and 5000">1000 - 5000</option>
+                      <option value="5001 and 10000">5000 - 10000</option>
+                      <option value="10001 and 20000">10000 - 20000</option>
+                      <option value="20001 and 30000">20000 - 30000</option>
 		</select> 
 		  <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
     </form>
     <ul id="topMenu" class="nav pull-right">
-       
-        
-        <%
+       <%
             if( ((String)session.getAttribute("loginState")) == null)
             {
                  out.print("<li class=\"\"><a href=\"index.jsp\">Home</a></li>");
@@ -103,7 +119,7 @@
                     if(role.equals("a"))
                     {
                         out.print("<li class=\"\"><a href=\"AddProduct.jsp\">Add Product</a></li>");
-                        out.print("<li class=\"\"><a href=\"\">Customers</a></li>");
+                        out.print("<li class=\"\"><a href=\"Users.jsp\">Customers</a></li>");
                         out.print("<li class=\"\"><a href=\"Profile?customer_id="+(int)session.getAttribute("customer_id")+"\">Profile</a></li>");
                         out.print("<li class=\"\" ><a href=\"AdminSearchProducts\" >Products</a></li>");
                         out.print("<li class=\"\">");
