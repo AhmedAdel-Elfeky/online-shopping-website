@@ -62,6 +62,8 @@
                         <%! ResultSet rs;%>
                         <%! DataBase db = new DataBase();%>
                         <%Cookie[] cookiess = request.getCookies();
+                       
+                        db.disconnect();
                             for (Cookie cooky : cookiess) {
                                 if (cooky.getName().contains("userId")) {
                                     db.connect();
@@ -69,11 +71,13 @@
                                     db.disconnect();
                                 } 
                                else if (cooky.getName().contains("updateUserIdLimit")) {
+                                   System.out.println(cooky.getValue());
                                     db.connect();
-                                    db.DML("UPDATE customer SET credit_limit = " + Long.parseLong(request.getParameter("creditLimit")) + "where customer_id =" + cooky.getValue());
+                                    db.DML("UPDATE customer SET credit_limit = " + cooky.getValue() + "where customer_id =" + cooky.getName().substring(17));
                                     db.disconnect();
                                 }
                             }
+                        
                         %>
                         <%                        db.connect();
                             String query = "select * from customer;";
@@ -106,10 +110,10 @@
                             <div class="modal-body">
                                 <form class="form-horizontal loginFrm" action="Users.jsp" method="post">
                                     <div class="control-group">								
-                                        <input type="text" id="inputEmail" name="creditLimit" placeholder="update limit">
+                                        <input type="text" id="inputEmail" class="creditlimit" name="creditLimit" placeholder="update limit">
                                     </div>
 
-                                    <button type="submit" class="btn btn-success">Update</button>
+                                    <button onclick="Update()" type="submit" class="btn btn-success">Update</button>
                                     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
                                 </form>
                             </div>
