@@ -1,5 +1,5 @@
- <%@page import="java.util.ArrayList"%>
- 
+<%@page import="java.util.ArrayList"%>
+
 <%@page import="java.util.HashMap"%>
 <%@page import="java.sql.ResultSet"%>
 <%-- 
@@ -13,51 +13,52 @@
     <div class="container">
         <div class="row">
             <!-- Sidebar ================================================== -->
-             <%! int numOfProduct = 0;
+            <%! int numOfProduct = 0;
                 int totalPrice = 0;
                 DataBase d = new DataBase();
                 int orderPrice;
                 int productNum;
-                ArrayList<Cookie> myCookie = new ArrayList<Cookie>(); // Create an ArrayList object
+                Cookie[] cookies;
+                ArrayList<Cookie> myCookie = new ArrayList<Cookie>();
 
             %>
             <%
-                if (session.getAttribute("reloadUnconfirmedOrder") == null && session.getAttribute("customer_id") != null) {
+                if (session.getAttribute("reloadUnconfirmedOrder").equals("false") && session.getAttribute("loginState").equals("true")) {
+                    System.out.println("From SideBar:" + session.getAttribute("customer_id"));
                     d.connect();
-                
-
                     ResultSet rs = d.select("select cop.order_id,cop.quantity,p.img_url,cop.price,cop.product_id,p.qunatity,p.name from product p"
                             + " inner join  customer_order_product cop on p.product_id=cop.product_id inner join orders o on "
                             + "cop.order_id=o.order_id where cop.customer_id =" + session.getAttribute("customer_id") + " and o.status='unconfirmed';");
                     while (rs.next()) {
                         numOfProduct += Integer.parseInt(rs.getString("quantity"));
                         totalPrice += Integer.parseInt(rs.getString("price")) * Integer.parseInt(rs.getString("quantity"));
-                        myCookie.add(new Cookie("id" + rs.getString("product_id"), rs.getString("quantity")));
-
+//
                         myCookie.add(new Cookie("productInCart", Integer.toString(numOfProduct)));
-
+                        myCookie.add(new Cookie("id" + rs.getString("product_id"), rs.getString("quantity")));
                         myCookie.add(new Cookie("totalPrice", Integer.toString(totalPrice)));
-                        session.setAttribute("orderId",rs.getInt("order_id"));
+                        session.setAttribute("orderId", rs.getInt("order_id"));
                     }
-                        for (Cookie c : myCookie) {
-                            c.setPath("/");
-                            response.addCookie(c);
+//                    
+                    for (Cookie c : myCookie) {
+                        response.addCookie(c);
+                    }
+                    System.out.println(session.getAttribute("orderId"));
+                    session.setAttribute("reloadUnconfirmedOrder", "true");
+                    myCookie.clear();
+                }
+
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie c : cookies) {
+                        if (c.getName().startsWith("productInCart") && c.getValue() != "") {
+                            numOfProduct = Integer.parseInt(c.getValue());
+                        } else if (c.getName().startsWith("totalPrice") && c.getValue() != "") {
+                            totalPrice = Integer.parseInt(c.getValue());
                         }
-                        System.out.println(session.getAttribute("orderId"));
-                        session.setAttribute("reloadUnconfirmedOrder", "true");
                     }
-                    Cookie[] cookies = request.getCookies();
-                    if (cookies != null) {
-                        for (Cookie c : cookies) {
-                            if (c.getName().startsWith("productInCart")) {
-                                numOfProduct = Integer.parseInt(c.getValue());
-                            } else if (c.getName().startsWith("totalPrice")) {
-                                totalPrice = Integer.parseInt(c.getValue());
-                            }
-                        }
-                    }
+                }
             %>
-            <div id="sidebar" class="span3">
+             <div id="sidebar" class="span3">
                <%
                 String r = (String) session.getAttribute("role");
                  if(r.equals("c"))
@@ -77,6 +78,8 @@
                         if (session.getAttribute("orderId") != null) {
                             d.updateOrder(cookies, (Integer) session.getAttribute("orderId"), (Integer) session.getAttribute("customer_id"), "unconfirmed");
                         }
+                        numOfProduct = 0;
+                        totalPrice = 0;
                     %>
                 </ul>
                 <br/>

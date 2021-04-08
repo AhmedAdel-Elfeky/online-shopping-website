@@ -20,12 +20,11 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 import javax.websocket.Session;
 
-
 public class DataBase {
 
     // init database constants
 //    private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-   private static final String DATABASE_URL = "jdbc:postgresql://localhost/e_commerce";
+    private static final String DATABASE_URL = "jdbc:postgresql://localhost/e_commerce";
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "postgres";
 
@@ -144,7 +143,6 @@ public class DataBase {
             e.printStackTrace();
         }
     }
- 
 
     public void getLatestProducts(JspWriter out) {
         try {
@@ -169,75 +167,70 @@ public class DataBase {
         }
 
     }
-    
-    public void listOrders(JspWriter out,int customer_id) {
+
+    public void listOrders(JspWriter out, int customer_id) {
         try {
             this.connect();
             ResultSet rs = this.select(" select cop.order_id,o.date from orders o inner join customer_order_product cop "
-                    + "on o.order_id = cop.order_id where status = 'confirmed' and cop.customer_id="+customer_id+" "
+                    + "on o.order_id = cop.order_id where status = 'confirmed' and cop.customer_id=" + customer_id + " "
                     + "group by cop.order_id,o.date order by cop.order_id  ;");
             List<Integer> conf_orders = new ArrayList<>();
             List<String> dates = new ArrayList<>();
             while (rs.next()) {
-                conf_orders.add(rs.getInt(1)); 
-                dates.add(rs.getString(2)); 
+                conf_orders.add(rs.getInt(1));
+                dates.add(rs.getString(2));
                 System.out.println(rs.getString(2));
             }
-            if(conf_orders.size() > 0)
-            {
-                for(int i=0;i<conf_orders.size();i++)
-                {
-                    out.print("Order Num&nbsp;:&nbsp;"+i );
-                     rs = this.select("  select cop.order_id,p.img_url,cop.quantity,cop.price,cop.product_id,p.name "
-                             + "from product p inner join customer_order_product cop on p.product_id=cop.product_id "
-                             + "inner join orders o on cop.order_id=o.order_id where cop.order_id = "+conf_orders.get(i)+";");
-                    out.print("<br/>Order Id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;"+conf_orders.get(i) );
-                    out.print("<br/>Order Date&nbsp;:&nbsp;"+dates.get(i) );
-                     out.print("    <table class=\"table table-bordered\">\n");
-                     out.print("<thead>");
+            if (conf_orders.size() > 0) {
+                for (int i = 0; i < conf_orders.size(); i++) {
+                    out.print("Order Num&nbsp;:&nbsp;" + i);
+                    rs = this.select("  select cop.order_id,p.img_url,cop.quantity,cop.price,cop.product_id,p.name "
+                            + "from product p inner join customer_order_product cop on p.product_id=cop.product_id "
+                            + "inner join orders o on cop.order_id=o.order_id where cop.order_id = " + conf_orders.get(i) + ";");
+                    out.print("<br/>Order Id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;" + conf_orders.get(i));
+                    out.print("<br/>Order Date&nbsp;:&nbsp;" + dates.get(i));
+                    out.print("    <table class=\"table table-bordered\">\n");
+                    out.print("<thead>");
+                    out.print("<tr>");
+                    out.print("<th width=\"100\">Product</th>");
+                    out.print("<th width=\"150\">Name</th>");
+                    out.print("<th width=\"30\">Quantity</th>");
+                    out.print("<th width=\"100\">Price</th>");
+                    out.print("<th>Discount</th>");
+                    out.print("<th>Tax</th>");
+                    out.print("<th width=\"100\">Total</th>");
+                    out.print("</tr>");
+                    out.print("</thead>");
+                    out.print("<tbody>");
+                    int total = 0;
+                    while (rs.next()) {
+
                         out.print("<tr>");
-                  out.print("<th width=\"100\">Product</th>");
-                  out.print("<th width=\"150\">Name</th>");
-                  out.print("<th width=\"30\">Quantity</th>");
-		  out.print("<th width=\"100\">Price</th>");
-                  out.print("<th>Discount</th>");
-                  out.print("<th>Tax</th>");
-                  out.print("<th width=\"100\">Total</th>");
-                  out.print("</tr>");
-                  out.print("</thead>");
-                  out.print("<tbody>");
-                    int total=0;
-                     while(rs.next())
-                     {
-                        
-                        out.print("<tr>");
-                        out.print("<td height=\"50\"> <img width=\"60\"  src=\""+rs.getString(2)+"\" alt=\"\"/></td>");
-                        out.print("<td>"+rs.getString(6)+"</td>");
-				 out.print(" <td>");
-                                 out.print(rs.getInt(3));
-                                out.print("  </td>");
-                        out.print("<td>$"+rs.getInt(4)+"</td>");
+                        out.print("<td height=\"50\"> <img width=\"60\"  src=\"" + rs.getString(2) + "\" alt=\"\"/></td>");
+                        out.print("<td>" + rs.getString(6) + "</td>");
+                        out.print(" <td>");
+                        out.print(rs.getInt(3));
+                        out.print("  </td>");
+                        out.print("<td>$" + rs.getInt(4) + "</td>");
                         out.print("<td>$00.00</td>");
                         out.print("<td>$00.00</td>");
-                         
-                        out.print("<td>$"+rs.getInt(3)*rs.getInt(4)+"</td>");
+
+                        out.print("<td>$" + rs.getInt(3) * rs.getInt(4) + "</td>");
                         out.print("</tr>");
-                        total += rs.getInt(3)*rs.getInt(4);
-                       
-                     }
-                      
+                        total += rs.getInt(3) * rs.getInt(4);
+
+                    }
+
                     out.print(" <tr>");
                     out.print("<td colspan=\"6\" style=\"text-align:right\"><strong>TOTAL =</strong></td>");
-                    out.print("<td class=\"label label-important\" style=\"display:block\"> <strong> "+total+" </strong></td>");
+                    out.print("<td class=\"label label-important\" style=\"display:block\"> <strong> " + total + " </strong></td>");
                     out.print("</tr>");
-				 out.print("</tbody>");
+                    out.print("</tbody>");
                     out.print(" </table>");
                 }
                 out.print("<br/>");
                 out.print("<br/>");
-            }
-            else
-            {
+            } else {
                 out.print("<h1> You did not make any orders yet</h1>");
             }
             this.disconnect();
@@ -248,15 +241,13 @@ public class DataBase {
 
     }
 
-    
-    public int getNumOfDev(JspWriter out,HttpServletRequest req,HttpSession s)
-    {
+    public int getNumOfDev(JspWriter out, HttpServletRequest req, HttpSession s) {
         s = req.getSession(false);
-        int mobile=0;
-        int laptop=0;
-        int numOfFeatured=0;
-         try {
-                this.connect();
+        int mobile = 0;
+        int laptop = 0;
+        int numOfFeatured = 0;
+        try {
+            this.connect();
             ResultSet rs1 = this.select("select count(product_id) from product where category_id= 1;");
             ResultSet rs2 = this.select("select count(product_id) from product where category_id= 2;");
             ResultSet rs3 = this.select("select count(product_id) from product where featured= \'f\';");
@@ -270,29 +261,25 @@ public class DataBase {
             while (rs3.next()) {
                 numOfFeatured = rs3.getInt(1);
             }
- 
+
             String r = (String) s.getAttribute("role");
-            if(r.equals("c") || r.equals(""))
-            {
-                 out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
-"                                <ul>\n" +
-"                                    <li><a href=\"SearchOnProduct?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
-"                                    <li><a href=\"SearchOnProduct?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
-"                                </ul>\n" +
-"                            </li>   ");
+            if (r.equals("c") || r.equals("")) {
+                out.print(" <li class=\"subMenu open\"><a> ELECTRONICS [" + (laptop + mobile) + "]</a>\n"
+                        + "                                <ul>\n"
+                        + "                                    <li><a href=\"SearchOnProduct?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone (" + mobile + ")</a></li>\n"
+                        + "                                    <li><a href=\"SearchOnProduct?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop (" + laptop + ")</a></li>\n"
+                        + "                                </ul>\n"
+                        + "                            </li>   ");
+            } else {
+                out.print(" <li class=\"subMenu open\"><a> ELECTRONICS [" + (laptop + mobile) + "]</a>\n"
+                        + "                                <ul>\n"
+                        + "                                    <li><a href=\"AdminSearchProducts?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone (" + mobile + ")</a></li>\n"
+                        + "                                    <li><a href=\"AdminSearchProducts?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop (" + laptop + ")</a></li>\n"
+                        + "                                </ul>\n"
+                        + "                            </li>   ");
             }
-            else
-            {
-                 out.print(" <li class=\"subMenu open\"><a> ELECTRONICS ["+(laptop+mobile)+"]</a>\n" +
-"                                <ul>\n" +
-"                                    <li><a href=\"AdminSearchProducts?category=mobile\"><i class=\"icon-chevron-right\"></i>Mobile Phone ("+mobile+")</a></li>\n" +
-"                                    <li><a href=\"AdminSearchProducts?category=labtop\"><i class=\"icon-chevron-right\"></i>Laptop ("+laptop+")</a></li>\n" +
-"                                </ul>\n" +
-"                            </li>   ");
-            }
-                   
-            
-             this.disconnect();
+
+            this.disconnect();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -319,16 +306,17 @@ public class DataBase {
         return numOfFeatured;
     }
 
-    public int getNumOfProducts(String name, String category,String price) {
+    public int getNumOfProducts(String name, String category, String price) {
 
         int numOfProduct = 0;
         ResultSet rs = null;
         try {
             this.connect();
-           if(price.equals(""))
-             rs = this.select("select count(product_id) from product where name Ilike '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%');");   
-           else
-             rs = this.select("select count(product_id) from product where name Ilike '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%'and price between "+price+");");
+            if (price.equals("")) {
+                rs = this.select("select count(product_id) from product where name Ilike '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%');");
+            } else {
+                rs = this.select("select count(product_id) from product where name Ilike '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%'and price between " + price + ");");
+            }
 
             if (rs.next()) {
                 numOfProduct = rs.getInt(1);
@@ -341,12 +329,11 @@ public class DataBase {
         return numOfProduct;
     }
 
-    
     public enum featured_type {
-    f,
-    uf;
-     }
-    
+        f,
+        uf;
+    }
+
     public void addNewProduct(HttpServletResponse response, HttpServletRequest request) {
         int cat_id = Integer.parseInt(request.getParameter("category"));
         String name = request.getParameter("pname");
@@ -361,8 +348,8 @@ public class DataBase {
         String pPackage = request.getParameter("pPackage");
         String pDisplay = request.getParameter("pDisplay");
         String pFeatures = request.getParameter("pFeatures");
-        
-        String AllDesc = desc+";"+pBrand+";"+pReleased+";"+pPackage+";"+pDisplay+";"+pFeatures;
+
+        String AllDesc = desc + ";" + pBrand + ";" + pReleased + ";" + pPackage + ";" + pDisplay + ";" + pFeatures;
         try {
             this.connect();
             prepStatement = connection.prepareStatement("insert into product (category_id,price,description,qunatity,"
@@ -384,15 +371,14 @@ public class DataBase {
             System.out.println("there is an error in adding product");
         }
     }
-    
-    public ProductInfo getProductInfo(HttpServletResponse response, HttpServletRequest request,int product_id) {
+
+    public ProductInfo getProductInfo(HttpServletResponse response, HttpServletRequest request, int product_id) {
         ProductInfo p = new ProductInfo();
         try {
             this.connect();
-            ResultSet rs = this.select("select * from product where product_id = "+product_id+";");
-           
-            while (rs.next())
-            {                
+            ResultSet rs = this.select("select * from product where product_id = " + product_id + ";");
+
+            while (rs.next()) {
                 p.categoryId = rs.getInt(2);
                 p.price = rs.getInt(3);
                 p.description = rs.getString(4);
@@ -400,7 +386,7 @@ public class DataBase {
                 p.name = rs.getString(6);
                 p.imgUrl = rs.getString(7);
                 p.date = rs.getString(8);
-                p.featured = rs.getString(9);  
+                p.featured = rs.getString(9);
             }
             this.disconnect();
         } catch (Exception s) {
@@ -409,8 +395,8 @@ public class DataBase {
         }
         return p;
     }
-    
-     public void editProduct(HttpServletResponse response, HttpServletRequest request, int productId) {
+
+    public void editProduct(HttpServletResponse response, HttpServletRequest request, int productId) {
         int cat_id = Integer.parseInt(request.getParameter("category"));
         String name = request.getParameter("pname");
         java.sql.Date date = java.sql.Date.valueOf(request.getParameter("pdate"));
@@ -424,8 +410,8 @@ public class DataBase {
         String pPackage = request.getParameter("pPackage");
         String pDisplay = request.getParameter("pDisplay");
         String pFeatures = request.getParameter("pFeatures");
-        
-        String AllDesc = desc+";"+pBrand+";"+pReleased+";"+pPackage+";"+pDisplay+";"+pFeatures;
+
+        String AllDesc = desc + ";" + pBrand + ";" + pReleased + ";" + pPackage + ";" + pDisplay + ";" + pFeatures;
         try {
             this.connect();
             prepStatement = connection.prepareStatement("update product SET category_id = ?,price=?,description=?,qunatity=?,"
@@ -447,16 +433,16 @@ public class DataBase {
             System.out.println("there is an error in adding product");
         }
     }
+
     public int createOrder(Cookie[] cookie, int customerId) {
-        int productId;
-        float productPrice =0 ;
-        int productQuantity =0;
+        HashMap<Integer, Integer> productarr = new HashMap<>();
+        float productPrice = 0;
         int orderId = 0;
         ResultSet rs = null;
         int result = -1;
         this.connect();
         for (Cookie c : cookie) {
-            if (c.getName().equals("productInCart")&&!(c.getValue().equals(""))) {
+            if (c.getName().equals("productInCart") && !(c.getValue().equals(""))) {
                 try {
                     result = this.DML("INSERT INTO orders(quantity,status,date) VALUES (" + Integer.parseInt(c.getValue()) + ",'unconfirmed',now());");
                     rs = this.select("select order_id from orders  order by order_id DESC limit(1);");
@@ -466,15 +452,16 @@ public class DataBase {
                 } catch (SQLException ex) {
                     Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else if (c.getName().startsWith("id")) {
-                productId = Integer.parseInt(c.getName().substring(2));
-                productQuantity = Integer.parseInt(c.getValue());
+            } else if (c.getName().startsWith("id") && orderId != 0) {
+                productarr.put(Integer.parseInt(c.getName().substring(2)), Integer.parseInt(c.getValue()));
+            }
+            for (Integer p : productarr.keySet()) {
                 try {
-                    rs = this.select("select price from product where product_id = " + productId + ";");
+                    rs = this.select("select price from product where product_id = " + p + ";");
                     if (rs.next()) {
                         productPrice = Float.parseFloat(rs.getString("price"));
                     }
-                    result = this.DML("INSERT INTO customer_order_product(order_id,customer_id,product_id,quantity,price) VALUES (" + orderId + "," + customerId + "," + productId + "," + productQuantity + "," + productPrice + ");");
+                    result = this.DML("INSERT INTO customer_order_product(order_id,customer_id,product_id,quantity,price) VALUES (" + orderId + "," + customerId + "," + p + "," + productarr.get(p) + "," + productPrice + ");");
                 } catch (SQLException ex) {
                     Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -483,7 +470,7 @@ public class DataBase {
         return orderId;
     }
 
-    public void updateOrder(Cookie[] cookie, int orderId, int customerId,String status) {
+    public void updateOrder(Cookie[] cookie, int orderId, int customerId, String status) {
         int productId = 0;
         int productQuantity = 0;
         ResultSet rs = null;
@@ -493,21 +480,25 @@ public class DataBase {
         for (Cookie c : cookie) {
             if (c.getName().equals("productInCart")) {
                 try {
-                    this.DML("update orders set quantity=" + Integer.parseInt(c.getValue()) + ",status= '"+status+"' where order_id =" + orderId + ";");
+                    this.DML("update orders set quantity=" + Integer.parseInt(c.getValue()) + ",status= '" + status + "' where order_id =" + orderId + ";");
                 } catch (SQLException ex) {
                     Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 productQuantity = Integer.parseInt(c.getValue());
-            }
-
-             else if (c.getName().startsWith("id")) {
-                 System.out.println("From id:" + c.getName());
+            } else if (c.getName().startsWith("id")) {
+                System.out.println("From id:" + c.getName());
                 if (c.getValue().equals("0")) {
                     System.out.println("From delete:" + productId);
                     try {
                         productId = Integer.parseInt(c.getName().substring(2));
                         System.out.println("From delete:" + productId);
-                        DML("delete from customer_order_product where product_id=" + productId + ";");
+                        DML("delete from customer_order_product where order_id=" + orderId + "and product_id=" + productId + ";");
+//                         rs = this.select("select quantity from orders where order_id = " + orderId + ";");
+//                         if(rs.next()){
+//                             if(rs.getInt("quantity") == 0)
+//                             DML("delet from orders where order_id = " + orderId + ";");
+//                         }
+//                        
                     } catch (SQLException ex) {
                         Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -533,38 +524,39 @@ public class DataBase {
         }
 
     }
-    public String confirmOrder(int customerId,int orderId,Cookie[]cookie){
-       ResultSet rs = null;
-       int balance;
-       int totalOrderPrice = 0;
-       this.connect();
-       if (cookie != null) {
-                    for (Cookie c : cookie) {
-                        if (c.getName().startsWith("totalPrice")){
-                            totalOrderPrice = Integer.parseInt(c.getValue());
-                        }
-                    }
+
+    public String confirmOrder(int customerId, int orderId, Cookie[] cookie) {
+        ResultSet rs = null;
+        int balance;
+        int totalOrderPrice = 0;
+        this.connect();
+        if (cookie != null) {
+            for (Cookie c : cookie) {
+                if (c.getName().startsWith("totalPrice")) {
+                    totalOrderPrice = Integer.parseInt(c.getValue());
+                }
             }
+        }
         try {
-            rs = this.select("select credit_limit from customer where customer_id="+customerId+";");
-            if(rs.next()){
-                balance =Integer.parseInt(rs.getString("credit_limit"));
-                if(totalOrderPrice < balance){
-                    this.updateOrder(cookie, orderId, customerId,"confirmed");
+            rs = this.select("select credit_limit from customer where customer_id=" + customerId + ";");
+            if (rs.next()) {
+                balance = Integer.parseInt(rs.getString("credit_limit"));
+                if (totalOrderPrice < balance) {
+                    this.updateOrder(cookie, orderId, customerId, "confirmed");
                     return "confirmed";
+                } else {
+                    return "unconfirmed";
                 }
-                else{
-                    return "unconfirmed";  
-                }
-                    
+
             }
             this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-          return null;
+        return null;
     }
-    public String reloadCart(int customerId){
+
+    public String reloadCart(int customerId) {
         return "False";
     }
 }

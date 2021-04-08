@@ -68,6 +68,7 @@ public class checklogin extends HttpServlet {
                             response.sendRedirect("index.jsp");
                         }
                         else{
+                            session.setAttribute("reload",true);
                             response.sendRedirect("Cart.jsp");
                         }
                     }

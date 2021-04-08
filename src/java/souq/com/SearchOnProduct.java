@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -42,7 +44,10 @@ public class SearchOnProduct extends HttpServlet {
 
         RequestDispatcher sideBar = req.getRequestDispatcher("sideBar.jsp");
         sideBar.include(req, resp);
-
+        Map<String, String[]> myparam = req.getParameterMap();
+        for (String key : myparam.keySet()) {
+            System.out.println(key + ":" + myparam.get(key));
+        }
         String name = req.getParameter("search");
         String price = req.getParameter("price");
         category = req.getParameter("category");
@@ -66,7 +71,7 @@ public class SearchOnProduct extends HttpServlet {
 
         DataBase db = new DataBase();
         boolean rsFlag = false;
-        int numOfProducts = db.getNumOfProducts(name, category,price);
+        int numOfProducts = db.getNumOfProducts(name, category, price);
         if (!name.equals("")) {
             searchedItem = name;
         } else {
@@ -98,19 +103,19 @@ public class SearchOnProduct extends HttpServlet {
                     + "        <div class=\"tab-pane  active\" id=\"blockView\">\n"
                     + "            <ul class=\"thumbnails\">\n"
                     + "");
-            if(price.equals("")){
-               rs = db.select("select name,price,img_url,product_id from product where name ILIKE '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%');");
+            if (price.equals("")) {
+                rs = db.select("select name,price,img_url,product_id from product where name ILIKE '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%');");
+            } else {
+                rs = db.select("select name,price,img_url,product_id from product where name ILIKE '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%' and price between " + price + " );");
             }
-            else{
-                 rs = db.select("select name,price,img_url,product_id from product where name ILIKE '%" + name + "%' and category_id in (select category_id from category where name Like '%" + category + "%' and price between "+price+" );");
-            }while (rs.next()) {
+            while (rs.next()) {
                 rsFlag = true;
                 out.println("<li class=\"span3\">\n"
                         + "			  <div class=\"thumbnail\">\n"
                         + "				<a href=\"ProductDetails?productId=" + rs.getString("product_id") + "\"><img  style=\"height:170px;\" src=" + rs.getString("img_url") + " alt=\"\"/></a>\n"
                         + "				<div class=\"caption\">\n"
                         + "				  <h5>" + rs.getString("name") + "</h5>"
-                        + "				   <h4 style=\"text-align:center;\"><a class=\"btn\" href=\"ProductDetails?productId=" + rs.getString("product_id") + "\"> <i class=\"icon-zoom-in\"></i></a> <button class=\"btn\"  data-price=" + rs.getString("price") + " id='" + rs.getString("product_id") + " ' onclick=\"addToCart(this.getAttribute('data-price'),this.id)\" >Add to <i class=\"icon-shopping-cart\"></i></button> <button class=\"btn btn-primary\" href=\"#\">" + rs.getString("price") + " $</button></h4>\n"
+                        + "				   <h4 style=\"text-align:center;\"><a class=\"btn\" href=\"ProductDetails?productId=" + rs.getString("product_id") + "\"> <i class=\"icon-zoom-in\"></i></a> <button type=\"submit\" class=\"btn\" data-price=" + rs.getString("price") + " id='" + rs.getString("product_id") + " ' onclick=\"addToCart(this.getAttribute('data-price'),this.id)\" >Add to <i class=\"icon-shopping-cart\"></i></button> <button class=\"btn btn-primary\" href=\"#\">" + rs.getString("price") + " $</button></h4>\n"
                         + "				</div>\n"
                         + "			  </div>\n"
                         + "			</li>"

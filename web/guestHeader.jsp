@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="bootstrap/css/font-awesome.min.css">
 	<style type="text/css" id="enject"></style>
   </head>
-<body>
+<body onpageshow="reloadPage()">
 <div id="header">
 <div class="container">
 <div id="welcomeLine" class="row">
@@ -123,7 +123,7 @@
                         out.print("<li class=\"\"><a href=\"Profile?customer_id="+(int)session.getAttribute("customer_id")+"\">Profile</a></li>");
                         out.print("<li class=\"\" ><a href=\"AdminSearchProducts\" >Products</a></li>");
                         out.print("<li class=\"\">");
-                        out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Login</span></a>");
+                        out.print("<a href=\"login.jsp?logout=false\"  role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Logout</span></a>");
                         out.print("</li>");
                         
                     }
@@ -134,7 +134,7 @@
                         out.print("<li class=\"\"><a href=\"Profile?customer_id="+(int)session.getAttribute("customer_id")+"\">Profile</a></li>");
                         out.print("<li class=\"\" ><a href=\"SearchOnProduct\" >Products</a></li>");
                         out.print("<li class=\"\">");
-                        out.print("<a href=\"login.jsp\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Login</span></a>");
+                        out.print("<a href=\"login.jsp?logout=false\" role=\"button\" style=\"padding-right:0\"><span class=\"btn btn-large btn-success\">Logout</span></a>");
                         out.print("</li>");
                     }
                     session.setAttribute("loginState", "true");
