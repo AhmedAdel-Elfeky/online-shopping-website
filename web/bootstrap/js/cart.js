@@ -31,10 +31,8 @@ function deleteProduct(id)
 {
     product_id = id.substring(6);
     document.getElementById("row" + product_id).remove();
-//    document.cookie = "id" + product_id + "=";
     updateCartinfo(totalOrderPrice);
     document.cookie =  "id" + product_id + "=" +"0";
-
 }
 
 function updateCartinfo() {
