@@ -65,7 +65,9 @@ public class checklogin extends HttpServlet {
                     session.setAttribute("customer_id",result.getInt(6));
                     if(result.getString(3).equals("c")){
                         if(session.getAttribute("requestedPage") == null){
+                            session.setAttribute("reload",true);
                             response.sendRedirect("index.jsp");
+                            
                         }
                         else{
                             session.setAttribute("reload",true);
