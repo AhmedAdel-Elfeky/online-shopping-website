@@ -3,16 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/web/bootstrap/js/product.js</file>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/src/java/souq/com/checklogin.java</file>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/src/java/souq/com/DataBase.java</file>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/web/login.jsp</file>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/web/checkSession.jsp</file>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/web/Footer.html</file>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/web/Cart.jsp</file>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/web/ConfirmOrder.jsp</file>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/web/guestHeader.jsp</file>
-            <file>file:/E:/ITI_0/Telecom%20APP%20development/Web%20dev/Project/feqy/online-shopping-website/online-shopping-website/src/java/souq/com/ProductDetails.java</file>
+            <file>file:/home/m_elieba/Repo/online-shopping-website/online-shopping-website/src/java/souq/com/checklogin.java</file>
+            <file>file:/home/m_elieba/Repo/online-shopping-website/online-shopping-website/src/java/souq/com/MongoCRUD.java</file>
+            <file>file:/home/m_elieba/Repo/online-shopping-website/online-shopping-website/src/java/souq/com/DataBase.java</file>
+            <file>file:/home/m_elieba/Repo/online-shopping-website/online-shopping-website/src/java/souq/com/ProductDetails.java</file>
+            <file>file:/home/m_elieba/Repo/online-shopping-website/online-shopping-website/src/java/souq/com/ReviewController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -45,7 +45,7 @@ public class checklogin extends HttpServlet {
       
         try{
             session=request.getSession(false);
-            c = DriverManager.getConnection(URL,"postgres","postgres");
+            c = DriverManager.getConnection(URL,"elieba","13058");
             
            ps = c.prepareStatement("select uname , password ,role,fname,lname,customer_id from customer where uname=? and password=?  ",
                     ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);

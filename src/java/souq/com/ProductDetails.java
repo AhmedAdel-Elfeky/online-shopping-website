@@ -5,6 +5,8 @@
  */
 package souq.com;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCursor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -25,7 +27,7 @@ import javax.servlet.http.HttpSession;
 public class ProductDetails extends HttpServlet {
 
     ResultSet rs = null;
-    String productId;
+    public static String productId;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,13 +40,18 @@ public class ProductDetails extends HttpServlet {
         sideBar.include(req, resp);
         productId = req.getParameter("productId");
 
-        viewProductDetails(productId, out, req);
+        try {
+            viewProductDetails(productId, out, req);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDetails.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         RequestDispatcher footer = req.getRequestDispatcher("Footer.html");
         footer.include(req, resp);
     }
 
-    public void viewProductDetails(String id, PrintWriter out, HttpServletRequest req) {
+    public void viewProductDetails(String id, PrintWriter out, HttpServletRequest req) throws SQLException {
+
         DataBase db = new DataBase();
         db.connect();
         try {
@@ -191,7 +198,7 @@ public class ProductDetails extends HttpServlet {
                             + "			<div class=\"span9\">\n"
                             + "            <ul id=\"productDetail\" class=\"nav nav-tabs\">\n"
                             + "              <li class=\"active\"><a href=\"#home\" data-toggle=\"tab\">Product Details</a></li>\n"
-                            + "               <li><a href=\"#profile\" data-toggle=\"tab\">Related Products</a></li>\n"
+                            + "               <li><a href=\"#profile\" data-toggle=\"tab\">Reviews</a></li>\n"
                             + "            </ul>\n"
                             + "            <div id=\"myTabContent\" class=\"tab-content\">\n"
                             + "              <div class=\"tab-pane fade active in\" id=\"home\">\n"
@@ -213,7 +220,7 @@ public class ProductDetails extends HttpServlet {
                 }
 
             }
-        
+
         } catch (SQLException ex) {
             Logger.getLogger(ProductDetails.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -406,13 +413,50 @@ public class ProductDetails extends HttpServlet {
         /**
          * *************************Reviews***********************************
          */
-        out.println("<div><span style='font-size:18px;'>By <b>Ahmed Ehab</b>  on 27 February 2018</span>\n"
-                + "  <br><br>Computer CPU Manufacturer : Intel Processor Speed (GH)</div><br><hr>\n");
-        
-        /***********************************************************************/
-        
-        out.println( "     <form action='ReviewController' method='post'>"
-                +"<div id='result'></div><br><hr><textarea style='width:700px;height:70px' id=\"comment\" name=\"comment\" placeholder='\n Enter Your Comment'></textarea>\n"
+
+        MongoCRUD.connect();
+        BasicDBObject query = new BasicDBObject("productId", Integer.parseInt(productId));
+        int userId;
+        MongoCursor<ProductComment> cursor;
+        cursor = MongoCRUD.collection.find(query).iterator();
+        int i = 0;
+        while (cursor.hasNext()) {
+            cursor.next();
+            i++;
+        }
+        System.out.println("Number of comments = " + i);
+        cursor = MongoCRUD.collection.find(query).iterator();
+        if (!cursor.hasNext()) {
+            out.println("<div><span style='font-size:18px;'>There aren't any reviews for this product</span></div><br><hr>\n");
+        } else {
+
+            userId = cursor.next().getUserId();
+            System.out.println("I have a comment");
+            db.connect();
+            ResultSet rs = db.select("select * from customer where customer_id =" + userId);
+
+            while (rs.next()) {
+                String fname = rs.getString("fname");
+                String lname = rs.getString("lname");
+                System.out.println("One line ahead");
+
+                System.out.println("i = " + i);
+                for (int j = 0; j < i; j++) {
+                    out.println("<div><span style='font-size:18px;'>By " + fname + " " + lname + " <b></b>" + MongoCRUD.retreiveOnePoductComments(query).get(j).getTimer() + "</span>\n" + "<br><br>" + MongoCRUD.retreiveOnePoductComments(query).get(j).getComment() + "</div><br><hr>\n");
+                }
+                MongoCRUD.comments.clear();
+//                }
+                System.out.println(MongoCRUD.comments);
+
+            }
+
+            db.disconnect();
+        }
+        /**
+         * ********************************************************************
+         */
+        out.println("<form action='ReviewController' method='post'>"
+                + "<div id='result'></div><br><hr><textarea style='width:700px;height:70px' id=\"comment\" name=\"comment\" placeholder='\n Enter Your Comment'></textarea>\n"
                 + "<button style='margin:12px 0px' type=\"button\" id='commentBtn' class=\"btn btn-large btn-primary pull-right\"> Comment </button></form>\n"
                 + "			<hr class=\"soft\"/>\n"
                 + "			</div>\n"
@@ -428,5 +472,4 @@ public class ProductDetails extends HttpServlet {
                 + "</div>");
 
     }
-
 }
