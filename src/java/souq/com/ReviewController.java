@@ -41,12 +41,9 @@ public class ReviewController extends HttpServlet {
         MongoCRUD.connect();
         MongoCRUD.insert(newComment);
 
-        if (session.getAttribute("loginState").toString().equals("true")) {
+       
             out.println("<span style='font-size:18px;'>By <b>" + session.getAttribute("fname") + " " + session.getAttribute("lname") + "</b>  on " + MongoCRUD.strDate + "</span>\n"
                     + "  <br><br>" + comment);
-        } else {
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("login.jsp");
-            requestDispatcher.forward(req, resp);
-        }
+         
     }
 }

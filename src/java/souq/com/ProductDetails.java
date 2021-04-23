@@ -51,7 +51,7 @@ public class ProductDetails extends HttpServlet {
     }
 
     public void viewProductDetails(String id, PrintWriter out, HttpServletRequest req) throws SQLException {
-
+        
         DataBase db = new DataBase();
         db.connect();
         try {
@@ -455,10 +455,13 @@ public class ProductDetails extends HttpServlet {
         /**
          * ********************************************************************
          */
+        HttpSession session = req.getSession();
+        if(session.getAttribute("loginState").equals("true")){
         out.println("<form action='ReviewController' method='post'>"
                 + "<div id='result'></div><br><hr><textarea style='width:700px;height:70px' id=\"comment\" name=\"comment\" placeholder='\n Enter Your Comment'></textarea>\n"
-                + "<button style='margin:12px 0px' type=\"button\" id='commentBtn' class=\"btn btn-large btn-primary pull-right\"> Comment </button></form>\n"
-                + "			<hr class=\"soft\"/>\n"
+                + "<button style='margin:12px 0px' type=\"button\" id='commentBtn' class=\"btn btn-large btn-primary pull-right\"> Comment </button></form>\n");
+        }
+        out.println("			<hr class=\"soft\"/>\n"
                 + "			</div>\n"
                 + "		</div>\n"
                 + "				<br class=\"clr\">\n"
