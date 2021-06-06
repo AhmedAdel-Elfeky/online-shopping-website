@@ -72,7 +72,7 @@ public class Order extends AsyncTask<String,Void,String> {
             state.setText(response.getState());
             date.setText(response.getOrderDate());
             expectedDate.setText(response.getExpectedDate());
-
+            Log.i("********",response.getExpectedDate());
         }
         else {
             Log.i("+++++++++","dddddddddddddddddddddddddddddddddddddddddddd");

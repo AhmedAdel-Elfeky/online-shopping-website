@@ -48,7 +48,7 @@ import java.net.URL;
             public void onClick(View v) {
                 String oId = orderId.getText().toString();
 //                Toast.makeText(getApplicationContext(),g,Toast.LENGTH_LONG).show();
-                o.execute("http://localhost:8080/order-api/rest/DML/get/"+oId);
+                o.execute("http://10.0.0.2:8080/order-api/rest/DML/get/"+oId);
             }
         });
 
