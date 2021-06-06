@@ -225,10 +225,6 @@ public class ProductDetails extends HttpServlet {
             Logger.getLogger(ProductDetails.class.getName()).log(Level.SEVERE, null, ex);
         }
         out.println("<div class=\"tab-pane fade\" id=\"profile\">\n"
-                + "		<div id=\"myTab\" class=\"pull-right\">\n"
-                + "		 <a href=\"#listView\" data-toggle=\"tab\"><span class=\"btn btn-large\"><i class=\"icon-list\"></i></span></a>\n"
-                + "		 <a href=\"#blockView\" data-toggle=\"tab\"><span class=\"btn btn-large btn-primary\"><i class=\"icon-th-large\"></i></span></a>\n"
-                + "		</div>\n"
                 + "		<br class=\"clr\"/>\n"
                 + "		<hr class=\"soft\"/>\n"
                 + "		<div class=\"tab-content\">\n"
