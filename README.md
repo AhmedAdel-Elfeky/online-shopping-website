@@ -33,3 +33,6 @@ products quantities should be updated and his cart reset.
  - mongoDB
  - PostgreSQL
  - Docker
+ -HTML
+ -CSS
+ -JavaScript
